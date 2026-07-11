@@ -15,21 +15,22 @@ const notificacoes = [
   {
     categoria: "Negociações",
     titulo: "Proposta aceite",
-    descricao: "Carlos Mendes aceitou a proposta de 41.500€ para o BMW Serie 5",
+    descricao:
+      "Carlos Mendes aceitou a proposta de 41.500Kz para o BMW Serie 5",
     hora: "5 min",
     lida: false,
   },
   {
     categoria: "Mensagens",
     titulo: "Nova mensagem de Ana Rodrigues",
-    descricao: "Enviei a proposta de 41.500€",
+    descricao: "Enviei a proposta de 41.500Kz",
     hora: "15 min",
     lida: false,
   },
   {
     categoria: "Pagamentos",
     titulo: "Pagamento recebido",
-    descricao: "Transferência de 41.500€ confirmada no cofre fiduciário",
+    descricao: "Transferência de 41.500Kz confirmada no cofre fiduciário",
     hora: "1h",
     lida: false,
   },

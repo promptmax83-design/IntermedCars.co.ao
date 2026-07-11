@@ -118,7 +118,7 @@ export default function PerfilPage() {
                 </div>
               </div>
               <div className="text-right">
-                <p className="font-bold text-accent">{item.preco}€</p>
+                <p className="font-bold text-accent">{item.preco}Kz</p>
                 <p
                   className={`text-[10px] font-medium ${item.estado === "Vendido" ? "text-green-500" : "text-amber-500"}`}
                 >

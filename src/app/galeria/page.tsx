@@ -161,7 +161,7 @@ export default function Galeria() {
                   </div>
                   <div className="flex justify-between items-center pt-4 border-t border-gray-100">
                     <p className="text-accent text-2xl font-bold">
-                      {car.preco}€
+                      {car.preco}Kz
                     </p>
                     <button className="bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-secondary transition-colors">
                       Ver Detalhes

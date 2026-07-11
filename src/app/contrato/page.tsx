@@ -36,7 +36,7 @@ export default function ContratoPage() {
             </div>
             <div className="bg-light rounded-lg p-3">
               <p className="text-[10px] text-muted uppercase">Valor</p>
-              <p className="font-bold text-accent mt-0.5">41.500€</p>
+              <p className="font-bold text-accent mt-0.5">41.500Kz</p>
             </div>
           </div>
           <div className="bg-light rounded-lg p-3">

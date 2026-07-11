@@ -14,6 +14,8 @@
     "typecheck": "tsc --noEmit",
     "minify:css": "cleancss -o .next/static/css/app.css .next/static/css/app.css",
     "analyze": "npm run typecheck && npm run lint && npm run build",
+    "tailwind:watch": "tailwindcss -i tailwind-php.css -o ../../PHP-Project/views/output.css --watch",
+    "tailwind:build": "tailwindcss -i tailwind-php.css -o ../../PHP-Project/views/output.css --minify",
     "prepare": "husky"
   },
   "dependencies": {

@@ -6,7 +6,7 @@ const conversas = [
     id: 1,
     nome: "Ana Rodrigues",
     veiculo: "BMW Serie 5",
-    ultimoMsg: "Enviei a proposta de 41.500€",
+    ultimoMsg: "Enviei a proposta de 41.500Kz",
     hora: "14:32",
     naoLida: true,
     estado: "Em negociação",
@@ -84,19 +84,19 @@ const mensagens = [
   { de: "outro", texto: "Perfeito. Qual é o preço final?", hora: "10:30" },
   {
     de: "eu",
-    texto: "O preço indicado é 42.900€. Estamos abertos a negociação.",
+    texto: "O preço indicado é 42.900Kz. Estamos abertos a negociação.",
     hora: "10:32",
   },
   {
     de: "outro",
-    texto: "Enviei a proposta de 41.500€. O que acha?",
+    texto: "Enviei a proposta de 41.500Kz. O que acha?",
     hora: "14:30",
   },
   {
     de: "outro",
-    texto: "Enviei a proposta de 41.500€",
+    texto: "Enviei a proposta de 41.500Kz",
     hora: "14:32",
-    proposta: { valor: "41.500€", estado: "Pendente" },
+    proposta: { valor: "41.500Kz", estado: "Pendente" },
   },
 ];
 
@@ -197,7 +197,7 @@ export default function ChatPage() {
                   📋 Status: Em negociação
                 </span>
                 <span className="text-amber-600">
-                  Veículo: BMW Serie 5 · Valor: 42.900€
+                  Veículo: BMW Serie 5 · Valor: 42.900Kz
                 </span>
               </div>
             </div>

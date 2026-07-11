@@ -4,9 +4,9 @@ import { useState } from "react";
 const periodos = ["Hoje", "Esta Semana", "Este Mês", "Este Ano"];
 
 const resumoHoje = [
-  { valor: "€4.250", label: "Comissões", cor: "text-accent" },
-  { valor: "€41.500", label: "Em Escrow", cor: "text-blue-500" },
-  { valor: "€82.400", label: "Receitas", cor: "text-emerald-500" },
+  { valor: "Kz4.250", label: "Comissões", cor: "text-accent" },
+  { valor: "Kz41.500", label: "Em Escrow", cor: "text-blue-500" },
+  { valor: "Kz82.400", label: "Receitas", cor: "text-emerald-500" },
   { valor: "3", label: "Negócios Ativos", cor: "text-amber-500" },
 ];
 
@@ -14,31 +14,31 @@ const transacoes = [
   {
     data: "10/07",
     descricao: "Comissão - BMW Serie 5 #1247",
-    valor: "+€2.075",
+    valor: "+Kz2.075",
     tipo: "receita",
   },
   {
     data: "09/07",
     descricao: "Escrow liberado - Audi Q5 #1245",
-    valor: "+€2.425",
+    valor: "+Kz2.425",
     tipo: "receita",
   },
   {
     data: "08/07",
     descricao: "Pagamento cofre - Porsche Macan #1246",
-    valor: "€67.000",
+    valor: "Kz67.000",
     tipo: "escrow",
   },
   {
     data: "07/07",
     descricao: "Comissão - Tesla Model 3 #1240",
-    valor: "+€2.150",
+    valor: "+Kz2.150",
     tipo: "receita",
   },
   {
     data: "05/07",
     descricao: "Taxa de平台 - Mensal",
-    valor: "-€299",
+    valor: "-Kz299",
     tipo: "despesa",
   },
 ];

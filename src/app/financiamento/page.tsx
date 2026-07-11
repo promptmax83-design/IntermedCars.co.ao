@@ -2,10 +2,10 @@
 import { useState } from "react";
 
 const bancos = [
-  { nome: "CGD", taxa: "4.2%", prazo: "60 meses", prestacao: "789€" },
-  { nome: "BPI", taxa: "3.9%", prazo: "60 meses", prestacao: "772€" },
-  { nome: "Millennium", taxa: "4.0%", prazo: "60 meses", prestacao: "778€" },
-  { nome: "Santander", taxa: "4.1%", prazo: "60 meses", prestacao: "783€" },
+  { nome: "CGD", taxa: "4.2%", prazo: "60 meses", prestacao: "789Kz" },
+  { nome: "BPI", taxa: "3.9%", prazo: "60 meses", prestacao: "772Kz" },
+  { nome: "Millennium", taxa: "4.0%", prazo: "60 meses", prestacao: "778Kz" },
+  { nome: "Santander", taxa: "4.1%", prazo: "60 meses", prestacao: "783Kz" },
 ];
 
 export default function FinanciamentoPage() {
@@ -32,7 +32,7 @@ export default function FinanciamentoPage() {
           </label>
           <div className="relative mt-1">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted">
-              €
+              Kz
             </span>
             <input
               type="number"
@@ -48,7 +48,7 @@ export default function FinanciamentoPage() {
           </label>
           <div className="relative mt-1">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted">
-              €
+              Kz
             </span>
             <input
               type="number"
@@ -58,7 +58,7 @@ export default function FinanciamentoPage() {
             />
           </div>
           <p className="text-xs text-muted mt-1">
-            Mínimo: 20% ({(preco * 0.2).toLocaleString()}€)
+            Mínimo: 20% ({(preco * 0.2).toLocaleString()}Kz)
           </p>
         </div>
         <div>
@@ -82,24 +82,24 @@ export default function FinanciamentoPage() {
       <div className="bg-accent rounded-xl p-6 text-primary">
         <p className="text-sm font-medium opacity-70">Prestação Estimada</p>
         <p className="text-4xl font-bold mt-1">
-          {prestacaoBase.toFixed(0)}€
+          {prestacaoBase.toFixed(0)}Kz
           <span className="text-lg opacity-70">/mês</span>
         </p>
         <div className="flex gap-6 mt-4 text-sm">
           <div>
             <p className="opacity-70">Financiável</p>
-            <p className="font-bold">{financiavel.toLocaleString()}€</p>
+            <p className="font-bold">{financiavel.toLocaleString()}Kz</p>
           </div>
           <div>
             <p className="opacity-70">Total a pagar</p>
             <p className="font-bold">
-              {(prestacaoBase * prazo).toFixed(0).toLocaleString()}€
+              {(prestacaoBase * prazo).toFixed(0).toLocaleString()}Kz
             </p>
           </div>
           <div>
             <p className="opacity-70">MTIC</p>
             <p className="font-bold">
-              {(prestacaoBase * prazo + entrada).toFixed(0).toLocaleString()}€
+              {(prestacaoBase * prazo + entrada).toFixed(0).toLocaleString()}Kz
             </p>
           </div>
         </div>
@@ -120,7 +120,7 @@ export default function FinanciamentoPage() {
                 </p>
               </div>
               <div className="text-right">
-                <p className="text-accent font-bold text-lg">{b.prestacao}€</p>
+                <p className="text-accent font-bold text-lg">{b.prestacao}Kz</p>
                 <p className="text-[10px] text-muted">/mês</p>
               </div>
             </div>
@@ -133,7 +133,7 @@ export default function FinanciamentoPage() {
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-medium">Seguro Automóvel</p>
-            <p className="text-xs text-muted">Cobertura completa · ~35€/mês</p>
+            <p className="text-xs text-muted">Cobertura completa · ~35Kz/mês</p>
           </div>
           <button className="w-12 h-7 bg-accent rounded-full relative">
             <span className="absolute right-0.5 top-0.5 w-6 h-6 bg-white rounded-full shadow-sm" />

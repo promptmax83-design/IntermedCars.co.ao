@@ -34,7 +34,7 @@ export default function AgentePage() {
         {[
           { valor: "247", label: "Vendas" },
           { valor: "98.2%", label: "Sucesso" },
-          { valor: "12.4k€", label: "Comissão Total" },
+          { valor: "12.4kKz", label: "Comissão Total" },
           { valor: "#2", label: "Ranking Nacional" },
         ].map((s) => (
           <div

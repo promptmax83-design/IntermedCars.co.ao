@@ -5,7 +5,7 @@ const negociacoes = [
   {
     id: 1,
     veiculo: "BMW Serie 5 530e",
-    valor: "41.500€",
+    valor: "41.500Kz",
     comprador: "João Ferreira",
     vendedor: "Ana Rodrigues",
     agente: "Miguel Costa",
@@ -24,7 +24,7 @@ const negociacoes = [
   {
     id: 2,
     veiculo: "Porsche Macan S",
-    valor: "67.000€",
+    valor: "67.000Kz",
     comprador: "Pedro Santos",
     vendedor: "Carlos Mendes",
     agente: "Ana Rodrigues",
@@ -43,7 +43,7 @@ const negociacoes = [
   {
     id: 3,
     veiculo: "Audi Q5 40 TDI",
-    valor: "48.500€",
+    valor: "48.500Kz",
     comprador: "Maria Silva",
     vendedor: "Ana S.",
     agente: "Carlos Mendes",
@@ -185,7 +185,7 @@ export default function CofrePage() {
           <p className="text-sm text-muted mt-1">Negócios Ativos</p>
         </div>
         <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 text-center">
-          <p className="text-3xl font-bold text-emerald-500">157.000€</p>
+          <p className="text-3xl font-bold text-emerald-500">157.000Kz</p>
           <p className="text-sm text-muted mt-1">Em Cofre</p>
         </div>
         <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 text-center">

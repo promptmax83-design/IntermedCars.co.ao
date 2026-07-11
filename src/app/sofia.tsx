@@ -7,14 +7,14 @@ export default function SofiaAI() {
     {
       de: "sofia",
       texto:
-        "Olá! Sou a Sofia, a tua assistente IA da IntermedCars. Como posso ajudar?",
+        "Ola! Sou a Sofia, a tua assistente IA da IntermedCars. Como posso ajudar?",
     },
   ]);
   const [input, setInput] = useState("");
 
   const sugestoes = [
-    "Encontrar um SUV até 40.000€",
-    "Como funciona o cofre fiduciário?",
+    "Encontrar um SUV ate 40.000Kz",
+    "Como funciona o cofre fiduciario?",
     "Preciso de financiamento",
     "Agendar uma vistoria",
   ];
@@ -33,14 +33,14 @@ export default function SofiaAI() {
   const getResposta = (msg: string) => {
     const lower = msg.toLowerCase();
     if (lower.includes("suv") || lower.includes("40.000"))
-      return "Encontrei 8 SUVs até 40.000€. O Volkswagen Tiguan a 36.900€ e o Hyundai Tucson a 35.900€ são ótimas opções. Quer que mostre os detalhes?";
-    if (lower.includes("cofre") || lower.includes("fiduciário"))
-      return "O cofre fiduciário protege ambas as partes. O comprador deposita o valor, e só é libertado quando toda a documentação está verificada e o contrato assinado. É 100% seguro!";
+      return "Encontrei 8 SUVs ate 40.000Kz. O Volkswagen Tiguan a 36.900Kz e o Hyundai Tucson a 35.900Kz sao otimas opcoes. Quer que mostre os detalhes?";
+    if (lower.includes("cofre") || lower.includes("fiduciario"))
+      return "O cofre fiduciario protege ambas as partes. O comprador deposita o valor, e so e libertado quando toda a documentacao esta verificada e o contrato assinado. E 100% seguro!";
     if (lower.includes("financiamento"))
-      return "Trabalhamos com o CGD (4.2%), BPI (3.9%) e Millennium (4.0%). Posso fazer uma simulação personalizada. Qual é o valor da viatura que pretende?";
+      return "Trabalhamos com o CGD (4.2%), BPI (3.9%) e Millennium (4.0%). Posso fazer uma simulacao personalizada. Qual e o valor da viatura que pretende?";
     if (lower.includes("vistoria"))
-      return "A vistoria é gratuita e dura cerca de 1 hora. Inspecionamos motor, travões, interior, pintura, pneus e suspensão. Posso agendar para amanhã às 10h?";
-    return "Entendido! Vou verificar isso para si. Enquanto isso, posso ajudar com mais alguma coisa? Tenho informações sobre viaturas, financiamento, vistorias e o cofre fiduciário.";
+      return "A vistoria e gratuita e dura cerca de 1 hora. Inspecionamos motor, travoes, interior, pintura, pneus e suspensao. Posso agendar para amanha as 10h?";
+    return "Entendido! Vou verificar isso para si. Enquanto isso, posso ajudar com mais alguma coisa? Tenho informacoes sobre viaturas, financiamento, vistorias e o cofre fiduciario.";
   };
 
   return (
@@ -54,14 +54,14 @@ export default function SofiaAI() {
             <div className="flex-1">
               <p className="font-bold text-sm">Sofia IA</p>
               <p className="text-[10px] text-gray-400">
-                Assistente IntermedCars · Online
+                Assistente IntermedCars - Online
               </p>
             </div>
             <button
               onClick={() => setAberto(false)}
               className="text-gray-400 hover:text-white text-lg"
             >
-              ✕
+              X
             </button>
           </div>
 
@@ -95,7 +95,7 @@ export default function SofiaAI() {
             <div className="flex gap-2">
               <input
                 type="text"
-                placeholder="Perguntar à Sofia..."
+                placeholder="Perguntar a Sofia..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && enviar()}
@@ -105,7 +105,7 @@ export default function SofiaAI() {
                 onClick={() => enviar()}
                 className="w-9 h-9 bg-accent rounded-full flex items-center justify-center text-primary font-bold text-sm"
               >
-                →
+                &rarr;
               </button>
             </div>
           </div>
@@ -116,7 +116,7 @@ export default function SofiaAI() {
         onClick={() => setAberto(!aberto)}
         className="fixed bottom-20 right-4 md:bottom-6 md:right-6 w-14 h-14 bg-accent rounded-full shadow-lg flex items-center justify-center text-primary font-bold text-lg z-50 hover:scale-110 transition-transform"
       >
-        {aberto ? "✕" : "S"}
+        {aberto ? "X" : "S"}
       </button>
     </>
   );
