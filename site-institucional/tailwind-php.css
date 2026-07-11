@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+/* IntermedCars Design System */
+:root {
+  --primary: #0d0d0d;
+  --secondary: #1a1a2e;
+  --accent: #c9a84c;
+  --accent-hover: #b8933d;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --background: #f0f2f5;
+  --light: #f5f5f5;
+  --muted: #6b7280;
+}

@@ -1,0 +1,10 @@
+parameters:
+    level: 8
+    paths:
+        - src
+    tmpDir: vendor/phpstan/cache
+    
+    # PHP 8.3 features
+    phpVersion: 80300
+
+includes:

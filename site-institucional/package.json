@@ -1,0 +1,52 @@
+{
+  "name": "site-institucional",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "build:prod": "cross-env NODE_ENV=production next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "minify:css": "cleancss -o .next/static/css/app.css .next/static/css/app.css",
+    "analyze": "npm run typecheck && npm run lint && npm run build",
+    "tailwind:watch": "tailwindcss -i tailwind-php.css -o ../../PHP-Project/views/output.css --watch",
+    "tailwind:build": "tailwindcss -i tailwind-php.css -o ../../PHP-Project/views/output.css --minify",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "next": "16.2.10",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/eslint": "^9.6.1",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "clean-css-cli": "^5.6.3",
+    "cross-env": "^10.1.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.10",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.8",
+    "npm-run-all": "^4.1.5",
+    "tailwindcss": "^4",
+    "terser": "^5.49.0",
+    "typescript": "^5"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,json,md}": [
+      "prettier --write"
+    ]
+  }
+}

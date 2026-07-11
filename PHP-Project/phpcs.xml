@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<ruleset name="IntermedCars PHP Standard">
+    <description>PSR-12 coding standard for IntermedCars PHP backend</description>
+    
+    <!-- Paths to check -->
+    <file>src</file>
+    
+    <!-- Use PSR-12 standard -->
+    <rule ref="PSR12"/>
+    
+    <!-- Additional checks -->
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="150"/>
+        </properties>
+    </rule>
+    
+    <!-- Exclude vendor -->
+    <exclude-pattern>vendor/*</exclude-pattern>
+    <exclude-pattern>cache/*</exclude-pattern>
+</ruleset>
