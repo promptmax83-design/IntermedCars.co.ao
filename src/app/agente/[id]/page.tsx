@@ -1,4 +1,4 @@
-export default function AgentePage({ params }: { params: { id: string } }) {
+export default function AgentePage() {
   return (
     <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
@@ -20,8 +20,12 @@ export default function AgentePage({ params }: { params: { id: string } }) {
             <span className="text-sm text-muted">4.9 (312 avaliações)</span>
           </div>
           <div className="flex gap-2 mt-3">
-            <span className="bg-accent/10 text-accent text-xs font-bold px-3 py-1 rounded-full">Nível Ouro</span>
-            <span className="bg-emerald-50 text-emerald-600 text-xs font-bold px-3 py-1 rounded-full">Top Agent #2</span>
+            <span className="bg-accent/10 text-accent text-xs font-bold px-3 py-1 rounded-full">
+              Nível Ouro
+            </span>
+            <span className="bg-emerald-50 text-emerald-600 text-xs font-bold px-3 py-1 rounded-full">
+              Top Agent #2
+            </span>
           </div>
         </div>
       </div>
@@ -33,7 +37,10 @@ export default function AgentePage({ params }: { params: { id: string } }) {
           { valor: "12.4k€", label: "Comissão Total" },
           { valor: "#2", label: "Ranking Nacional" },
         ].map((s) => (
-          <div key={s.label} className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 text-center">
+          <div
+            key={s.label}
+            className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 text-center"
+          >
             <p className="text-xl font-bold text-accent">{s.valor}</p>
             <p className="text-[10px] text-muted mt-1">{s.label}</p>
           </div>
@@ -43,8 +50,19 @@ export default function AgentePage({ params }: { params: { id: string } }) {
       <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
         <h2 className="font-bold mb-3">Medalhas</h2>
         <div className="flex gap-3">
-          {["🏆 Primeira Venda", "💯 100 Negócios", "⭐ Top Agente", "🤝 Negociação Perfeita", "🏅 Cliente Ouro"].map((m) => (
-            <div key={m} className="bg-light rounded-lg px-3 py-2 text-xs font-medium text-center">{m}</div>
+          {[
+            "🏆 Primeira Venda",
+            "💯 100 Negócios",
+            "⭐ Top Agente",
+            "🤝 Negociação Perfeita",
+            "🏅 Cliente Ouro",
+          ].map((m) => (
+            <div
+              key={m}
+              className="bg-light rounded-lg px-3 py-2 text-xs font-medium text-center"
+            >
+              {m}
+            </div>
           ))}
         </div>
       </div>
@@ -54,10 +72,19 @@ export default function AgentePage({ params }: { params: { id: string } }) {
         <div className="space-y-2">
           {[
             { pos: 1, nome: "Carlos Mendes", vendas: 253, medalha: "🥇" },
-            { pos: 2, nome: "Ana Rodrigues", vendas: 247, medalha: "🥈", destaque: true },
+            {
+              pos: 2,
+              nome: "Ana Rodrigues",
+              vendas: 247,
+              medalha: "🥈",
+              destaque: true,
+            },
             { pos: 3, nome: "Miguel Costa", vendas: 231, medalha: "🥉" },
           ].map((a) => (
-            <div key={a.pos} className={`flex items-center gap-3 p-2 rounded-lg ${a.destaque ? "bg-accent/5 border border-accent/20" : ""}`}>
+            <div
+              key={a.pos}
+              className={`flex items-center gap-3 p-2 rounded-lg ${a.destaque ? "bg-accent/5 border border-accent/20" : ""}`}
+            >
               <span className="text-lg">{a.medalha}</span>
               <div className="flex-1">
                 <p className="text-sm font-medium">{a.nome}</p>
