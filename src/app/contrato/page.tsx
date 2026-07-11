@@ -5,12 +5,16 @@ export default function ContratoPage() {
     <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
       <div>
         <h1 className="text-2xl font-bold">Contrato Digital</h1>
-        <p className="text-sm text-muted">Negociação #1247 · BMW Serie 5 530e</p>
+        <p className="text-sm text-muted">
+          Negociação #1247 · BMW Serie 5 530e
+        </p>
       </div>
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         <div className="bg-primary text-white p-6 text-center">
-          <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">Contrato de Mediação Automóvel</p>
+          <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">
+            Contrato de Mediação Automóvel
+          </p>
           <p className="font-bold text-lg">IntermedCars</p>
           <p className="text-xs text-gray-400 mt-1">Ref: IC-2026-1247</p>
         </div>
@@ -37,7 +41,12 @@ export default function ContratoPage() {
           </div>
           <div className="bg-light rounded-lg p-3">
             <p className="text-[10px] text-muted uppercase">Condições</p>
-            <p className="text-muted mt-0.5">Pagamento via cofre fiduciário IntermedCars. Transferência bancária SEPA. Entrega em 5 dias úteis após confirmação do pagamento. Veículo entregue com documentação completa e vistoria realizada.</p>
+            <p className="text-muted mt-0.5">
+              Pagamento via cofre fiduciário IntermedCars. Transferência
+              bancária SEPA. Entrega em 5 dias úteis após confirmação do
+              pagamento. Veículo entregue com documentação completa e vistoria
+              realizada.
+            </p>
           </div>
         </div>
       </div>
@@ -46,16 +55,37 @@ export default function ContratoPage() {
         <h2 className="font-bold mb-4">Assinaturas</h2>
         <div className="space-y-3">
           {[
-            { nome: "João Ferreira (Comprador)", status: "Assinado", data: "10/07/2026 14:32", cor: "text-emerald-500" },
-            { nome: "Ana Rodrigues (Vendedor)", status: "Pendente", data: "Aguardando...", cor: "text-amber-500" },
-            { nome: "IntermedCars (Mediador)", status: "Pendente", data: "Aguardando ambas as partes", cor: "text-gray-400" },
+            {
+              nome: "João Ferreira (Comprador)",
+              status: "Assinado",
+              data: "10/07/2026 14:32",
+              cor: "text-emerald-500",
+            },
+            {
+              nome: "Ana Rodrigues (Vendedor)",
+              status: "Pendente",
+              data: "Aguardando...",
+              cor: "text-amber-500",
+            },
+            {
+              nome: "IntermedCars (Mediador)",
+              status: "Pendente",
+              data: "Aguardando ambas as partes",
+              cor: "text-gray-400",
+            },
           ].map((s) => (
-            <div key={s.nome} className="flex items-center justify-between p-3 bg-light rounded-lg">
+            <div
+              key={s.nome}
+              className="flex items-center justify-between p-3 bg-light rounded-lg"
+            >
               <div>
                 <p className="text-sm font-medium">{s.nome}</p>
                 <p className="text-xs text-muted">{s.data}</p>
               </div>
-              <span className={`text-xs font-medium ${s.cor}`}>{s.status === "Assinado" ? "✓ " : ""}{s.status}</span>
+              <span className={`text-xs font-medium ${s.cor}`}>
+                {s.status === "Assinado" ? "✓ " : ""}
+                {s.status}
+              </span>
             </div>
           ))}
         </div>
@@ -67,7 +97,9 @@ export default function ContratoPage() {
         <div className="w-32 h-32 bg-gray-100 rounded-xl mx-auto flex items-center justify-center text-gray-300 text-4xl">
           ▦
         </div>
-        <p className="text-xs text-muted mt-3">Escaneie para validar o contrato</p>
+        <p className="text-xs text-muted mt-3">
+          Escaneie para validar o contrato
+        </p>
       </div>
 
       <div className="flex gap-3">

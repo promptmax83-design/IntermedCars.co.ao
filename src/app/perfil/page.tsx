@@ -17,9 +17,24 @@ const inventario = [
 ];
 
 const avaliacoes = [
-  { de: "Ricardo M.", texto: "Excelente agente! Muito profissional e atencioso.", rating: 5, data: "05/07/2026" },
-  { de: "Sofia A.", texto: "Negociação rápida e transparente. Recomendo!", rating: 5, data: "01/07/2026" },
-  { de: "Pedro S.", texto: "Muito bom profissional. Tratou de tudo.", rating: 4, data: "28/06/2026" },
+  {
+    de: "Ricardo M.",
+    texto: "Excelente agente! Muito profissional e atencioso.",
+    rating: 5,
+    data: "05/07/2026",
+  },
+  {
+    de: "Sofia A.",
+    texto: "Negociação rápida e transparente. Recomendo!",
+    rating: 5,
+    data: "01/07/2026",
+  },
+  {
+    de: "Pedro S.",
+    texto: "Muito bom profissional. Tratou de tudo.",
+    rating: 4,
+    data: "28/06/2026",
+  },
 ];
 
 export default function PerfilPage() {
@@ -47,8 +62,12 @@ export default function PerfilPage() {
           </div>
 
           <div className="flex items-center gap-2 mt-3">
-            <span className="bg-accent/10 text-accent text-xs font-bold px-3 py-1 rounded-full">Nível Prata</span>
-            <span className="bg-emerald-50 text-emerald-600 text-xs font-bold px-3 py-1 rounded-full">98.4% Sucesso</span>
+            <span className="bg-accent/10 text-accent text-xs font-bold px-3 py-1 rounded-full">
+              Nível Prata
+            </span>
+            <span className="bg-emerald-50 text-emerald-600 text-xs font-bold px-3 py-1 rounded-full">
+              98.4% Sucesso
+            </span>
           </div>
 
           <div className="grid grid-cols-3 gap-3 mt-6">
@@ -70,7 +89,11 @@ export default function PerfilPage() {
 
       <div className="flex gap-1 bg-white rounded-xl p-1 shadow-sm border border-gray-100">
         {["inventario", "avaliações", "badges", "histórico"].map((t) => (
-          <button key={t} onClick={() => setTab(t)} className={`flex-1 py-2 rounded-lg text-xs font-medium capitalize transition-colors ${tab === t ? "bg-primary text-white" : "text-muted hover:bg-light"}`}>
+          <button
+            key={t}
+            onClick={() => setTab(t)}
+            className={`flex-1 py-2 rounded-lg text-xs font-medium capitalize transition-colors ${tab === t ? "bg-primary text-white" : "text-muted hover:bg-light"}`}
+          >
             {t}
           </button>
         ))}
@@ -79,17 +102,28 @@ export default function PerfilPage() {
       {tab === "inventario" && (
         <div className="space-y-3">
           {inventario.map((item) => (
-            <div key={`${item.marca}-${item.modelo}`} className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex items-center justify-between">
+            <div
+              key={`${item.marca}-${item.modelo}`}
+              className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex items-center justify-between"
+            >
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-light rounded-lg flex items-center justify-center text-xl">🚗</div>
+                <div className="w-12 h-12 bg-light rounded-lg flex items-center justify-center text-xl">
+                  🚗
+                </div>
                 <div>
-                  <p className="text-xs text-accent font-semibold">{item.marca}</p>
+                  <p className="text-xs text-accent font-semibold">
+                    {item.marca}
+                  </p>
                   <p className="font-medium text-sm">{item.modelo}</p>
                 </div>
               </div>
               <div className="text-right">
                 <p className="font-bold text-accent">{item.preco}€</p>
-                <p className={`text-[10px] font-medium ${item.estado === "Vendido" ? "text-green-500" : "text-amber-500"}`}>{item.estado}</p>
+                <p
+                  className={`text-[10px] font-medium ${item.estado === "Vendido" ? "text-green-500" : "text-amber-500"}`}
+                >
+                  {item.estado}
+                </p>
               </div>
             </div>
           ))}
@@ -99,15 +133,26 @@ export default function PerfilPage() {
       {tab === "avaliações" && (
         <div className="space-y-3">
           {avaliacoes.map((a, i) => (
-            <div key={i} className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+            <div
+              key={i}
+              className="bg-white rounded-xl p-4 shadow-sm border border-gray-100"
+            >
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-accent text-xs font-bold">{a.de.split(" ").map((n) => n[0]).join("")}</div>
+                  <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-accent text-xs font-bold">
+                    {a.de
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}
+                  </div>
                   <p className="font-medium text-sm">{a.de}</p>
                 </div>
                 <span className="text-xs text-muted">{a.data}</span>
               </div>
-              <p className="text-accent text-sm">{"★".repeat(a.rating)}{"☆".repeat(5 - a.rating)}</p>
+              <p className="text-accent text-sm">
+                {"★".repeat(a.rating)}
+                {"☆".repeat(5 - a.rating)}
+              </p>
               <p className="text-sm text-muted mt-1">{a.texto}</p>
             </div>
           ))}
@@ -117,11 +162,18 @@ export default function PerfilPage() {
       {tab === "badges" && (
         <div className="grid grid-cols-3 gap-3">
           {badges.map((b) => (
-            <div key={b.nome} className={`bg-white rounded-xl p-4 shadow-sm border text-center ${b.desbloqueado ? "border-accent" : "border-gray-100 opacity-40"}`}>
+            <div
+              key={b.nome}
+              className={`bg-white rounded-xl p-4 shadow-sm border text-center ${b.desbloqueado ? "border-accent" : "border-gray-100 opacity-40"}`}
+            >
               <span className="text-3xl">{b.icono}</span>
               <p className="text-xs font-medium mt-2">{b.nome}</p>
-              {b.desbloqueado && <p className="text-[10px] text-accent mt-1">Desbloqueado</p>}
-              {!b.desbloqueado && <p className="text-[10px] text-muted mt-1">Bloqueado</p>}
+              {b.desbloqueado && (
+                <p className="text-[10px] text-accent mt-1">Desbloqueado</p>
+              )}
+              {!b.desbloqueado && (
+                <p className="text-[10px] text-muted mt-1">Bloqueado</p>
+              )}
             </div>
           ))}
         </div>

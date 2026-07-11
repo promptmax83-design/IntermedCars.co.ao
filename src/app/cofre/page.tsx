@@ -69,7 +69,9 @@ export default function CofrePage() {
     <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
       <div>
         <h1 className="text-2xl font-bold">Cofre Fiduciário</h1>
-        <p className="text-sm text-muted">Acompanhe o estado de cada negociação em tempo real.</p>
+        <p className="text-sm text-muted">
+          Acompanhe o estado de cada negociação em tempo real.
+        </p>
       </div>
 
       <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
@@ -78,7 +80,9 @@ export default function CofrePage() {
             key={n.id}
             onClick={() => setNegociacaoAtiva(i)}
             className={`shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-              i === negociacaoAtiva ? "bg-primary text-white" : "bg-white text-gray-600 border border-gray-200"
+              i === negociacaoAtiva
+                ? "bg-primary text-white"
+                : "bg-white text-gray-600 border border-gray-200"
             }`}
           >
             {n.veiculo.split(" ")[0]} {n.veiculo.split(" ")[1]}
@@ -100,7 +104,8 @@ export default function CofrePage() {
             <div>
               <p className="text-xs text-gray-400">Estado</p>
               <p className="font-bold text-sm mt-1 text-amber-400">
-                {neg.etapas.find((e) => e.status === "ativo")?.nome || "Concluído"}
+                {neg.etapas.find((e) => e.status === "ativo")?.nome ||
+                  "Concluído"}
               </p>
             </div>
             <div>
@@ -130,25 +135,37 @@ export default function CofrePage() {
             {neg.etapas.map((etapa, i) => (
               <div key={etapa.nome} className="flex items-start gap-4">
                 <div className="flex flex-col items-center">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${
-                    etapa.status === "concluido" ? "bg-emerald-500 text-white" :
-                    etapa.status === "ativo" ? "bg-accent text-primary animate-pulse" :
-                    "bg-gray-200 text-gray-400"
-                  }`}>
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${
+                      etapa.status === "concluido"
+                        ? "bg-emerald-500 text-white"
+                        : etapa.status === "ativo"
+                          ? "bg-accent text-primary animate-pulse"
+                          : "bg-gray-200 text-gray-400"
+                    }`}
+                  >
                     {etapa.status === "concluido" ? "✓" : i + 1}
                   </div>
                   {i < neg.etapas.length - 1 && (
-                    <div className={`w-0.5 h-12 ${
-                      etapa.status === "concluido" ? "bg-emerald-300" : "bg-gray-200"
-                    }`} />
+                    <div
+                      className={`w-0.5 h-12 ${
+                        etapa.status === "concluido"
+                          ? "bg-emerald-300"
+                          : "bg-gray-200"
+                      }`}
+                    />
                   )}
                 </div>
                 <div className="pb-6 flex-1">
                   <div className="flex items-center justify-between">
-                    <p className={`font-medium text-sm ${etapa.status === "concluido" ? "text-emerald-600" : etapa.status === "ativo" ? "text-accent font-bold" : "text-gray-400"}`}>
+                    <p
+                      className={`font-medium text-sm ${etapa.status === "concluido" ? "text-emerald-600" : etapa.status === "ativo" ? "text-accent font-bold" : "text-gray-400"}`}
+                    >
                       {etapa.nome}
                     </p>
-                    {etapa.data && <span className="text-xs text-muted">{etapa.data}</span>}
+                    {etapa.data && (
+                      <span className="text-xs text-muted">{etapa.data}</span>
+                    )}
                   </div>
                   {etapa.status === "ativo" && (
                     <div className="mt-2 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
