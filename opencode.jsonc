@@ -1,0 +1,104 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "username": "Carla Fernanda",
+  "instructions": ["AGENTS.md"],
+  "references": {
+    "intermedcars-frontend": {
+      "path": "./site-institucional",
+      "description": "IntermedCars Next.js/TypeScript frontend project"
+    },
+    "intermedcars-backend": {
+      "path": "../PHP-Project",
+      "description": "IntermedCars PHP 8.3 backend API"
+    }
+  },
+  "agent": {
+    "architecture": {
+      "description": "Chief architect for IntermedCars. Designs system structure, defines interfaces, plans modules. NEVER writes code.",
+      "mode": "primary",
+      "model": "anthropic/claude-3-5-sonnet-20241022",
+      "permission": {
+        "edit": "deny",
+        "bash": {
+          "npm run analyze": "allow",
+          "npm run typecheck": "allow",
+          "npm run build": "allow",
+          "php vendor/bin/phpstan *": "allow",
+          "git log *": "allow",
+          "git diff *": "allow",
+          "*": "deny"
+        }
+      },
+      "prompt": "You are the Chief Architect of IntermedCars. You NEVER write or edit code. You design system architecture, define module interfaces, plan data flows, and review code structure. You output: architecture diagrams (ASCII/text), interface definitions, data schemas, module responsibilities, and technical specifications. Speak in Portuguese when documenting. Be precise, structured, and opinionated about clean architecture."
+    },
+    "build": {
+      "description": "High-speed builder for IntermedCars. Writes classes, functions, pure SQL queries. Executes the architect's blueprint.",
+      "mode": "subagent",
+      "model": "google/gemini-1.5-pro",
+      "permission": {
+        "edit": "allow",
+        "bash": {
+          "npm *": "allow",
+          "npx *": "allow",
+          "git *": "allow",
+          "php *": "allow",
+          "*": "ask"
+        }
+      },
+      "prompt": "You are the Build Agent for IntermedCars. You write fast, clean code. RULES: Always use declare(strict_types=1) at top of PHP files. Write pure SQL queries (no ORM overhead). Use parameterized statements (never string concatenation). Follow PSR-12 for PHP. Use TypeScript for frontend. Run npm run lint:fix after changes. Execute the architect's design precisely."
+    },
+    "security": {
+      "description": "Security auditor for IntermedCars. Validates inputs, audits code for vulnerabilities, prevents intrusions. Read-only audit mode.",
+      "mode": "subagent",
+      "model": "meta-llama/llama-3-405b-instruct",
+      "permission": {
+        "edit": "deny",
+        "bash": {
+          "npm run lint": "allow",
+          "npm run typecheck": "allow",
+          "php vendor/bin/phpstan *": "allow",
+          "php vendor/bin/phpcs *": "allow",
+          "git diff *": "allow",
+          "*": "deny"
+        }
+      },
+      "prompt": "You are the Security Auditor for IntermedCars. You audit code for vulnerabilities. NEVER write or edit files. Check for: SQL injection (parameterized queries only), XSS (escape all output), CSRF (token validation), input validation (sanitize all), authentication bypass, hardcoded secrets, insecure deserialization. Report findings with severity: CRITICAL/HIGH/MEDIUM/LOW. Speak in Portuguese when documenting security issues."
+    }
+  },
+  "mcp": {
+    "filesystem": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-filesystem", "C:/Users/Carla Fernanda/Documents"],
+      "enabled": true
+    },
+    "github": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-github"],
+      "enabled": true,
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:GITHUB_TOKEN}"
+      }
+    }
+  },
+  "lsp": {
+    "php": {
+      "command": ["php", "C:/Users/Carla Fernanda/AppData/Local/Microsoft/WinGet/Packages/PHP.PHP.8.3_Microsoft.Winget.Source_8wekyb3d8bbwe/php.exe"],
+      "extensions": ["php"],
+      "enabled": true
+    }
+  },
+  "formatter": true,
+  "permission": {
+    "edit": "allow",
+    "bash": {
+      "npm *": "allow",
+      "npx *": "allow",
+      "git *": "allow",
+      "php *": "allow",
+      "*": "ask"
+    },
+    "external_directory": {
+      "C:/Users/Carla Fernanda/Documents/**": "allow"
+    }
+  }
+}

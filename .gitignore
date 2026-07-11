@@ -1,0 +1,8 @@
+node_modules/
+.next/
+vendor/
+.env
+*.sqlite
+*.log
+.DS_Store
+Thumbs.db
