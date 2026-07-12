@@ -118,8 +118,8 @@ export default function CofrePage() {
     const formData = new FormData();
     formData.append("proof", comprovativoFile);
     formData.append("transaction_id", String(tx.id));
-    formData.append("amount", String(tx.proposed_price * 0.01));
-    formData.append("role", "buyer");
+    formData.append("amount", "100000");
+    formData.append("role", "seller");
 
     try {
       const res = await fetch(`${API_BASE}/api/commission/pay`, {
@@ -163,7 +163,7 @@ export default function CofrePage() {
       <div>
         <h1 className="text-2xl font-bold text-[#fafafa]">Cofre Fiduciario</h1>
         <p className="text-sm text-[#71717a]">
-          Custodia segura de fundos. Pagamento de comissao com comprovativo verificado por IA.
+          Custodia segura de fundos. Pagamento de taxa fixa com comprovativo verificado por IA.
         </p>
       </div>
 
@@ -219,8 +219,8 @@ export default function CofrePage() {
                     <p className="font-bold text-sm text-[#f59e0b] mt-1">{statusFlow[tx.status]?.label || tx.status}</p>
                   </div>
                   <div>
-                    <p className="text-[10px] font-bold text-[#71717a] uppercase tracking-wider">Comissao (2%)</p>
-                    <p className="font-bold text-sm text-[#c9a84c] mt-1">{formatKz(tx.proposed_price * 0.02)}</p>
+                    <p className="text-[10px] font-bold text-[#71717a] uppercase tracking-wider">Taxa Fixa (Vendedor)</p>
+                    <p className="font-bold text-sm text-[#c9a84c] mt-1">{formatKz(100000)}</p>
                   </div>
                 </div>
 
@@ -322,8 +322,8 @@ export default function CofrePage() {
                   </div>
                 </div>
                 <div className="pt-2 border-t border-white/[0.06]">
-                  <p className="text-xs text-[#71717a]">Valor a Transferir (Comissao 2%)</p>
-                  <p className="text-lg text-[#10b981] font-bold">{formatKz(tx.proposed_price * 0.02)}</p>
+                  <p className="text-xs text-[#71717a]">Valor a Transferir (Taxa Fixa - Vendedor)</p>
+                  <p className="text-lg text-[#10b981] font-bold">{formatKz(100000)}</p>
                 </div>
               </div>
 

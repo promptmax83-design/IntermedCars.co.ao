@@ -12,7 +12,7 @@ use IntermedCars\Database\Database;
  *
  * Business Rules:
  *   - Day 3 (72h): Standard warning message "pagamento em atraso" sent to the user
- *   - Day 4 (96h): +1% penalty for abuse (total debt: 2%) + temporary ban
+ *   - Day 4 (96h): +10.000 Kz penalty for abuse (total debt: 110.000 Kz) + temporary ban
  *   - Unban only after the full debt is paid
  *   - Anti-recidivism: cross-reference BI/passport, email, phone, Face ID, parent names
  */
@@ -101,7 +101,7 @@ class PenaltyService
             'status' => 'multa_aplicada',
             'warning' => true,
             'penalty_applied' => true,
-            'message' => 'Multa de +1% aplicada por abuso. Divida total: 2%. Conta temporariamente banida.',
+            'message' => 'Multa de 10.000 Kz aplicada por abuso. Divida total: 110.000 Kz. Conta temporariamente banida.',
         ];
     }
 
@@ -178,6 +178,6 @@ class PenaltyService
      */
     public function getWarningMessage(): string
     {
-        return 'Pagamento em atraso. O prazo de 72 horas para pagamento da comissao foi excedido.';
+        return 'Pagamento em atraso. O prazo de 72 horas para pagamento da taxa foi excedido.';
     }
 }

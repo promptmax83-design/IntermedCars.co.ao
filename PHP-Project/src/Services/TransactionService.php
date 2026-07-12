@@ -18,7 +18,7 @@ use IntermedCars\Models\TransactionStatus;
  *   3. Buyer deposits into escrow (deposito_efetuado)
  *   4. Inspection is completed (vistoria_concluida)
  *   5. Commission is calculated and becomes pending (comissao_pendente)
- *   6a. Both parties pay within 72h -> comissao_paga -> transacao_concluida
+ *   6a. Seller pays within 72h -> comissao_paga -> transacao_concluida
  *   6b. One party fails to pay within 72h -> prazo_excedido
  *   7. If still unpaid at 96h -> multa_aplicada -> divida_pendente -> banido
  */
@@ -163,7 +163,7 @@ class TransactionService
             'success' => true,
             'status' => TransactionStatus::COMISSAO_PENDENTE->value,
             'commission_deadline' => $deadline,
-            'message' => 'Vistoria aprovada. Comissao de 2% pendente (1% comprador + 1% vendedor). Prazo: 72 horas.',
+            'message' => 'Vistoria aprovada. Taxa fixa de 100.000 Kz pendente (apenas vendedor). Prazo: 72 horas.',
         ];
     }
 
@@ -202,7 +202,7 @@ class TransactionService
                 'success' => true,
                 'both_paid' => true,
                 'status' => TransactionStatus::TRANSACAO_CONCLUIDA->value,
-                'message' => 'Comissao paga por ambas as partes. Transacao concluida.',
+                'message' => 'Taxa fixa paga pelo vendedor. Transacao concluida.',
             ];
         }
 
@@ -210,7 +210,7 @@ class TransactionService
             'success' => true,
             'both_paid' => false,
             'status' => TransactionStatus::COMISSAO_PENDENTE->value,
-            'message' => "Comissao de {$role} registada. Aguardando pagamento da outra parte.",
+            'message' => "Taxa fixa de {$role} registada. Aguardando pagamento da taxa.",
         ];
     }
 
@@ -260,7 +260,7 @@ class TransactionService
                 'success' => true,
                 'action' => 'penalty_applied',
                 'status' => TransactionStatus::MULTA_APLICADA->value,
-                'message' => 'Multa de +1% aplicada. Conta temporariamente banida.',
+                'message' => 'Multa de 10.000 Kz aplicada. Conta temporariamente banida.',
             ];
         }
 
@@ -273,19 +273,19 @@ class TransactionService
     }
 
     /**
-     * Check if both buyer and seller have paid their commission.
+     * Check if seller has paid the platform fee.
      *
      * @param int $transactionId
-     * @return bool true if both parties have paid
+     * @return bool true if seller has paid
      */
     private function checkBothPartiesPaid(int $transactionId): bool
     {
-        $sql = 'SELECT COUNT(DISTINCT role) as roles_paid FROM commission_payments
-                WHERE transaction_id = :transaction_id';
+        $sql = "SELECT COUNT(*) as paid FROM commission_payments
+                WHERE transaction_id = :transaction_id AND role = 'seller'";
         $stmt = Database::getConnection()->prepare($sql);
         $stmt->execute(['transaction_id' => $transactionId]);
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
-        return ($result['roles_paid'] ?? 0) >= 2;
+        return ($result['paid'] ?? 0) >= 1;
     }
 
     /**

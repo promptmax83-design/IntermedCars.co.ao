@@ -71,7 +71,7 @@ class ContractService
     private function buildContractHtml(array $data, string $contractNumber): string
     {
         $preco = number_format((float) $data['vehicle_price'], 2, ',', '.');
-        $comissao = number_format((float) $data['vehicle_price'] * 0.02, 2, ',', '.');
+        $comissao = number_format(100000, 2, ',', '.');
         $date = date('d/m/Y');
         $hora = date('H:i');
         $iban = $_ENV['PAYMENT_IBAN'] ?? getenv('PAYMENT_IBAN') ?: 'N/D';
@@ -135,7 +135,7 @@ class ContractService
         <div class="section-title">3. CONDICOES FINANCEIRAS</div>
         <div class="highlight">
             <div class="field"><span class="label">Preco de Venda:</span><span class="value" style="font-size:18px;font-weight:bold;color:#10b981">Kz {$preco}</span></div>
-            <div class="field"><span class="label">Comissao Plataforma (2%):</span><span class="value">Kz {$comissao}</span></div>
+            <div class="field"><span class="label">Taxa Fixa Plataforma (Vendedor):</span><span class="value">Kz {$comissao}</span></div>
         </div>
     </div>
 
@@ -145,8 +145,8 @@ class ContractService
             4.1. O vendedor declara ser legitimo proprietario do veiculo descrito.<br>
             4.2. O comprador declara ter inspecionado e aceitado o veiculo.<br>
             4.3. A transferencia de propriedade efetua-se apos o pagamento integral.<br>
-            4.4. A IntermedCars atua como intermediario e cobre 2% de comissao (1% cada parte).<br>
-            4.5. Prazo de pagamento da comissao: 72 horas apos vistoria.<br>
+            4.4. A IntermedCars atua como intermediario e cobra uma taxa fixa de 100.000 Kz, paga apenas pelo vendedor.<br>
+            4.5. Prazo de pagamento da taxa: 72 horas apos vistoria.<br>
             4.6. Atraso no pagamento gera multa de 1% adicional + bloqueio temporario.
         </p>
     </div>

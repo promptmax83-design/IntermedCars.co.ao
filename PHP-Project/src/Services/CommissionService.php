@@ -8,10 +8,10 @@ use IntermedCars\Database\Database;
 
 /**
  *
- * Handles the 2% commission per transaction (1% buyer + 1% seller).
+ * Handles the fixed platform fee per transaction (100,000 Kz, seller only).
  *
  * Business Rules:
- *   - 2% total per transaction: 1% paid by buyer + 1% paid by seller
+ *   - Fixed platform fee of 100,000 Kz paid by the seller only. Buyer pays nothing (optional tip).
  *   - Commission is charged AFTER the inspection (vistoria) is completed
  *   - Payment deadline: 72 hours from the completed inspection
  *   - No upfront charging
@@ -20,8 +20,7 @@ use IntermedCars\Database\Database;
  */
 class CommissionService
 {
-    private const COMMISSION_RATE_BUYER = 0.01;
-    private const COMMISSION_RATE_SELLER = 0.01;
+    private const FIXED_FEE_SELLER = 100000;
     private const PAYMENT_DEADLINE_HOURS = 72;
 
     private PaymentProofService $proofService;
@@ -34,19 +33,15 @@ class CommissionService
     /**
      * Calculate commission amounts for a transaction.
      *
-     * @param float $vehiclePrice The agreed vehicle price
+     * @param float $vehiclePrice The agreed vehicle price (unused, kept for API compatibility)
      * @return array{buyer_commission: float, seller_commission: float, total_commission: float}
      */
     public function calculateCommission(float $vehiclePrice): array
     {
-        $buyerCommission = round($vehiclePrice * self::COMMISSION_RATE_BUYER, 2);
-        $sellerCommission = round($vehiclePrice * self::COMMISSION_RATE_SELLER, 2);
-        $totalCommission = $buyerCommission + $sellerCommission;
-
         return [
-            'buyer_commission' => $buyerCommission,
-            'seller_commission' => $sellerCommission,
-            'total_commission' => $totalCommission,
+            'buyer_commission' => 0,
+            'seller_commission' => self::FIXED_FEE_SELLER,
+            'total_commission' => self::FIXED_FEE_SELLER,
         ];
     }
 
@@ -110,8 +105,8 @@ class CommissionService
      */
     public function recordPayment(int $userId, int $transactionId, float $amount, string $role): array
     {
-        if (!in_array($role, ['buyer', 'seller'], true)) {
-            throw new \InvalidArgumentException("Papel invalido. Deve ser 'buyer' ou 'seller'.");
+        if (!in_array($role, ['seller'], true)) {
+            throw new \InvalidArgumentException("Papel invalido. Deve ser 'seller'.");
         }
 
         if ($amount <= 0) {
@@ -132,7 +127,7 @@ class CommissionService
         return [
             'success' => true,
             'payment_id' => $paymentId,
-            'message' => "Comissao de {$role} registada com sucesso.",
+            'message' => "Taxa fixa de {$role} registada com sucesso.",
         ];
     }
 
@@ -149,7 +144,7 @@ class CommissionService
      * @param int $userId
      * @param int $transactionId
      * @param float $amount
-     * @param string $role 'buyer' or 'seller'
+     * @param string $role 'seller' only
      * @param string $proofFilePath Path to uploaded payment proof
      * @return array{success: bool, proof_verified: bool, payment_id: int, message: string}
      */
@@ -196,7 +191,7 @@ class CommissionService
             'proof_verified' => $analysisResult['verified'],
             'payment_id' => $paymentResult['payment_id'],
             'message' => $analysisResult['verified']
-                ? "Comissao de {$role} paga e comprovativo validado."
+                ? "Taxa fixa de {$role} paga e comprovativo validado."
                 : "Comprovativo enviado. Analise IA concluida - aguardando revisao da equipa.",
         ];
     }

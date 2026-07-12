@@ -66,7 +66,7 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
   const isNegotiating = viatura.status === "em_negociacao";
   const vendedor = viatura.seller || { id: 0, nome: "Vendedor", verified: false, vendas: 0 };
   const precoFormatado = viatura.preco.toLocaleString("pt-AO");
-  const comissao = Math.round(viatura.preco * 0.01).toLocaleString("pt-AO");
+  const comissao = "100.000";
 
   return (
     <div className={`max-w-[1400px] mx-auto px-4 py-6 ${isDimmed ? "opacity-60" : ""}`}>
@@ -285,7 +285,7 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
 
             <div className="space-y-2">
               <div className="flex justify-between items-center">
-                <span className="text-[12px] text-[#71717a]">Comissao (2%)</span>
+                <span className="text-[12px] text-[#71717a]">Taxa Fixa (Vendedor)</span>
                 <span className="text-[13px] font-semibold text-[#c9a84c]">Kz {comissao}</span>
               </div>
               <div className="flex justify-between items-center">
@@ -365,7 +365,7 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
               {[
                 "Pagamento seguro no cofre",
                 "Vistoria obrigatoria",
-                "Comissao 2% so apos aprovacao",
+                "Taxa fixa 100.000 Kz so apos aprovacao",
                 "Suporte 24/7",
               ].map((item) => (
                 <div key={item} className="flex items-start gap-2">
