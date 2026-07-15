@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# IntermedCars PHP Backend
 
-## Getting Started
+PHP 8.3 API backend for the IntermedCars platform.
 
-First, run the development server:
+## Requirements
+
+- PHP 8.3+ with extensions: openssl, curl, mbstring, zip, json
+- Composer 2.x
+- PHPStan (static analysis)
+- PHP_CodeSniffer (PSR-12 coding standard)
+
+## Setup
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+composer install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Static Analysis (PHPStan)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Run analysis at level 8
+php vendor/bin/phpstan analyse
 
-## Learn More
+# Run with specific config
+php vendor/bin/phpstan analyse -c phpstan.neon
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Code Standards (PSR-12)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+# Check coding standards
+php vendor/bin/phpcs
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Auto-fix issues
+php vendor/bin/phpcbf
+```
 
-## Deploy on Vercel
+## Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+PHP-Project/
+├── src/
+│   ├── Controllers/    # API controllers
+│   ├── Models/         # Data models
+│   └── Services/       # Business logic
+├── views/              # PHP templates (Tailwind watch)
+├── public/             # Public assets
+├── vendor/             # Composer dependencies
+├── composer.json       # Dependencies
+├── phpstan.neon        # PHPStan config (level 8)
+└── phpcs.xml           # PSR-12 coding standard
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Code Standards
+
+- **Strict Types**: Every file MUST start with `declare(strict_types=1);`
+- **PSR-12**: Follow PSR-12 coding standard
+- **PHPStan Level 8**: Maximum static analysis level
+- **Typed Properties**: Use PHP 8.3 typed properties
+- **Return Types**: Always declare return types
+- **Parameterized Queries**: Never use string concatenation for SQL

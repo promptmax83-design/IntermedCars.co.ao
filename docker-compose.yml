@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: intermedcars-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS:-root}
+      MYSQL_DATABASE: ${DB_NAME:-intermedcars}
+      MYSQL_USER: ${DB_USER:-intermedcars}
+      MYSQL_PASSWORD: ${DB_PASS:-intermedcars_pass}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ./database/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: intermedcars-api
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_NAME: ${DB_NAME:-intermedcars}
+      DB_USER: ${DB_USER:-intermedcars}
+      DB_PASS: ${DB_PASS:-intermedcars_pass}
+      JWT_SECRET: ${JWT_SECRET:-your-secret-key-change-in-production}
+      PAYMENT_IBAN: ${PAYMENT_IBAN:-000600008398497030137}
+      PAYMENT_BENEFICIARY: ${PAYMENT_BENEFICIARY:-Ebivandro Terbio Manuel Agostinho}
+      KYC_PROVIDER: ${KYC_PROVIDER:-onfido}
+      KYC_API_KEY: ${KYC_API_KEY:-}
+    ports:
+      - "8080:80"
+    volumes:
+      - ./storage:/var/www/html/storage
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    build:
+      context: ../site-institucional
+      dockerfile: Dockerfile
+    container_name: intermedcars-frontend
+    restart: unless-stopped
+    depends_on:
+      - api
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8080/api
+    ports:
+      - "3000:3000"
+
+volumes:
+  db_data:
+    driver: local
