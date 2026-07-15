@@ -1,9 +1,4 @@
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Blog - IntermedCars",
-  description: "Notícias, dicas e novidades do mundo automóvel.",
-};
+"use client";
 
 const artigos = [
   {
@@ -17,7 +12,7 @@ const artigos = [
   {
     titulo: "Guia Completo: Documentos Necessários para Comprar um Carro",
     resumo:
-      "Tudo o que precisa de saber sobre a documentação ao comprar uma viatura em Portugal.",
+      "Tudo o que precisa de saber sobre a documentação ao comprar uma viatura em Angola.",
     categoria: "Guia",
     data: "28 Jun 2026",
     tempo: "8 min",
@@ -58,13 +53,13 @@ const artigos = [
 
 export default function Blog() {
   return (
-    <div>
-      <section className="bg-primary text-white py-20">
+    <div className="min-h-screen bg-[#060608]">
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-accent font-semibold tracking-widest uppercase text-sm mb-2">
+          <p className="text-[#10b981] font-semibold tracking-widest uppercase text-sm mb-2">
             Novidades
           </p>
-          <h1 className="text-4xl md:text-5xl font-bold">Blog</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-[#fafafa]">Blog</h1>
         </div>
       </section>
 
@@ -74,27 +69,27 @@ export default function Blog() {
             {artigos.map((artigo) => (
               <article
                 key={artigo.titulo}
-                className="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow group cursor-pointer"
+                className="bg-zinc-900/50 border border-zinc-800/80 rounded-2xl overflow-hidden hover:border-zinc-700/80 transition-colors group cursor-pointer"
               >
-                <div className="h-48 bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                  <span className="text-accent text-4xl font-bold opacity-20 group-hover:opacity-40 transition-opacity">
+                <div className="h-48 bg-gradient-to-br from-[#060608] to-zinc-900/50 flex items-center justify-center border-b border-zinc-800/80">
+                  <span className="text-[#10b981] text-4xl font-bold opacity-20 group-hover:opacity-40 transition-opacity">
                     {artigo.categoria}
                   </span>
                 </div>
                 <div className="p-6">
                   <div className="flex items-center gap-3 mb-3">
-                    <span className="bg-accent bg-opacity-10 text-accent text-xs font-bold px-3 py-1 rounded-full">
+                    <span className="bg-[#10b981]/10 text-[#10b981] text-xs font-bold px-3 py-1 rounded-full">
                       {artigo.categoria}
                     </span>
-                    <span className="text-muted text-xs">{artigo.data}</span>
-                    <span className="text-muted text-xs">
+                    <span className="text-[#71717a] text-xs">{artigo.data}</span>
+                    <span className="text-[#71717a] text-xs">
                       · {artigo.tempo} leitura
                     </span>
                   </div>
-                  <h2 className="text-lg font-bold mb-2 group-hover:text-accent transition-colors">
+                  <h2 className="text-lg font-bold text-[#fafafa] mb-2 group-hover:text-[#10b981] transition-colors">
                     {artigo.titulo}
                   </h2>
-                  <p className="text-muted text-sm">{artigo.resumo}</p>
+                  <p className="text-[#a1a1aa] text-sm">{artigo.resumo}</p>
                 </div>
               </article>
             ))}
@@ -102,21 +97,21 @@ export default function Blog() {
         </div>
       </section>
 
-      <section className="py-16 bg-light">
+      <section className="py-16 bg-white/[0.02]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl font-bold mb-4">
+          <h2 className="text-2xl font-bold text-[#fafafa] mb-4">
             Receba as Últimas Notícias
           </h2>
-          <p className="text-muted mb-6">
+          <p className="text-[#a1a1aa] mb-6">
             Subscreva a nossa newsletter para ficar a par de tudo.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
             <input
               type="email"
               placeholder="O seu email"
-              className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:border-transparent outline-none"
+              className="flex-1 px-4 py-3 bg-white/[0.04] border border-white/[0.06] rounded-xl text-[#fafafa] placeholder-[#52525b] focus:ring-2 focus:ring-[#10b981] focus:border-transparent outline-none transition"
             />
-            <button className="bg-accent text-primary px-6 py-3 rounded-lg hover:bg-accent-hover transition-colors font-semibold">
+            <button className="bg-[#10b981] text-[#060608] px-6 py-3 rounded-xl hover:bg-[#0ea573] transition-colors font-semibold">
               Subscrever
             </button>
           </div>

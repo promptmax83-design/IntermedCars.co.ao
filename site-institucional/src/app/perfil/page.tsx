@@ -1,189 +1,274 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Logo from "@/components/logo";
 
-const badges = [
-  { icono: "🏆", nome: "Primeira Venda", desbloqueado: true },
-  { icono: "💯", nome: "100 Negócios", desbloqueado: true },
-  { icono: "⭐", nome: "Top Agente", desbloqueado: true },
-  { icono: "🤝", nome: "Negociação Perfeita", desbloqueado: true },
-  { icono: "🏅", nome: "Cliente Ouro", desbloqueado: false },
-  { icono: "👑", nome: "Embaixador", desbloqueado: false },
-];
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 
-const inventario = [
-  { marca: "BMW", modelo: "Serie 5", preco: "42.900", estado: "Ativo" },
-  { marca: "Audi", modelo: "Q5", preco: "49.900", estado: "Ativo" },
-  { marca: "Mercedes", modelo: "Classe C", preco: "38.500", estado: "Vendido" },
-];
+type UserProfile = {
+  id: number;
+  nome: string;
+  email: string;
+  telemovel: string;
+  verificado: boolean;
+  status: string;
+  created_at: string;
+  verified_at: string | null;
+  veiculos: number;
+  vendas: number;
+};
 
-const avaliacoes = [
-  {
-    de: "Ricardo M.",
-    texto: "Excelente agente! Muito profissional e atencioso.",
-    rating: 5,
-    data: "05/07/2026",
-  },
-  {
-    de: "Sofia A.",
-    texto: "Negociação rápida e transparente. Recomendo!",
-    rating: 5,
-    data: "01/07/2026",
-  },
-  {
-    de: "Pedro S.",
-    texto: "Muito bom profissional. Tratou de tudo.",
-    rating: 4,
-    data: "28/06/2026",
-  },
-];
+type Vehicle = {
+  id: number;
+  marca: string;
+  modelo: string;
+  ano: number;
+  preco: number;
+  status: string;
+  created_at: string;
+};
 
 export default function PerfilPage() {
   const [tab, setTab] = useState("inventario");
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const token = localStorage.getItem("token");
+      const userStr = localStorage.getItem("user");
+      if (!token || !userStr) {
+        setError("Precisa de fazer login para ver o perfil");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const user = JSON.parse(userStr);
+        const [profileRes, vehiclesRes] = await Promise.all([
+          fetch(`${API_BASE}/api/users/${user.id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+          fetch(`${API_BASE}/api/vehicles?status=disponivel`, {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+        ]);
+
+        if (profileRes.ok) {
+          const profileData = await profileRes.json();
+          setProfile(profileData);
+        }
+
+        if (vehiclesRes.ok) {
+          const vehiclesData = await vehiclesRes.json();
+          const allVehicles = vehiclesData.data || vehiclesData;
+          // Filter vehicles owned by current user
+          const myVehicles = Array.isArray(allVehicles)
+            ? allVehicles.filter((v: Vehicle & { user_id?: number }) => v.user_id === user.id)
+            : [];
+          setVehicles(myVehicles);
+        }
+      } catch {
+        setError("Erro ao carregar perfil");
+      }
+      setLoading(false);
+    };
+
+    fetchProfile();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#060608] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-[#10b981] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (error || !profile) {
+    return (
+      <div className="min-h-screen bg-[#060608] flex flex-col items-center justify-center px-4">
+        <Logo size="md" />
+        <p className="text-[#71717a] mt-4">{error || "Perfil nao encontrado"}</p>
+        <Link href="/login" className="text-[#10b981] text-sm mt-2 hover:underline">
+          Fazer login
+        </Link>
+      </div>
+    );
+  }
+
+  const initials = profile.nome.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase();
+  const memberSince = new Date(profile.created_at).toLocaleDateString("pt-AO", {
+    month: "long",
+    year: "numeric",
+  });
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="h-32 bg-gradient-to-r from-primary via-secondary to-primary relative">
-          <div className="absolute -bottom-10 left-6">
-            <div className="w-20 h-20 bg-accent rounded-full border-4 border-white flex items-center justify-center">
-              <span className="text-primary text-2xl font-bold">JF</span>
-            </div>
-          </div>
-        </div>
-        <div className="pt-14 px-6 pb-6">
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold">João Ferreira</h1>
-            <span className="text-accent">✓</span>
-          </div>
-          <p className="text-sm text-muted">Agente Certificado · Lisboa</p>
-          <div className="flex items-center gap-1 mt-1">
-            <span className="text-accent text-sm">★★★★★</span>
-            <span className="text-sm text-muted">(243 avaliações)</span>
-          </div>
-
-          <div className="flex items-center gap-2 mt-3">
-            <span className="bg-accent/10 text-accent text-xs font-bold px-3 py-1 rounded-full">
-              Nível Prata
-            </span>
-            <span className="bg-emerald-50 text-emerald-600 text-xs font-bold px-3 py-1 rounded-full">
-              98.4% Sucesso
-            </span>
-          </div>
-
-          <div className="grid grid-cols-3 gap-3 mt-6">
-            <div className="bg-light rounded-lg p-3 text-center">
-              <p className="text-xl font-bold text-accent">142</p>
-              <p className="text-[10px] text-muted">Transações</p>
-            </div>
-            <div className="bg-light rounded-lg p-3 text-center">
-              <p className="text-xl font-bold text-accent">23</p>
-              <p className="text-[10px] text-muted">Este Mês</p>
-            </div>
-            <div className="bg-light rounded-lg p-3 text-center">
-              <p className="text-xl font-bold text-accent">#5</p>
-              <p className="text-[10px] text-muted">Ranking</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="flex gap-1 bg-white rounded-xl p-1 shadow-sm border border-gray-100">
-        {["inventario", "avaliações", "badges", "histórico"].map((t) => (
-          <button
-            key={t}
-            onClick={() => setTab(t)}
-            className={`flex-1 py-2 rounded-lg text-xs font-medium capitalize transition-colors ${tab === t ? "bg-primary text-white" : "text-muted hover:bg-light"}`}
-          >
-            {t}
-          </button>
-        ))}
-      </div>
-
-      {tab === "inventario" && (
-        <div className="space-y-3">
-          {inventario.map((item) => (
-            <div
-              key={`${item.marca}-${item.modelo}`}
-              className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex items-center justify-between"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-light rounded-lg flex items-center justify-center text-xl">
-                  🚗
-                </div>
-                <div>
-                  <p className="text-xs text-accent font-semibold">
-                    {item.marca}
-                  </p>
-                  <p className="font-medium text-sm">{item.modelo}</p>
-                </div>
+    <div className="min-h-screen bg-[#060608]">
+      <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
+        {/* Profile Header */}
+        <div className="bg-zinc-900/50 border border-zinc-800/80 rounded-2xl overflow-hidden">
+          {/* Banner */}
+          <div className="h-32 bg-gradient-to-r from-[#10b981]/20 via-[#c9a84c]/20 to-[#10b981]/20 relative">
+            <div className="absolute -bottom-10 left-6">
+              <div className="w-20 h-20 bg-gradient-to-br from-[#c9a84c] to-[#b8933d] rounded-full border-4 border-[#0d0d10] flex items-center justify-center">
+                <span className="text-[#060608] text-2xl font-bold">{initials}</span>
               </div>
-              <div className="text-right">
-                <p className="font-bold text-accent">{item.preco}Kz</p>
-                <p
-                  className={`text-[10px] font-medium ${item.estado === "Vendido" ? "text-green-500" : "text-amber-500"}`}
-                >
-                  {item.estado}
+            </div>
+          </div>
+
+          {/* Info */}
+          <div className="pt-14 px-6 pb-6">
+            <div className="flex items-center gap-2">
+              <h1 className="text-xl font-bold text-[#fafafa]">{profile.nome}</h1>
+              {profile.verificado && (
+                <svg className="w-5 h-5 text-[#10b981]" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+              )}
+            </div>
+            <p className="text-[13px] text-[#71717a] mt-1">
+              Membro desde {memberSince}
+            </p>
+
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-3 mt-6">
+              <div className="bg-white/[0.02] rounded-xl p-3 text-center border border-white/[0.04]">
+                <p className="text-xl font-bold text-[#10b981]">{profile.veiculos}</p>
+                <p className="text-[10px] text-[#71717a]">Veiculos</p>
+              </div>
+              <div className="bg-white/[0.02] rounded-xl p-3 text-center border border-white/[0.04]">
+                <p className="text-xl font-bold text-[#c9a84c]">{profile.vendas}</p>
+                <p className="text-[10px] text-[#71717a]">Vendas</p>
+              </div>
+              <div className="bg-white/[0.02] rounded-xl p-3 text-center border border-white/[0.04]">
+                <p className="text-xl font-bold text-[#fafafa]">
+                  {profile.verificado ? "✓" : "—"}
                 </p>
+                <p className="text-[10px] text-[#71717a]">Verificado</p>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Tabs */}
+        <div className="flex gap-1 bg-zinc-900/50 rounded-xl p-1 border border-zinc-800/80">
+          {["inventario", "configuracoes"].map((t) => (
+            <button
+              key={t}
+              onClick={() => setTab(t)}
+              className={`flex-1 py-2 rounded-lg text-xs font-medium capitalize transition-colors ${
+                tab === t
+                  ? "bg-[#10b981] text-[#060608]"
+                  : "text-[#71717a] hover:text-[#fafafa] hover:bg-white/[0.04]"
+              }`}
+            >
+              {t}
+            </button>
           ))}
         </div>
-      )}
 
-      {tab === "avaliações" && (
-        <div className="space-y-3">
-          {avaliacoes.map((a, i) => (
-            <div
-              key={i}
-              className="bg-white rounded-xl p-4 shadow-sm border border-gray-100"
-            >
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-accent text-xs font-bold">
-                    {a.de
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")}
+        {/* Tab Content */}
+        {tab === "inventario" && (
+          <div className="space-y-3">
+            {vehicles.length === 0 ? (
+              <div className="bg-zinc-900/50 border border-zinc-800/80 rounded-2xl p-8 text-center">
+                <p className="text-[#71717a] text-sm">Ainda nao tem veiculos anunciados.</p>
+                <Link
+                  href="/anunciar"
+                  className="inline-block mt-3 text-[#10b981] text-sm font-medium hover:underline"
+                >
+                  Anunciar primeiro veiculo
+                </Link>
+              </div>
+            ) : (
+              vehicles.map((v) => (
+                <Link
+                  key={v.id}
+                  href={`/viatura/${v.id}`}
+                  className="block bg-zinc-900/50 border border-zinc-800/80 rounded-2xl p-4 hover:bg-white/[0.02] transition-colors"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 bg-white/[0.04] rounded-xl flex items-center justify-center text-xl">
+                        🚗
+                      </div>
+                      <div>
+                        <p className="text-[11px] text-[#10b981] font-semibold uppercase tracking-wider">
+                          {v.marca}
+                        </p>
+                        <p className="text-sm font-medium text-[#fafafa]">
+                          {v.modelo} · {v.ano}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-bold text-[#10b981]">
+                        Kz {v.preco.toLocaleString("pt-AO")}
+                      </p>
+                      <p
+                        className={`text-[10px] font-medium ${
+                          v.status === "comprado" ? "text-[#10b981]" : "text-[#f59e0b]"
+                        }`}
+                      >
+                        {v.status === "disponivel" ? "Ativo" : v.status === "comprado" ? "Vendido" : v.status}
+                      </p>
+                    </div>
                   </div>
-                  <p className="font-medium text-sm">{a.de}</p>
-                </div>
-                <span className="text-xs text-muted">{a.data}</span>
-              </div>
-              <p className="text-accent text-sm">
-                {"★".repeat(a.rating)}
-                {"☆".repeat(5 - a.rating)}
+                </Link>
+              ))
+            )}
+          </div>
+        )}
+
+        {tab === "configuracoes" && (
+          <div className="space-y-4">
+            <div className="bg-zinc-900/50 border border-zinc-800/80 rounded-2xl p-4">
+              <p className="text-[10px] text-[#71717a] uppercase tracking-wider mb-3">
+                Dados Pessoais
               </p>
-              <p className="text-sm text-muted mt-1">{a.texto}</p>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-[12px] text-[#71717a]">Nome</span>
+                  <span className="text-[13px] text-[#fafafa]">{profile.nome}</span>
+                </div>
+                <div className="h-px bg-white/[0.04]" />
+                <div className="flex justify-between items-center">
+                  <span className="text-[12px] text-[#71717a]">Email</span>
+                  <span className="text-[13px] text-[#fafafa]">{profile.email}</span>
+                </div>
+                <div className="h-px bg-white/[0.04]" />
+                <div className="flex justify-between items-center">
+                  <span className="text-[12px] text-[#71717a]">Telemovel</span>
+                  <span className="text-[13px] text-[#fafafa]">{profile.telemovel}</span>
+                </div>
+                <div className="h-px bg-white/[0.04]" />
+                <div className="flex justify-between items-center">
+                  <span className="text-[12px] text-[#71717a]">Estado</span>
+                  <span className={`text-[13px] font-medium ${
+                    profile.verificado ? "text-[#10b981]" : "text-[#f59e0b]"
+                  }`}>
+                    {profile.verificado ? "Verificado" : "Pendente"}
+                  </span>
+                </div>
+              </div>
             </div>
-          ))}
-        </div>
-      )}
 
-      {tab === "badges" && (
-        <div className="grid grid-cols-3 gap-3">
-          {badges.map((b) => (
-            <div
-              key={b.nome}
-              className={`bg-white rounded-xl p-4 shadow-sm border text-center ${b.desbloqueado ? "border-accent" : "border-gray-100 opacity-40"}`}
+            <button
+              onClick={() => {
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+                window.location.href = "/login";
+              }}
+              className="w-full py-3 bg-[#ef4444]/10 border border-[#ef4444]/30 text-[#ef4444] font-semibold text-sm rounded-xl transition-all duration-200 hover:bg-[#ef4444]/20"
             >
-              <span className="text-3xl">{b.icono}</span>
-              <p className="text-xs font-medium mt-2">{b.nome}</p>
-              {b.desbloqueado && (
-                <p className="text-[10px] text-accent mt-1">Desbloqueado</p>
-              )}
-              {!b.desbloqueado && (
-                <p className="text-[10px] text-muted mt-1">Bloqueado</p>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
-
-      {tab === "histórico" && (
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 text-center text-muted text-sm">
-          Histórico completo de transações aqui.
-        </div>
-      )}
+              Terminar_sessao
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -42,7 +42,7 @@
           "npx *": "allow",
           "git *": "allow",
           "php *": "allow",
-          "*": "ask"
+          "*": "allow"
         }
       },
       "prompt": "You are the Build Agent for IntermedCars. You write fast, clean code. RULES: Always use declare(strict_types=1) at top of PHP files. Write pure SQL queries (no ORM overhead). Use parameterized statements (never string concatenation). Follow PSR-12 for PHP. Use TypeScript for frontend. Run npm run lint:fix after changes. Execute the architect's design precisely."
@@ -95,7 +95,7 @@
       "npx *": "allow",
       "git *": "allow",
       "php *": "allow",
-      "*": "ask"
+      "*": "allow"
     },
     "external_directory": {
       "C:/Users/Carla Fernanda/Documents/**": "allow"

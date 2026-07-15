@@ -31,7 +31,7 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
   const [favoritado, setFavoritado] = useState(false);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"}/vehicles/${id}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"}/api/vehicles/${id}`)
       .then((res) => {
         if (!res.ok) throw new Error("Viatura nao encontrada");
         return res.json();

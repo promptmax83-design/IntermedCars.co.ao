@@ -44,130 +44,86 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-[#060608] flex">
-      {/* LEFT — Animations */}
+      {/* ═══ LEFT — Visual Panel ═══ */}
       <div className="hidden lg:flex flex-1 items-center justify-center relative overflow-hidden">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(16,185,129,0.08)_0%,transparent_70%)]" />
+        {/* Background */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_rgba(16,185,129,0.1)_0%,transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(245,158,11,0.05)_0%,transparent_50%)]" />
 
-        <div className="relative z-10 max-w-md px-8">
-          {/* Branding */}
-          <div className="mb-10 flex flex-col items-start">
-            <Logo size="lg" showText={false} />
-            <div className="mt-4">
-              <h2 className="text-2xl font-bold text-[#fafafa]">
-                Intermed<span className="text-[#10b981]">Cars</span>
-              </h2>
-              <p className="text-sm text-[#71717a] mt-1">
-                Compre e venda veiculos de forma segura
-              </p>
+        <div className="relative z-10 max-w-lg px-12">
+          {/* Logo + Brand */}
+          <div className="mb-12">
+            <Logo size="lg" />
+            <h1 className="text-3xl font-bold text-[#fafafa] mt-6">
+              Bem-vindo de volta
+            </h1>
+            <p className="text-[15px] text-[#71717a] mt-3 leading-relaxed">
+              Acesse a sua conta e continue a negociar veiculos de forma segura.
+            </p>
+          </div>
+
+          {/* Visual Cards — Representing digital intermediation */}
+          <div className="space-y-4">
+            {/* Card 1: Security Shield */}
+            <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] border border-white/[0.05] backdrop-blur-sm">
+              <div className="w-12 h-12 rounded-xl bg-[#10b981]/10 flex items-center justify-center flex-shrink-0">
+                <svg className="w-6 h-6 text-[#10b981]" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-[13px] font-semibold text-[#fafafa]">Mediação 100% Segura</p>
+                <p className="text-[12px] text-[#71717a]">Cada negociacao é acompanhada e protegida</p>
+              </div>
+            </div>
+
+            {/* Card 2: Verified Users */}
+            <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] border border-white/[0.05] backdrop-blur-sm">
+              <div className="w-12 h-12 rounded-xl bg-[#f59e0b]/10 flex items-center justify-center flex-shrink-0">
+                <svg className="w-6 h-6 text-[#f59e0b]" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-[13px] font-semibold text-[#fafafa]">Utilizadores Verificados</p>
+                <p className="text-[12px] text-[#71717a]">Identidade confirmada para sua seguranca</p>
+              </div>
+            </div>
+
+            {/* Card 3: Transparent Process */}
+            <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/[0.03] border border-white/[0.05] backdrop-blur-sm">
+              <div className="w-12 h-12 rounded-xl bg-[#c9a84c]/10 flex items-center justify-center flex-shrink-0">
+                <svg className="w-6 h-6 text-[#c9a84c]" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-[13px] font-semibold text-[#fafafa]">Processo Transparente</p>
+                <p className="text-[12px] text-[#71717a]">Acompanhe cada etapa da negociacao</p>
+              </div>
             </div>
           </div>
 
-          {/* Animation: Chat + Vehicle Pipeline */}
-          <div className="space-y-8">
-            {/* Chat Animation */}
-            <div className="relative">
-              <p className="text-[10px] font-bold text-[#52525b] uppercase tracking-wider mb-3">
-                Chat em tempo real
-              </p>
-              <div className="space-y-2">
-                {/* Message 1 — left */}
-                <div className="flex items-end gap-2 chat-anim-1">
-                  <div className="w-7 h-7 rounded-full bg-[#c9a84c]/20 flex items-center justify-center text-[10px] font-bold text-[#c9a84c] shrink-0">
-                    JS
-                  </div>
-                  <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl rounded-bl-md px-4 py-2.5 max-w-[200px]">
-                    <p className="text-[12px] text-[#fafafa]">O BMW ainda esta disponivel?</p>
-                  </div>
-                </div>
-
-                {/* Message 2 — right */}
-                <div className="flex items-end gap-2 justify-end chat-anim-2">
-                  <div className="bg-[#10b981] rounded-2xl rounded-br-md px-4 py-2.5 max-w-[200px]">
-                    <p className="text-[12px] text-[#060608]">Sim! Posso mandar fotos</p>
-                  </div>
-                  <div className="w-7 h-7 rounded-full bg-[#10b981]/20 flex items-center justify-center text-[10px] font-bold text-[#10b981] shrink-0">
-                    AR
-                  </div>
-                </div>
-
-                {/* Typing indicator */}
-                <div className="flex items-end gap-2 chat-anim-3">
-                  <div className="w-7 h-7 rounded-full bg-[#c9a84c]/20 flex items-center justify-center text-[10px] font-bold text-[#c9a84c] shrink-0">
-                    JS
-                  </div>
-                  <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl rounded-bl-md px-4 py-3">
-                    <div className="flex gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#52525b] typing-dot" />
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#52525b] typing-dot" style={{ animationDelay: "0.2s" }} />
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#52525b] typing-dot" style={{ animationDelay: "0.4s" }} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Vehicle Pipeline Animation */}
-            <div className="relative">
-              <p className="text-[10px] font-bold text-[#52525b] uppercase tracking-wider mb-3">
-                Processo de mediacao
-              </p>
-              <div className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-4">
-                {/* Car icon + progress */}
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="car-move w-8 h-8 text-[#10b981]">
-                    <svg fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H18.75m-7.5-3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-                    </svg>
-                  </div>
-                  <div className="flex-1 h-1.5 bg-white/[0.04] rounded-full overflow-hidden">
-                    <div className="h-full bg-[#10b981] rounded-full pipeline-bar" />
-                  </div>
-                </div>
-
-                {/* Steps */}
-                <div className="flex justify-between">
-                  {[
-                    { label: "Negociacao", delay: "0s" },
-                    { label: "Vistoria", delay: "0.6s" },
-                    { label: "Pago", delay: "1.2s" },
-                  ].map((step) => (
-                    <div key={step.label} className="flex flex-col items-center gap-1.5">
-                      <div
-                        className="w-6 h-6 rounded-full bg-[#10b981]/10 flex items-center justify-center step-pop"
-                        style={{ animationDelay: step.delay }}
-                      >
-                        <svg className="w-3 h-3 text-[#10b981] step-check" style={{ animationDelay: step.delay }} fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <span className="text-[10px] text-[#71717a] step-label" style={{ animationDelay: step.delay }}>
-                        {step.label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+          {/* Trust badge */}
+          <div className="mt-10 flex items-center gap-2 text-[12px] text-[#52525b]">
+            <svg className="w-4 h-4 text-[#10b981]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>Milhares de negocios concluidos com seguranca</span>
           </div>
         </div>
       </div>
 
-      {/* RIGHT — Login Form */}
+      {/* ═══ RIGHT — Login Form ═══ */}
       <div className="flex-1 lg:flex-none lg:w-[480px] flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-sm">
           {/* Mobile logo */}
           <div className="lg:hidden mb-8 flex flex-col items-center">
-            <Logo size="md" showText={false} />
-            <div className="mt-3">
-              <h1 className="text-xl font-bold text-[#fafafa]">
-                Intermed<span className="text-[#10b981]">Cars</span>
-              </h1>
-            </div>
+            <Logo size="md" />
           </div>
 
           <h2 className="text-2xl font-bold text-[#fafafa] mb-1">Entrar</h2>
-          <p className="text-sm text-[#71717a] mb-6">
+          <p className="text-sm text-[#71717a] mb-8">
             Acesse a tua conta para continuar
           </p>
 
@@ -206,6 +162,16 @@ export default function LoginPage() {
               />
             </div>
 
+            <div className="flex items-center justify-between">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" className="w-4 h-4 rounded border-white/[0.1] bg-white/[0.04] text-[#10b981] focus:ring-[#10b981]/30" />
+                <span className="text-[12px] text-[#71717a]">Lembrar-me</span>
+              </label>
+              <a href="#" className="text-[12px] text-[#10b981] hover:underline">
+                Esqueceu a password?
+              </a>
+            </div>
+
             <button
               type="submit"
               disabled={loading}
@@ -215,7 +181,7 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <div className="mt-6 text-center">
+          <div className="mt-8 text-center">
             <p className="text-sm text-[#71717a]">
               Nao tens conta?{" "}
               <Link

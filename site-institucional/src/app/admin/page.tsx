@@ -14,7 +14,7 @@ const tabs: { id: Tab; label: string; icon: string }[] = [
   { id: "analytics", label: "Analytics", icon: "\u{1F4C8}" },
 ];
 
-type User = { id: number; nome: string; email: string; telemovel: string; status: string; bi_number: string; created_at: string };
+type User = { id: number; nome: string; email: string; telemovel: string; status: string; bi_passaporte: string; created_at: string };
 type Vehicle = { id: number; marca: string; modelo: string; preco: number; vendedor_nome: string; status: string; created_at: string; vendedor_id: number };
 type Transaction = { id: number; marca: string; modelo: string; proposed_price: number; buyer_name: string; seller_name: string; status: string; created_at: string; commission_deadline: string | null };
 type AdminStats = { disponivel: number; em_negociacao: number; comprado: number; cancelado: number; total: number; user_count: number; transaction_count: number; commission_revenue: number };
@@ -192,7 +192,7 @@ export default function AdminPage() {
                     <tr key={u.id} className="border-b border-white/[0.04] hover:bg-white/[0.02]">
                       <td className="p-4 text-sm text-[#fafafa]">{u.nome}</td>
                       <td className="p-4 text-sm text-[#71717a]">{u.email}</td>
-                      <td className="p-4 text-xs text-[#52525b] font-mono">{u.bi_number || "-"}</td>
+                      <td className="p-4 text-xs text-[#52525b] font-mono">{u.bi_passaporte || "-"}</td>
                       <td className="p-4">
                         <span className={`px-2 py-1 rounded-full text-[10px] font-bold ${
                           u.status === "verificado" ? "bg-[#10b981]/10 text-[#10b981]" :
