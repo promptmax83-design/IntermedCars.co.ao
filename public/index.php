@@ -571,6 +571,7 @@ $router->post('/api/negotiations/{id}/complete', static function (): void {
 
 $router->get('/api/negotiations/{id}', static function (): void {
     try {
+        AuthMiddleware::requireAuth();
         $id = (int) ($_SERVER['ROUTE_PARAMS']['id'] ?? 0);
         $service = new \IntermedCars\Services\NegotiationService();
         $result = $service->getById($id);
@@ -584,6 +585,7 @@ $router->get('/api/negotiations/{id}', static function (): void {
 
 $router->get('/api/negotiations/{id}/financial', static function (): void {
     try {
+        AuthMiddleware::requireAuth();
         $id = (int) ($_SERVER['ROUTE_PARAMS']['id'] ?? 0);
         $service = new \IntermedCars\Services\CommissionService();
         $result = $service->getFinancialSummary($id);
@@ -795,16 +797,38 @@ $router->put('/api/consultants/{id}/rating', static function (): void {
 $router->post('/api/payments/multicaixa/callback', static function (): void {
     try {
         $payload = json_decode(file_get_contents('php://input'), true) ?: [];
+        $signature = $_SERVER['HTTP_X_PROXYPAY_SIGNATURE'] ?? $_SERVER['HTTP_SIGNATURE'] ?? null;
         $service = new \IntermedCars\Services\MulticaixaService();
-        $result = $service->handleCallback($payload);
+        $result = $service->handleCallback($payload, $signature);
         
         if ($result['accepted']) {
             $db = \IntermedCars\Database\Database::getConnection();
+            
+            // Update fee_payments table (single source of truth)
             $stmt = $db->prepare("UPDATE fee_payments SET status = 'confirmado', confirmed_at = datetime('now','localtime') WHERE payment_ref = :ref AND status = 'pendente'");
             $stmt->execute(['ref' => $result['transaction_id']]);
+            
+            // Sync negotiation flags from fee_payments (replaces dual source of truth)
+            $stmt2 = $db->prepare("
+                SELECT negotiation_id, payer_role FROM fee_payments 
+                WHERE payment_ref = :ref AND status = 'confirmado'
+            ");
+            $stmt2->execute(['ref' => $result['transaction_id']]);
+            $payment = $stmt2->fetch(\PDO::FETCH_ASSOC);
+            
+            if ($payment) {
+                $column = $payment['payer_role'] === 'seller' ? 'has_seller_paid_fee' : 'has_buyer_paid_fee';
+                $paidAtColumn = $payment['payer_role'] === 'seller' ? 'seller_paid_at' : 'buyer_paid_at';
+                $stmt3 = $db->prepare("UPDATE negotiations SET {$column} = 1, {$paidAtColumn} = datetime('now','localtime'), updated_at = datetime('now','localtime') WHERE id = :id");
+                $stmt3->execute(['id' => $payment['negotiation_id']]);
+            }
         }
         
         echo json_encode(['received' => true], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+    } catch (\RuntimeException $e) {
+        error_log("[Multicaixa] Callback rejected: " . $e->getMessage());
+        http_response_code(403);
+        echo json_encode(['error' => 'Forbidden'], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
     } catch (\Throwable $e) {
         error_log("[Multicaixa] Callback error: " . $e->getMessage());
         http_response_code(500);

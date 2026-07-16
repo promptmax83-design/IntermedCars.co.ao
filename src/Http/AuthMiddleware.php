@@ -15,11 +15,15 @@ class AuthMiddleware
     private const TOKEN_EXPIRY = 86400; // 24 hours
 
     /**
-     * Get JWT secret from environment or fallback.
+     * Get JWT secret from environment. No fallback — must be set in .env.
      */
     private static function getSecret(): string
     {
-        return $_ENV['JWT_SECRET'] ?? getenv('JWT_SECRET') ?: 'intermedcars-secret-key-change-in-production';
+        $secret = $_ENV['JWT_SECRET'] ?? getenv('JWT_SECRET') ?: '';
+        if ($secret === '') {
+            throw new \RuntimeException('JWT_SECRET not configured. Set it in .env file.');
+        }
+        return $secret;
     }
 
     /**

@@ -111,14 +111,28 @@ class MulticaixaService
     
     /**
      * Handle callback from ProxyPay (to be called by the callback endpoint).
+     * Verifies webhook signature to prevent forged callbacks.
      */
-    public function handleCallback(array $payload): array
+    public function handleCallback(array $payload, ?string $signatureHeader = null): array
     {
         $transactionId = $payload['transaction_id'] ?? '';
         $status = $payload['status'] ?? '';
         $mobile = $payload['mobile'] ?? '';
         $amount = $payload['amount'] ?? 0;
-        
+
+        // Verify webhook signature if secret is configured
+        $webhookSecret = $_ENV['PROXYPAY_WEBHOOK_SECRET'] ?? '';
+        if ($webhookSecret !== '' && $signatureHeader !== null) {
+            $expectedSig = hash_hmac('sha256', json_encode($payload, JSON_THROW_ON_ERROR), $webhookSecret);
+            if (!hash_equals($expectedSig, $signatureHeader)) {
+                error_log("[Multicaixa] Webhook signature mismatch for tx={$transactionId}");
+                throw new \RuntimeException("Invalid webhook signature");
+            }
+        } elseif ($webhookSecret !== '' && $signatureHeader === null) {
+            error_log("[Multicaixa] Webhook signature required but not provided for tx={$transactionId}");
+            throw new \RuntimeException("Webhook signature required");
+        }
+
         error_log("[Multicaixa] Callback received: tx={$transactionId}, status={$status}, mobile={$mobile}");
         
         return [
