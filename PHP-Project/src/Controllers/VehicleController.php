@@ -197,7 +197,7 @@ class VehicleController extends BaseController
             );
         }
 
-        $sql = 'UPDATE vehicles SET status = :status, updated_at = NOW() WHERE id = :id';
+        $sql = 'UPDATE vehicles SET status = :status, updated_at = datetime(\'now\',\'localtime\') WHERE id = :id';
         $stmt = $this->db->prepare($sql);
         $stmt->execute([
             'status' => VehicleStatus::EM_NEGOCIACAO->value,
@@ -231,7 +231,7 @@ class VehicleController extends BaseController
             );
         }
 
-        $sql = 'UPDATE vehicles SET status = :status, updated_at = NOW() WHERE id = :id';
+        $sql = 'UPDATE vehicles SET status = :status, updated_at = datetime(\'now\',\'localtime\') WHERE id = :id';
         $stmt = $this->db->prepare($sql);
         $stmt->execute([
             'status' => VehicleStatus::COMPRADO->value,
@@ -270,7 +270,7 @@ class VehicleController extends BaseController
 
         $oldStatus = $vehicle->status;
 
-        $sql = 'UPDATE vehicles SET status = :status, updated_at = NOW() WHERE id = :id';
+        $sql = 'UPDATE vehicles SET status = :status, updated_at = datetime(\'now\',\'localtime\') WHERE id = :id';
         $stmt = $this->db->prepare($sql);
         $stmt->execute([
             'status' => VehicleStatus::CANCELADO->value,
@@ -304,7 +304,7 @@ class VehicleController extends BaseController
             );
         }
 
-        $sql = 'UPDATE vehicles SET status = :status, updated_at = NOW() WHERE id = :id';
+        $sql = 'UPDATE vehicles SET status = :status, updated_at = datetime(\'now\',\'localtime\') WHERE id = :id';
         $stmt = $this->db->prepare($sql);
         $stmt->execute([
             'status' => VehicleStatus::DISPONIVEL->value,
@@ -482,7 +482,7 @@ class VehicleController extends BaseController
         ?int $userId = null
     ): void {
         $sql = 'INSERT INTO vehicle_status_logs (vehicle_id, from_status, to_status, user_id, created_at)
-                VALUES (:vehicle_id, :from_status, :to_status, :user_id, NOW())';
+                VALUES (:vehicle_id, :from_status, :to_status, :user_id, datetime(\'now\',\'localtime\'))';
         $stmt = $this->db->prepare($sql);
         $stmt->execute([
             'vehicle_id' => $vehicleId,

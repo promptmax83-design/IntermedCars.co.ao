@@ -129,7 +129,12 @@ export default function SidebarNav() {
 
         <div className="border-t border-white/[0.04] my-3" />
 
-        {navSecondary.map((item) => {
+        {navSecondary.filter((item) => {
+          if (item.href === "/consultor/dashboard") return true;
+          if (item.href === "/admin") return true;
+          if (item.href === "/dashboard-financeiro") return true;
+          return true;
+        }).map((item) => {
           const active = isActive(item.href);
           return (
             <Link

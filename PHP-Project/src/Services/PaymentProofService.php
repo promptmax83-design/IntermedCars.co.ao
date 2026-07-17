@@ -84,7 +84,7 @@ class PaymentProofService
         $encryptedPath = $this->encryptAndStore($filePath, $userId, $transactionId);
 
         $sql = 'INSERT INTO payment_proofs (user_id, transaction_id, file_path, mime_type, file_size, status, created_at)
-                VALUES (:user_id, :transaction_id, :file_path, :mime_type, :file_size, :status, NOW())';
+                VALUES (:user_id, :transaction_id, :file_path, :mime_type, :file_size, :status, datetime(\'now\',\'localtime\'))';
         $stmt = Database::getConnection()->prepare($sql);
         $stmt->execute([
             'user_id' => $userId,
@@ -136,7 +136,7 @@ class PaymentProofService
 
         $newStatus = $analysisResult['verified'] ? 'aprovado' : 'suspeito';
         $sql = 'UPDATE payment_proofs SET status = :status, ai_confidence = :confidence,
-                ai_flags = :flags, analyzed_at = NOW() WHERE id = :id';
+                ai_flags = :flags, analyzed_at = datetime(\'now\',\'localtime\') WHERE id = :id';
         $stmt = Database::getConnection()->prepare($sql);
         $stmt->execute([
             'status' => $newStatus,
@@ -201,7 +201,7 @@ class PaymentProofService
         $newStatus = $approved ? 'aprovado_manual' : 'rejeitado_manual';
 
         $sql = 'UPDATE payment_proofs SET status = :status, reviewer_id = :reviewer,
-                review_notes = :notes, reviewed_at = NOW() WHERE id = :id';
+                review_notes = :notes, reviewed_at = datetime(\'now\',\'localtime\') WHERE id = :id';
         $stmt = Database::getConnection()->prepare($sql);
         $stmt->execute([
             'status' => $newStatus,

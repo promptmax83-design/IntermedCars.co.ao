@@ -116,7 +116,7 @@ class PenaltyService
     public function applyPenalty(int $userId, int $transactionId, float $penaltyAmount): array
     {
         $sql = 'INSERT INTO user_debts (user_id, transaction_id, amount, type, created_at)
-                VALUES (:user_id, :transaction_id, :amount, :type, NOW())';
+                VALUES (:user_id, :transaction_id, :amount, :type, datetime(\'now\',\'localtime\'))';
         $stmt = Database::getConnection()->prepare($sql);
         $stmt->execute([
             'user_id' => $userId,
@@ -125,7 +125,7 @@ class PenaltyService
             'type' => 'multa_abuso',
         ]);
 
-        $sql = 'UPDATE users SET status = :status, banned_at = NOW() WHERE id = :id';
+        $sql = 'UPDATE users SET status = :status, banned_at = datetime(\'now\',\'localtime\') WHERE id = :id';
         $stmt = Database::getConnection()->prepare($sql);
         $stmt->execute([
             'status' => 'temporariamente_banido',

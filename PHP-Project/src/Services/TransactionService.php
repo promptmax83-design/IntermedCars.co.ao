@@ -53,7 +53,7 @@ class TransactionService
         }
 
         $sql = 'INSERT INTO transactions (vehicle_id, buyer_id, seller_id, proposed_price, status, created_at)
-                VALUES (:vehicle_id, :buyer_id, :seller_id, :proposed_price, :status, NOW())';
+                VALUES (:vehicle_id, :buyer_id, :seller_id, :proposed_price, :status, datetime(\'now\',\'localtime\'))';
         $stmt = Database::getConnection()->prepare($sql);
         $stmt->execute([
             'vehicle_id' => $vehicleId,
@@ -81,7 +81,7 @@ class TransactionService
      */
     public function acceptProposal(int $transactionId, int $sellerId): array
     {
-        $sql = 'UPDATE transactions SET status = :status, accepted_at = NOW() WHERE id = :id AND seller_id = :seller_id';
+        $sql = 'UPDATE transactions SET status = :status, accepted_at = datetime(\'now\',\'localtime\') WHERE id = :id AND seller_id = :seller_id';
         $stmt = Database::getConnection()->prepare($sql);
         $stmt->execute([
             'status' => TransactionStatus::PROPOSTA_ACEITE->value,
@@ -110,7 +110,7 @@ class TransactionService
             throw new \InvalidArgumentException("Valor do deposito deve ser positivo.");
         }
 
-        $sql = 'UPDATE transactions SET status = :status, deposit_amount = :amount, deposited_at = NOW()
+        $sql = 'UPDATE transactions SET status = :status, deposit_amount = :amount, deposited_at = datetime(\'now\',\'localtime\')
                 WHERE id = :id AND buyer_id = :buyer_id';
         $stmt = Database::getConnection()->prepare($sql);
         $stmt->execute([
@@ -150,7 +150,7 @@ class TransactionService
         $now = new \DateTime();
         $deadline = $now->modify('+72 hours')->format('Y-m-d\TH:i:sP');
 
-        $sql = 'UPDATE transactions SET status = :status, inspection_completed_at = NOW(),
+        $sql = 'UPDATE transactions SET status = :status, inspection_completed_at = datetime(\'now\',\'localtime\'),
                 commission_deadline = :deadline WHERE id = :id';
         $stmt = Database::getConnection()->prepare($sql);
         $stmt->execute([
@@ -191,7 +191,7 @@ class TransactionService
         $bothPaid = $this->checkBothPartiesPaid($transactionId);
 
         if ($bothPaid) {
-            $sql = 'UPDATE transactions SET status = :status, completed_at = NOW() WHERE id = :id';
+            $sql = 'UPDATE transactions SET status = :status, completed_at = datetime(\'now\',\'localtime\') WHERE id = :id';
             $stmt = Database::getConnection()->prepare($sql);
             $stmt->execute([
                 'status' => TransactionStatus::TRANSACAO_CONCLUIDA->value,

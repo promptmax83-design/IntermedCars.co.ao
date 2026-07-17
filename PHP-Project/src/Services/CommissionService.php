@@ -114,7 +114,7 @@ class CommissionService
         }
 
         $sql = 'INSERT INTO commission_payments (user_id, transaction_id, amount, role, paid_at)
-                VALUES (:user_id, :transaction_id, :amount, :role, NOW())';
+                VALUES (:user_id, :transaction_id, :amount, :role, datetime(\'now\',\'localtime\'))';
         $stmt = Database::getConnection()->prepare($sql);
         $stmt->execute([
             'user_id' => $userId,
@@ -177,7 +177,7 @@ class CommissionService
         // 4. If AI verified, mark payment as confirmed
         if ($analysisResult['verified']) {
             $sql = 'UPDATE commission_payments SET status = :status, proof_id = :proof_id,
-                    confirmed_at = NOW() WHERE id = :id';
+                    confirmed_at = datetime(\'now\',\'localtime\') WHERE id = :id';
             $stmt = Database::getConnection()->prepare($sql);
             $stmt->execute([
                 'status' => 'confirmado',

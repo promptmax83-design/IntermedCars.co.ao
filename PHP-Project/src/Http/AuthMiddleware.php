@@ -12,8 +12,16 @@ namespace IntermedCars\Http;
  */
 class AuthMiddleware
 {
-    private const SECRET_KEY = 'intermedcars-secret-key-change-in-production';
+    private static ?string $secretKey = null;
     private const TOKEN_EXPIRY = 86400; // 24 hours
+
+    private static function getSecretKey(): string
+    {
+        if (self::$secretKey === null) {
+            self::$secretKey = $_ENV['JWT_SECRET'] ?? getenv('JWT_SECRET') ?: 'intermedcars-secret-key-change-in-production';
+        }
+        return self::$secretKey;
+    }
 
     /**
      * Generate a JWT token for a user.
@@ -36,7 +44,7 @@ class AuthMiddleware
         $payload = self::base64UrlEncode($payloadData !== false ? $payloadData : '');
 
         $signature = self::base64UrlEncode(
-            hash_hmac('sha256', "{$header}.{$payload}", self::SECRET_KEY, true)
+            hash_hmac('sha256', "{$header}.{$payload}", self::getSecretKey(), true)
         );
 
         return "{$header}.{$payload}.{$signature}";
@@ -59,7 +67,7 @@ class AuthMiddleware
 
         // Verify signature
         $expectedSignature = self::base64UrlEncode(
-            hash_hmac('sha256', "{$header}.{$payload}", self::SECRET_KEY, true)
+            hash_hmac('sha256', "{$header}.{$payload}", self::getSecretKey(), true)
         );
 
         if (!hash_equals($expectedSignature, $signature)) {

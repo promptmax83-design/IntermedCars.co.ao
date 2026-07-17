@@ -92,7 +92,7 @@ class MessageController extends BaseController
         }
 
         $sql = 'INSERT INTO messages (sender_id, receiver_id, transaction_id, content, type, created_at)
-                VALUES (:sender_id, :receiver_id, :transaction_id, :content, :type, NOW())';
+                VALUES (:sender_id, :receiver_id, :transaction_id, :content, :type, datetime(\'now\',\'localtime\'))';
         $stmt = $this->db->prepare($sql);
         $stmt->execute([
             'sender_id' => $senderId,
@@ -120,7 +120,7 @@ class MessageController extends BaseController
      */
     public function markAsRead(int $userId, int $senderId): array
     {
-        $sql = 'UPDATE messages SET read_at = NOW()
+        $sql = 'UPDATE messages SET read_at = datetime(\'now\',\'localtime\')
                 WHERE sender_id = :senderId AND receiver_id = :userId AND read_at IS NULL';
         $stmt = $this->db->prepare($sql);
         $stmt->execute([

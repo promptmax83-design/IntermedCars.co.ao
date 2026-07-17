@@ -24,17 +24,19 @@ class AuthController extends BaseController
     /**
      * Register a new user with basic information.
      *
-     * @param array{nome: string, email: string, telemovel: string, bi_passaporte: string, password: string, nome_pai: string, nome_mae: string} $data
+     * @param array{nome: string, email: string, telemovel?: string, bi_passaporte: string, password: string, nome_pai: string, nome_mae: string} $data
      * @return array{success: bool, user_id: int, token: string, message: string}
      */
     public function register(array $data): array
     {
-        $required = ['nome', 'email', 'telemovel', 'bi_passaporte', 'password', 'nome_pai', 'nome_mae'];
+        $required = ['nome', 'email', 'bi_passaporte', 'password'];
         foreach ($required as $field) {
             if (empty($data[$field])) {
                 throw new \InvalidArgumentException("Campo obrigatorio: {$field}");
             }
         }
+
+        $data['telemovel'] = $data['telemovel'] ?? '000000000';
 
         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             throw new \InvalidArgumentException("Email invalido");
@@ -44,7 +46,7 @@ class AuthController extends BaseController
             throw new \InvalidArgumentException("BI/Passaporte deve ter minimo 9 caracteres");
         }
 
-        if (!preg_match('/^(\+244)?9\d{8}$/', $data['telemovel'])) {
+        if ($data['telemovel'] !== '000000000' && !preg_match('/^(\+244)?9\d{8}$/', $data['telemovel'])) {
             throw new \InvalidArgumentException("Telemovel invalido");
         }
 
@@ -69,10 +71,12 @@ class AuthController extends BaseController
             throw new \InvalidArgumentException("BI/Passaporte ja registado");
         }
 
-        $passwordHash = password_hash($data['password'], PASSWORD_ARGON2ID);
+        $passwordHash = defined('PASSWORD_ARGON2ID')
+            ? password_hash($data['password'], PASSWORD_ARGON2ID)
+            : password_hash($data['password'], PASSWORD_BCRYPT);
 
         $sql = 'INSERT INTO users (nome, email, telemovel, bi_passaporte, password_hash, nome_pai, nome_mae, status, created_at)
-                VALUES (:nome, :email, :telemovel, :bi_passaporte, :password_hash, :nome_pai, :nome_mae, :status, NOW())';
+                VALUES (:nome, :email, :telemovel, :bi_passaporte, :password_hash, :nome_pai, :nome_mae, :status, datetime(\'now\',\'localtime\'))';
         $stmt = $this->db->prepare($sql);
         $stmt->execute([
             'nome' => $data['nome'],
@@ -80,8 +84,8 @@ class AuthController extends BaseController
             'telemovel' => $data['telemovel'],
             'bi_passaporte' => $data['bi_passaporte'],
             'password_hash' => $passwordHash,
-            'nome_pai' => $data['nome_pai'],
-            'nome_mae' => $data['nome_mae'],
+            'nome_pai' => $data['nome_pai'] ?? null,
+            'nome_mae' => $data['nome_mae'] ?? null,
             'status' => 'pendente_verificacao',
         ]);
 
@@ -160,7 +164,7 @@ class AuthController extends BaseController
 
         $encryptedPath = $this->encryptAndStore($filePath, $userId, 'bi_frente');
 
-        $sql = 'UPDATE users SET bi_frente_path = :path, updated_at = NOW() WHERE id = :id';
+        $sql = 'UPDATE users SET bi_frente_path = :path, updated_at = datetime(\'now\',\'localtime\') WHERE id = :id';
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['path' => $encryptedPath, 'id' => $userId]);
 
@@ -194,7 +198,7 @@ class AuthController extends BaseController
 
         $encryptedPath = $this->encryptAndStore($filePath, $userId, 'bi_verso');
 
-        $sql = 'UPDATE users SET bi_verso_path = :path, updated_at = NOW() WHERE id = :id';
+        $sql = 'UPDATE users SET bi_verso_path = :path, updated_at = datetime(\'now\',\'localtime\') WHERE id = :id';
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['path' => $encryptedPath, 'id' => $userId]);
 
@@ -223,7 +227,7 @@ class AuthController extends BaseController
 
         $encryptedPath = $this->encryptAndStore($filePath, $userId, 'selfie');
 
-        $sql = 'UPDATE users SET selfie_path = :path, updated_at = NOW() WHERE id = :id';
+        $sql = 'UPDATE users SET selfie_path = :path, updated_at = datetime(\'now\',\'localtime\') WHERE id = :id';
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['path' => $encryptedPath, 'id' => $userId]);
 
@@ -258,7 +262,7 @@ class AuthController extends BaseController
         $verified = $this->callExternalVerificationApi($userId);
 
         if ($verified) {
-            $sql = 'UPDATE users SET status = :status, verified_at = NOW() WHERE id = :id';
+            $sql = 'UPDATE users SET status = :status, verified_at = datetime(\'now\',\'localtime\') WHERE id = :id';
             $stmt = $this->db->prepare($sql);
             $stmt->execute(['status' => 'verificado', 'id' => $userId]);
 
@@ -269,7 +273,7 @@ class AuthController extends BaseController
             ];
         }
 
-        $sql = 'UPDATE users SET status = :status, updated_at = NOW() WHERE id = :id';
+        $sql = 'UPDATE users SET status = :status, updated_at = datetime(\'now\',\'localtime\') WHERE id = :id';
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['status' => 'verificacao_recusada', 'id' => $userId]);
 
@@ -289,18 +293,18 @@ class AuthController extends BaseController
     private function callExternalVerificationApi(int $userId): bool
     {
         // Get user's uploaded documents
-        $sql = 'SELECT bi_document_path, selfie_path FROM users WHERE id = :id';
+        $sql = 'SELECT bi_frente_path, selfie_path FROM users WHERE id = :id';
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['id' => $userId]);
         $user = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        if (!$user || empty($user['bi_document_path']) || empty($user['selfie_path'])) {
+        if (!$user || empty($user['bi_frente_path']) || empty($user['selfie_path'])) {
             return false;
         }
 
         $result = $this->kycService->submitForVerification(
             $userId,
-            $user['bi_document_path'],
+            $user['bi_frente_path'],
             $user['selfie_path']
         );
 
@@ -349,7 +353,7 @@ class AuthController extends BaseController
         $stmt->execute([
             'bi' => $data['bi_passaporte'],
             'email' => $data['email'],
-            'telemovel' => $data['telemovel'],
+            'telemovel' => $data['telemovel'] ?? '',
             'banned_status' => 'temporariamente_banido',
         ]);
         $bannedUser = $stmt->fetch(\PDO::FETCH_ASSOC);
@@ -369,11 +373,11 @@ class AuthController extends BaseController
 
         foreach ($bannedUsers as $banned) {
             $similarFather = similar_text(
-                strtolower($data['nome_pai']),
+                strtolower($data['nome_pai'] ?? ''),
                 strtolower($banned['nome_pai'] ?? '')
             );
             $similarMother = similar_text(
-                strtolower($data['nome_mae']),
+                strtolower($data['nome_mae'] ?? ''),
                 strtolower($banned['nome_mae'] ?? '')
             );
 
