@@ -206,12 +206,12 @@ export default function LandingPage() {
             <div className="space-y-8">
               {steps.map((s) => (
                 <div key={s.num} className="flex items-start gap-6 relative">
-                  <div className="w-12 h-12 rounded-full bg-[#060608] border-2 border-[#f59e0b] flex items-center justify-center flex-shrink-0 z-10">
+                  <div className="w-12 h-12 rounded-full bg-white border-2 border-[#f59e0b] flex items-center justify-center flex-shrink-0 z-10">
                     <span className="text-[13px] font-bold text-[#f59e0b]">{s.num}</span>
                   </div>
                   <div className="pt-2">
                     <h3 className="text-[15px] font-semibold text-slate-800 mb-1">{s.title}</h3>
-                    <p className="text-[13px] text-[#71717a]">{s.desc}</p>
+                    <p className="text-[13px] text-slate-500">{s.desc}</p>
                   </div>
                 </div>
               ))}
@@ -231,7 +231,7 @@ export default function LandingPage() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
             {securityPillars.map((p) => (
-              <div key={p.title} className="p-5 rounded-2xl bg-white/[0.04] border border-white/[0.04] hover:border-[#10b981]/20 transition-colors">
+              <div key={p.title} className="p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-[#10b981]/20 transition-colors">
                 <div className="w-10 h-10 rounded-xl bg-[#10b981]/10 flex items-center justify-center mb-4">
                   <svg className="w-5 h-5 text-[#10b981]" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d={p.icon} />
@@ -270,7 +270,7 @@ export default function LandingPage() {
 
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {testimonials.map((t) => (
-              <div key={t.name} className="p-6 rounded-2xl bg-white/[0.04] border border-white/[0.04]">
+              <div key={t.name} className="p-6 rounded-2xl bg-slate-50 border border-slate-200">
                 <div className="flex gap-1 mb-4">
                   {Array.from({ length: t.rating }).map((_, i) => (
                     <svg key={i} className="w-4 h-4 text-[#f59e0b]" fill="currentColor" viewBox="0 0 24 24">
@@ -299,7 +299,7 @@ export default function LandingPage() {
 
           <div className="space-y-3">
             {faqs.map((f, i) => (
-              <div key={i} className="rounded-xl bg-white/[0.04] border border-white/[0.04] overflow-hidden">
+              <div key={i} className="rounded-xl bg-slate-50 border border-slate-200 overflow-hidden">
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   className="w-full flex items-center justify-between p-5 text-left"
