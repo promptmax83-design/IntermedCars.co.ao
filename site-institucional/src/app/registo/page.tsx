@@ -32,7 +32,6 @@ export default function RegistoPage() {
   const [countdown, setCountdown] = useState(0);
   const [codeError, setCodeError] = useState<string | null>(null);
   const [codeSent, setCodeSent] = useState(false);
-  const [debugCode, setDebugCode] = useState<string | null>(null);
 
   // Countdown timer
   useEffect(() => {
@@ -88,9 +87,6 @@ export default function RegistoPage() {
 
       setCodeSent(true);
       setCountdown(60);
-      if (data.debug_code) {
-        setDebugCode(data.debug_code);
-      }
     } catch (err) {
       setCodeError(err instanceof Error ? err.message : "Erro ao enviar codigo");
     } finally {
@@ -525,19 +521,6 @@ export default function RegistoPage() {
                     : `Enviamos um codigo de 6 digitos para ${maskValue(verifyMethod === "email" ? form.email : form.telemovel, verifyMethod)}`}
                 </p>
 
-                {!verified && debugCode && (
-                  <div className="mt-4 p-4 bg-[#c9a84c]/10 border border-[#c9a84c]/30 rounded-xl">
-                    <p className="text-[11px] font-medium text-[#c9a84c] uppercase tracking-wider mb-1">
-                      Modo Desenvolvimento
-                    </p>
-                    <p className="text-2xl font-mono font-bold text-[#c9a84c] tracking-[0.3em]">
-                      {debugCode}
-                    </p>
-                    <p className="text-[11px] text-[#c9a84c]/60 mt-1">
-                      Copia este codigo e clica em &quot;Verificar Codigo&quot;
-                    </p>
-                  </div>
-                )}
               </div>
 
               {!verified && (
@@ -575,7 +558,7 @@ export default function RegistoPage() {
                       <p className="text-[12px] text-[#52525b]">Reenviar em {countdown}s</p>
                     ) : (
                       <button
-                        onClick={() => { setCodeSent(false); setDebugCode(null); sendVerificationCode(); }}
+                        onClick={() => { setCodeSent(false); sendVerificationCode(); }}
                         disabled={sendingCode}
                         className="text-[12px] text-[#10b981] hover:underline disabled:opacity-50"
                       >
@@ -585,7 +568,7 @@ export default function RegistoPage() {
                   </div>
 
                   <button
-                    onClick={() => { setStep("register"); setCodeSent(false); setCode(""); setDebugCode(null); }}
+                    onClick={() => { setStep("register"); setCodeSent(false); setCode(""); }}
                     className="w-full py-2 text-[#71717a] text-[12px] hover:text-[#fafafa] transition-colors"
                   >
                     Voltar
