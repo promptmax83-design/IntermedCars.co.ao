@@ -46,7 +46,9 @@ class AuthController extends BaseController
             throw new \InvalidArgumentException("BI/Passaporte deve ter minimo 9 caracteres");
         }
 
-        if ($data['telemovel'] !== '000000000' && !preg_match('/^(\+244)?9\d{8}$/', $data['telemovel'])) {
+        $data['telemovel'] = preg_replace('/[\s\-\(\)]/', '', $data['telemovel']);
+
+        if ($data['telemovel'] !== '000000000' && !preg_match('/^(\+?244)?9\d{8}$/', $data['telemovel'])) {
             throw new \InvalidArgumentException("Telemovel invalido");
         }
 
