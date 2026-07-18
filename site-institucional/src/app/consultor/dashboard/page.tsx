@@ -5,6 +5,16 @@ import { useRouter } from "next/navigation";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 
+type CofreData = {
+  ganhos_totais: number;
+  ganhos_pendentes: number;
+  negocios_concluidos: number;
+  ranking: string;
+  split_percentagem: number;
+  proximo_ranking: string;
+  progresso_percentagem: number;
+};
+
 type ConsultorStats = {
   negociacoes_ativas: number;
   rating: number;
@@ -51,6 +61,7 @@ export default function ConsultorDashboardPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [actionLoading, setActionLoading] = useState<number | null>(null);
+  const [cofre, setCofre] = useState<CofreData | null>(null);
 
   const fetchData = useCallback(async () => {
     try {
@@ -81,6 +92,14 @@ export default function ConsultorDashboardPage() {
               )
             : []
         );
+      }
+
+      const cofreRes = await fetch(`${API_BASE}/api/consultants/me/cofre`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (cofreRes.ok) {
+        const cofreData = await cofreRes.json();
+        setCofre(cofreData.data || cofreData);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Erro ao carregar dados");
@@ -160,6 +179,95 @@ export default function ConsultorDashboardPage() {
             Gestao das suas negociacoes e desempenho.
           </p>
         </div>
+
+        {(() => {
+          const cofreData: CofreData = cofre || {
+            ganhos_totais: stats?.comissao_total || 0,
+            ganhos_pendentes: 0,
+            negocios_concluidos: stats?.total_concluidas || 0,
+            ranking: "Bronze",
+            split_percentagem: 20,
+            proximo_ranking: "Prata",
+            progresso_percentagem: Math.min(
+              ((stats?.total_concluidas || 0) / 20) * 100,
+              100
+            ),
+          };
+
+          const rankingBadge: Record<string, string> = {
+            Bronze: "bg-amber-100 text-amber-700",
+            Prata: "bg-slate-100 text-slate-600",
+            Ouro: "bg-yellow-100 text-yellow-700",
+            Embaixador: "bg-amber-100 text-amber-800",
+          };
+
+          return (
+            <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-5 border border-amber-200/60">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl">💰</span>
+                  <h2 className="text-lg font-bold text-amber-900">
+                    O Meu Cofre
+                  </h2>
+                </div>
+                <span
+                  className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                    rankingBadge[cofreData.ranking] ||
+                    "bg-amber-100 text-amber-700"
+                  }`}
+                >
+                  {cofreData.ranking}
+                </span>
+              </div>
+
+              <div className="mb-4">
+                <p className="text-3xl font-bold text-amber-900">
+                  Kz {cofreData.ganhos_totais.toLocaleString("pt-AO")}
+                </p>
+                <p className="text-sm text-amber-600">Ganhos Totais</p>
+              </div>
+
+              <div className="grid grid-cols-3 gap-3 mb-4">
+                <div className="bg-white/60 rounded-lg p-3 text-center">
+                  <p className="text-lg font-bold text-amber-700">
+                    {cofreData.split_percentagem}%
+                  </p>
+                  <p className="text-xs text-amber-600">Split</p>
+                </div>
+                <div className="bg-white/60 rounded-lg p-3 text-center">
+                  <p className="text-lg font-bold text-amber-700">
+                    {cofreData.negocios_concluidos}
+                  </p>
+                  <p className="text-xs text-amber-600">Negocios</p>
+                </div>
+                <div className="bg-white/60 rounded-lg p-3 text-center">
+                  <p className="text-lg font-bold text-amber-700">
+                    Kz{" "}
+                    {cofreData.ganhos_pendentes.toLocaleString("pt-AO")}
+                  </p>
+                  <p className="text-xs text-amber-600">Pendente</p>
+                </div>
+              </div>
+
+              <div>
+                <div className="flex justify-between text-xs text-amber-700 mb-1">
+                  <span>Progresso</span>
+                  <span>
+                    Proximo nivel: {cofreData.proximo_ranking}
+                  </span>
+                </div>
+                <div className="w-full bg-amber-100 rounded-full h-2">
+                  <div
+                    className="bg-amber-400 h-2 rounded-full transition-all"
+                    style={{
+                      width: `${cofreData.progresso_percentagem}%`,
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          );
+        })()}
 
         {stats && (
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
