@@ -54,11 +54,16 @@ class VerificationService
             $notification->sendSms($targetValue, "IntermedCars: O teu codigo e {$code}", 'registration');
         }
 
-        return [
+        $isDev = (($_ENV['APP_ENV'] ?? 'development') === 'development');
+        $response = [
             'success' => true,
             'message' => "Codigo enviado para {$targetValue}",
             'expires_in' => 600,
         ];
+        if ($isDev) {
+            $response['debug_code'] = $code;
+        }
+        return $response;
     }
 
     public function verifyCode(string $targetType, string $targetValue, string $code, string $purpose = 'registration'): array

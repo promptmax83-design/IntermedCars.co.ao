@@ -23,7 +23,7 @@ class NotificationService
         $senderEmail = $_ENV['BREVO_SENDER_EMAIL'] ?? 'no-reply@intermedcars.co.ao';
         $senderName = $_ENV['BREVO_SENDER_NAME'] ?? 'IntermedCars';
 
-        if ($this->debug && empty($apiKey)) {
+        if ($this->debug) {
             error_log("[Notification] DEBUG email to {$to}: {$subject}");
             $this->logRepo->log('email', $to, $event, 'debug');
             return ['success' => true, 'message' => 'Email enviado (debug mode)', 'debug' => true];
