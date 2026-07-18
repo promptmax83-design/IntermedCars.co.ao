@@ -115,7 +115,7 @@ class AuthController extends BaseController
             throw new \InvalidArgumentException("Email e password obrigatorios");
         }
 
-        $sql = 'SELECT id, nome, email, bi_passaporte, password_hash, status FROM users WHERE email = :email';
+        $sql = 'SELECT id, nome, email, bi_passaporte, password_hash, status, role FROM users WHERE email = :email';
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['email' => $email]);
         $user = $stmt->fetch(\PDO::FETCH_ASSOC);
@@ -137,6 +137,7 @@ class AuthController extends BaseController
                 'nome' => $user['nome'],
                 'email' => $user['email'],
                 'verificado' => $user['status'] === 'verificado',
+                'role' => $user['role'] ?? 'user',
             ],
             'token' => $token,
         ];

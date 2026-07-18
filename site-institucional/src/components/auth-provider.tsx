@@ -72,10 +72,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [showKycModal, setShowKycModal] = useState(false);
 
   const login = useCallback((newToken: string, newUser: User) => {
+    const userWithRole = { ...newUser, role: newUser.role || "user" };
     localStorage.setItem("token", newToken);
-    localStorage.setItem("user", JSON.stringify(newUser));
+    localStorage.setItem("user", JSON.stringify(userWithRole));
     setToken(newToken);
-    setUser(newUser);
+    setUser(userWithRole);
   }, []);
 
   const logout = useCallback(() => {
