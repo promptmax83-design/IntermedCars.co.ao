@@ -26,7 +26,7 @@ export default function RootLayout({
       lang="pt-AO"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-[#060608] text-[#f0f0f0]">
+      <body className="min-h-full bg-[#F8F9FA] text-[#1E293B]">
         <ClientProviders>
           <AppShell>{children}</AppShell>
         </ClientProviders>

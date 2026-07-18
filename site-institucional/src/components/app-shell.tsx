@@ -50,7 +50,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#060608] flex items-center justify-center">
+      <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <div className="w-10 h-10 rounded-full border-2 border-[#10b981] border-t-transparent animate-spin" />
           <p className="text-xs text-[#52525b]">A carregar...</p>
@@ -79,7 +79,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       {/* MAIN */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Mobile Header */}
-        <header className="lg:hidden flex items-center justify-between px-4 h-14 bg-[#0a0a0c] border-b border-white/[0.04] shrink-0">
+        <header className="lg:hidden sticky top-0 z-20 bg-white/80 backdrop-blur-xl border-b border-slate-200/60 flex items-center justify-between px-4 h-14 shrink-0">
           <Link href="/">
             <Logo size="sm" showText={false} />
           </Link>

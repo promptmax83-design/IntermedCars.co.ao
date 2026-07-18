@@ -19,7 +19,7 @@ const rankColors: Record<string, string> = {
   Bronze: "text-[#cd7f32]",
   Prata: "text-[#c0c0c0]",
   Ouro: "text-[#ffd700]",
-  Embaixador: "text-[#10b981]",
+  Embaixador: "text-emerald-600",
 };
 
 const rankStars: Record<string, number> = {
@@ -84,14 +84,14 @@ export default function EncontrarConsultorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#060608] pb-24">
+    <div className="min-h-screen bg-[#F8F9FA] pb-24">
       {/* Header */}
-      <div className="sticky top-0 z-20 bg-[#0a0a0c]/90 backdrop-blur-xl border-b border-white/[0.04]">
+      <div className="sticky top-0 z-20 bg-white/80 backdrop-blur-xl border-b border-slate-200/60">
         <div className="max-w-2xl mx-auto px-4 py-4">
-          <h1 className="text-lg font-bold text-[#fafafa]">
+          <h1 className="text-lg font-bold text-slate-800">
             Encontrar Consultor
           </h1>
-          <p className="text-[12px] text-[#71717a] mt-0.5">
+          <p className="text-[12px] text-slate-500 mt-0.5">
             Como o Yango — encontra o consultor certo para o teu negocio
           </p>
         </div>
@@ -100,7 +100,7 @@ export default function EncontrarConsultorPage() {
       <div className="max-w-2xl mx-auto px-4 pt-6 space-y-6">
         {/* Search by Code */}
         <div className="space-y-3">
-          <label className="text-[11px] font-medium text-[#71717a] uppercase tracking-wider">
+          <label className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">
             Digite o codigo do consultor
           </label>
           <div className="flex gap-2">
@@ -109,24 +109,24 @@ export default function EncontrarConsultorPage() {
               value={searchCode}
               onChange={(e) => setSearchCode(e.target.value.toUpperCase())}
               placeholder="IMC-0001"
-              className="flex-1 px-4 py-3 bg-white/[0.04] border border-white/[0.06] rounded-xl text-sm text-[#fafafa] font-mono tracking-wider outline-none focus:border-[#10b981]/40 transition-colors"
+              className="flex-1 px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 font-mono tracking-wider outline-none shadow-sm focus:border-emerald-500/40 transition-colors"
             />
             <button
               onClick={handleSearchCode}
               disabled={!searchCode.trim()}
-              className="px-6 py-3 bg-[#10b981] hover:bg-[#0ea573] text-[#060608] font-semibold text-sm rounded-xl transition-all duration-200 disabled:opacity-50"
+              className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm rounded-xl transition-all duration-200 disabled:opacity-50"
             >
               Buscar
             </button>
           </div>
           {error && (
-            <p className="text-[13px] text-[#ef4444]">{error}</p>
+            <p className="text-[13px] text-red-500">{error}</p>
           )}
         </div>
 
         {/* Search by Zone */}
         <div className="space-y-3">
-          <label className="text-[11px] font-medium text-[#71717a] uppercase tracking-wider">
+          <label className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">
             Ou pesquisar por zona
           </label>
           <div className="flex gap-2">
@@ -135,11 +135,11 @@ export default function EncontrarConsultorPage() {
               value={searchZone}
               onChange={(e) => setSearchZone(e.target.value)}
               placeholder="Ex: Luanda, Huambo, Benguela..."
-              className="flex-1 px-4 py-3 bg-white/[0.04] border border-white/[0.06] rounded-xl text-sm text-[#fafafa] outline-none focus:border-[#10b981]/40 transition-colors"
+              className="flex-1 px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 outline-none shadow-sm focus:border-emerald-500/40 transition-colors"
             />
             <button
               onClick={fetchConsultants}
-              className="px-6 py-3 bg-white/[0.06] hover:bg-white/[0.1] text-[#fafafa] font-medium text-sm rounded-xl transition-all duration-200"
+              className="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-sm rounded-xl transition-all duration-200"
             >
               Filtrar
             </button>
@@ -148,9 +148,9 @@ export default function EncontrarConsultorPage() {
 
         {/* Selected Consultant */}
         {selected && (
-          <div className="bg-[#10b981]/5 border border-[#10b981]/20 rounded-2xl p-5 space-y-4">
+          <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 space-y-4">
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#10b981] to-[#059669] flex items-center justify-center text-lg font-bold text-white">
+              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center text-lg font-bold text-white">
                 {selected.fullname
                   .split(" ")
                   .map((n) => n[0])
@@ -158,20 +158,20 @@ export default function EncontrarConsultorPage() {
                   .slice(0, 2)}
               </div>
               <div className="flex-1">
-                <h3 className="text-[15px] font-bold text-[#fafafa]">
+                <h3 className="text-[15px] font-bold text-slate-800">
                   {selected.fullname}
                 </h3>
-                <p className="text-[12px] text-[#10b981] font-mono">
+                <p className="text-[12px] text-emerald-600 font-mono">
                   {selected.codigo_referencia}
                 </p>
-                <p className="text-[12px] text-[#71717a]">
+                <p className="text-[12px] text-slate-500">
                   Zona: {selected.zone}
                 </p>
               </div>
               <div className="text-right">
                 <span
                   className={`text-[13px] font-bold ${
-                    rankColors[selected.rank] || "text-[#fafafa]"
+                    rankColors[selected.rank] || "text-slate-800"
                   }`}
                 >
                   {selected.rank}
@@ -181,7 +181,7 @@ export default function EncontrarConsultorPage() {
                     (_, i) => (
                       <svg
                         key={i}
-                        className="w-3 h-3 text-[#f59e0b]"
+                        className="w-3 h-3 text-amber-500"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                       >
@@ -194,29 +194,29 @@ export default function EncontrarConsultorPage() {
             </div>
 
             <div className="grid grid-cols-3 gap-3 text-center">
-              <div className="bg-white/[0.03] rounded-xl p-3">
-                <p className="text-[18px] font-bold text-[#fafafa]">
+              <div className="bg-white/60 rounded-xl p-3">
+                <p className="text-[18px] font-bold text-slate-800">
                   {selected.total_deals}
                 </p>
-                <p className="text-[10px] text-[#71717a] uppercase">Deals</p>
+                <p className="text-[10px] text-slate-500 uppercase">Deals</p>
               </div>
-              <div className="bg-white/[0.03] rounded-xl p-3">
-                <p className="text-[18px] font-bold text-[#f59e0b]">
+              <div className="bg-white/60 rounded-xl p-3">
+                <p className="text-[18px] font-bold text-amber-500">
                   {Number(selected.rating).toFixed(1)}
                 </p>
-                <p className="text-[10px] text-[#71717a] uppercase">Rating</p>
+                <p className="text-[10px] text-slate-500 uppercase">Rating</p>
               </div>
-              <div className="bg-white/[0.03] rounded-xl p-3">
-                <p className="text-[18px] font-bold text-[#10b981]">
+              <div className="bg-white/60 rounded-xl p-3">
+                <p className="text-[18px] font-bold text-emerald-600">
                   {selected.rank}
                 </p>
-                <p className="text-[10px] text-[#71717a] uppercase">Rank</p>
+                <p className="text-[10px] text-slate-500 uppercase">Rank</p>
               </div>
             </div>
 
             <Link
               href={`/chat?consultant=${selected.id}`}
-              className="flex items-center justify-center gap-2 w-full py-3 bg-[#10b981] hover:bg-[#0ea573] text-[#060608] font-semibold text-sm rounded-xl transition-all duration-200"
+              className="flex items-center justify-center gap-2 w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm rounded-xl transition-all duration-200"
             >
               <svg
                 className="w-4 h-4"
@@ -238,20 +238,20 @@ export default function EncontrarConsultorPage() {
 
         {/* Consultants List */}
         <div className="space-y-3">
-          <h2 className="text-[11px] font-medium text-[#71717a] uppercase tracking-wider">
+          <h2 className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">
             Consultores Disponiveis
           </h2>
 
           {loading ? (
-            <div className="text-center py-12 text-[#71717a]">
+            <div className="text-center py-12 text-slate-400">
               A carregar consultores...
             </div>
           ) : consultants.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-[#71717a] text-sm">
+              <p className="text-slate-400 text-sm">
                 Nenhum consultor encontrado
               </p>
-              <p className="text-[#52525b] text-[12px] mt-1">
+              <p className="text-slate-400 text-[12px] mt-1">
                 Tenta pesquisar por outra zona
               </p>
             </div>
@@ -263,11 +263,11 @@ export default function EncontrarConsultorPage() {
                   onClick={() => setSelected(c)}
                   className={`w-full flex items-center gap-4 p-4 rounded-xl border transition-all duration-200 text-left ${
                     selected?.id === c.id
-                      ? "bg-[#10b981]/10 border-[#10b981]/30"
-                      : "bg-white/[0.02] border-white/[0.04] hover:bg-white/[0.04]"
+                      ? "bg-emerald-50 border-emerald-200"
+                      : "bg-white border-slate-200/60 shadow-sm hover:shadow-md"
                   }`}
                 >
-                  <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#c9a84c] to-[#b8933d] flex items-center justify-center text-[13px] font-bold text-[#060608]">
+                  <div className="w-11 h-11 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-[13px] font-bold text-white">
                     {c.fullname
                       .split(" ")
                       .map((n) => n[0])
@@ -275,22 +275,22 @@ export default function EncontrarConsultorPage() {
                       .slice(0, 2)}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[13px] font-medium text-[#fafafa] truncate">
+                    <p className="text-[13px] font-medium text-slate-800 truncate">
                       {c.fullname}
                     </p>
-                    <p className="text-[11px] text-[#10b981] font-mono">
+                    <p className="text-[11px] text-emerald-600 font-mono">
                       {c.codigo_referencia}
                     </p>
                   </div>
                   <div className="text-right shrink-0">
                     <p
                       className={`text-[12px] font-bold ${
-                        rankColors[c.rank] || "text-[#fafafa]"
+                        rankColors[c.rank] || "text-slate-800"
                       }`}
                     >
                       {c.rank}
                     </p>
-                    <p className="text-[11px] text-[#71717a]">
+                    <p className="text-[11px] text-slate-500">
                       {Number(c.rating).toFixed(1)}★
                     </p>
                   </div>

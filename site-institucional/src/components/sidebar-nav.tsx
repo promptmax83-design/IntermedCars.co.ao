@@ -84,9 +84,9 @@ export default function SidebarNav() {
     : "U";
 
   return (
-    <aside className="hidden lg:flex flex-col w-[260px] bg-[#0a0a0c] border-r border-white/[0.04] shrink-0">
+    <aside className="hidden lg:flex flex-col w-[260px] bg-white/80 backdrop-blur-xl border-r border-slate-200/60 shrink-0 shadow-sm">
       {/* Logo */}
-      <div className="h-16 flex items-center px-5 border-b border-white/[0.04]">
+      <div className="h-16 flex items-center px-5 border-b border-slate-100">
         <Link href="/">
           <Logo size="md" />
         </Link>
@@ -105,15 +105,15 @@ export default function SidebarNav() {
               href={item.href}
               className={`group flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200 ${
                 active
-                  ? "bg-[#10b981]/10 text-[#10b981]"
-                  : "text-[#71717a] hover:text-[#fafafa] hover:bg-white/[0.03]"
+                  ? "bg-emerald-50 text-emerald-600"
+                  : "text-slate-500 hover:text-slate-700 hover:bg-slate-50"
               }`}
             >
               <div
                 className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
                   active
-                    ? "bg-[#10b981]/15"
-                    : "bg-white/[0.03] group-hover:bg-white/[0.06]"
+                    ? "bg-emerald-100"
+                    : "bg-slate-100 group-hover:bg-slate-200/60"
                 }`}
               >
                 <svg
@@ -135,7 +135,7 @@ export default function SidebarNav() {
           );
         })}
 
-        <div className="border-t border-white/[0.04] my-3" />
+        <div className="border-t border-slate-100 my-3" />
 
         {navSecondary.filter((item) => {
           const userRole = user?.role || "user";
@@ -148,15 +148,15 @@ export default function SidebarNav() {
               href={item.href}
               className={`group flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200 ${
                 active
-                  ? "bg-[#10b981]/10 text-[#10b981]"
-                  : "text-[#71717a] hover:text-[#fafafa] hover:bg-white/[0.03]"
+                  ? "bg-emerald-50 text-emerald-600"
+                  : "text-slate-500 hover:text-slate-700 hover:bg-slate-50"
               }`}
             >
               <div
                 className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
                   active
-                    ? "bg-[#10b981]/15"
-                    : "bg-white/[0.03] group-hover:bg-white/[0.06]"
+                    ? "bg-emerald-100"
+                    : "bg-slate-100 group-hover:bg-slate-200/60"
                 }`}
               >
                 <svg
@@ -180,10 +180,10 @@ export default function SidebarNav() {
       </nav>
 
       {/* Bottom */}
-      <div className="p-4 border-t border-white/[0.04] space-y-3">
+      <div className="p-4 border-t border-slate-100 space-y-3">
         <Link
           href="/anunciar"
-          className="flex items-center justify-center gap-2 w-full bg-[#10b981] hover:bg-[#0ea573] text-[#060608] font-semibold text-[13px] py-2.5 px-4 rounded-xl transition-all duration-200 hover:shadow-[0_0_24px_rgba(16,185,129,0.25)]"
+          className="flex items-center justify-center gap-2 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-[13px] py-2.5 px-4 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg"
         >
           <svg
             className="w-4 h-4"
@@ -202,16 +202,19 @@ export default function SidebarNav() {
         </Link>
         <button
           onClick={logout}
-          className="flex items-center gap-3 p-2 rounded-xl hover:bg-white/[0.03] transition-colors cursor-pointer w-full text-left"
+          className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer w-full text-left"
         >
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#c9a84c] to-[#b8933d] flex items-center justify-center text-[11px] font-bold text-[#060608]">
+          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-[11px] font-bold text-white shadow-sm">
             {userInitials}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-[13px] font-medium truncate text-[#fafafa]">
+            <p className="text-[13px] font-medium truncate text-slate-800">
               {user?.nome || "Utilizador"}
             </p>
-            <p className="text-[11px] text-[#52525b] truncate">
+            <p className="text-emerald-600 font-mono text-[11px]">
+              IMC-{user?.id?.toString().padStart(5, "0") || "00000"}
+            </p>
+            <p className="text-[11px] text-slate-400 truncate">
               {user?.verificado ? "Agente Certificado" : "Conta Ativa"}
             </p>
           </div>
