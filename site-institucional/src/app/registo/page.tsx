@@ -187,7 +187,7 @@ export default function RegistoPage() {
   const canSubmit = form.nome && form.bi_passaporte && form.password && form.confirmarPassword && (form.email || form.telemovel);
 
   return (
-    <div className="min-h-screen bg-[#060608] flex">
+    <div className="min-h-screen bg-[#F8F9FA] flex">
       {/* LEFT — Visual Panel */}
       <div className="hidden lg:flex flex-1 items-center justify-center relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_rgba(16,185,129,0.1)_0%,transparent_60%)]" />
@@ -196,10 +196,10 @@ export default function RegistoPage() {
         <div className="relative z-10 max-w-lg px-12">
           <div className="mb-10">
             <Logo size="lg" />
-            <h1 className="text-3xl font-bold text-[#fafafa] mt-6">
+            <h1 className="text-3xl font-bold text-slate-800 mt-6">
               Junte-se ao <span className="text-[#10b981]">IntermedCars</span>
             </h1>
-            <p className="text-[15px] text-[#71717a] mt-3 leading-relaxed">
+            <p className="text-[15px] text-slate-500 mt-3 leading-relaxed">
               Crie a sua conta gratuita e comece a negociar veiculos de forma segura.
             </p>
           </div>
@@ -212,8 +212,8 @@ export default function RegistoPage() {
                 </svg>
               </div>
               <div>
-                <p className="text-[13px] font-semibold text-[#fafafa]">Registo Rapido</p>
-                <p className="text-[12px] text-[#71717a]">Crie a sua conta em menos de 2 minutos</p>
+                <p className="text-[13px] font-semibold text-slate-800">Registo Rapido</p>
+                <p className="text-[12px] text-slate-500">Crie a sua conta em menos de 2 minutos</p>
               </div>
             </div>
 
@@ -224,8 +224,8 @@ export default function RegistoPage() {
                 </svg>
               </div>
               <div>
-                <p className="text-[13px] font-semibold text-[#fafafa]">Identidade Verificada</p>
-                <p className="text-[12px] text-[#71717a]">BI e selfie para garantir seguranca</p>
+                <p className="text-[13px] font-semibold text-slate-800">Identidade Verificada</p>
+                <p className="text-[12px] text-slate-500">BI e selfie para garantir seguranca</p>
               </div>
             </div>
 
@@ -236,13 +236,13 @@ export default function RegistoPage() {
                 </svg>
               </div>
               <div>
-                <p className="text-[13px] font-semibold text-[#fafafa]">Plataforma Segura</p>
-                <p className="text-[12px] text-[#71717a]">Os seus dados estao protegidos</p>
+                <p className="text-[13px] font-semibold text-slate-800">Plataforma Segura</p>
+                <p className="text-[12px] text-slate-500">Os seus dados estao protegidos</p>
               </div>
             </div>
           </div>
 
-          <div className="mt-10 flex items-center gap-2 text-[12px] text-[#52525b]">
+          <div className="mt-10 flex items-center gap-2 text-[12px] text-slate-400">
             <svg className="w-4 h-4 text-[#10b981]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -289,15 +289,15 @@ export default function RegistoPage() {
           {/* STEP: Choose Method */}
           {step === "register" && regMethod === "choose" && (
             <div>
-              <h2 className="text-2xl font-bold text-[#fafafa] mb-1">Criar Conta</h2>
-              <p className="text-[13px] text-[#71717a] mb-8">
+              <h2 className="text-2xl font-bold text-slate-800 mb-1">Criar Conta</h2>
+              <p className="text-[13px] text-slate-500 mb-8">
                 Escolhe como queres registar-te.
               </p>
 
               <div className="space-y-3">
                 <button
                   onClick={() => setRegMethod("email")}
-                  className="w-full flex items-center gap-4 p-4 bg-white/[0.04] border border-white/[0.06] rounded-xl hover:border-[#10b981]/40 hover:bg-[#10b981]/5 transition-all duration-200 text-left"
+                  className="w-full flex items-center gap-4 p-4 bg-slate-50 border border-slate-200 rounded-xl hover:border-[#10b981]/40 hover:bg-[#10b981]/5 transition-all duration-200 text-left"
                 >
                   <div className="w-12 h-12 rounded-full bg-[#10b981]/10 flex items-center justify-center flex-shrink-0">
                     <svg className="w-6 h-6 text-[#10b981]" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
@@ -305,14 +305,14 @@ export default function RegistoPage() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-[#fafafa]">Usar Email</p>
-                    <p className="text-[12px] text-[#71717a]">Regista-te com o teu endereco de email</p>
+                    <p className="text-sm font-semibold text-slate-800">Usar Email</p>
+                    <p className="text-[12px] text-slate-500">Regista-te com o teu endereco de email</p>
                   </div>
                 </button>
 
                 <button
                   onClick={() => setRegMethod("phone")}
-                  className="w-full flex items-center gap-4 p-4 bg-white/[0.04] border border-white/[0.06] rounded-xl hover:border-[#10b981]/40 hover:bg-[#10b981]/5 transition-all duration-200 text-left"
+                  className="w-full flex items-center gap-4 p-4 bg-slate-50 border border-slate-200 rounded-xl hover:border-[#10b981]/40 hover:bg-[#10b981]/5 transition-all duration-200 text-left"
                 >
                   <div className="w-12 h-12 rounded-full bg-[#10b981]/10 flex items-center justify-center flex-shrink-0">
                     <svg className="w-6 h-6 text-[#10b981]" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
@@ -320,13 +320,13 @@ export default function RegistoPage() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-[#fafafa]">Usar Telemovel</p>
-                    <p className="text-[12px] text-[#71717a]">Regista-te com o teu numero de telefone</p>
+                    <p className="text-sm font-semibold text-slate-800">Usar Telemovel</p>
+                    <p className="text-[12px] text-slate-500">Regista-te com o teu numero de telefone</p>
                   </div>
                 </button>
               </div>
 
-              <p className="text-center text-[13px] text-[#71717a] mt-8">
+              <p className="text-center text-[13px] text-slate-500 mt-8">
                 Ja tens conta?{" "}
                 <Link href="/login" className="text-[#10b981] font-semibold hover:underline">
                   Entrar
@@ -340,7 +340,7 @@ export default function RegistoPage() {
             <div>
               <button
                 onClick={() => setRegMethod("choose")}
-                className="text-[12px] text-[#71717a] hover:text-[#fafafa] transition-colors mb-4 flex items-center gap-1"
+                className="text-[12px] text-slate-500 hover:text-slate-800 transition-colors mb-4 flex items-center gap-1"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -348,16 +348,16 @@ export default function RegistoPage() {
                 Voltar
               </button>
 
-              <h2 className="text-2xl font-bold text-[#fafafa] mb-1">
+              <h2 className="text-2xl font-bold text-slate-800 mb-1">
                 Criar Conta com {regMethod === "email" ? "Email" : "Telemovel"}
               </h2>
-              <p className="text-[13px] text-[#71717a] mb-6">
+              <p className="text-[13px] text-slate-500 mb-6">
                 Preenche os teus dados para comecar.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="text-[11px] font-medium text-[#71717a] uppercase tracking-wider">
+                  <label className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">
                     Nome Completo
                   </label>
                   <input
@@ -367,13 +367,13 @@ export default function RegistoPage() {
                     onChange={handleChange}
                     required
                     placeholder="Ex: Joao Silva"
-                    className="w-full mt-1.5 px-4 py-3 bg-white/[0.04] border border-white/[0.06] rounded-xl text-sm text-[#fafafa] placeholder-[#52525b] outline-none focus:border-[#10b981]/40 transition-colors"
+                    className="w-full mt-1.5 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-[#52525b] outline-none focus:border-[#10b981]/40 transition-colors"
                   />
                 </div>
 
                 {regMethod === "email" && (
                   <div>
-                    <label className="text-[11px] font-medium text-[#71717a] uppercase tracking-wider">
+                    <label className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">
                       Email
                     </label>
                     <input
@@ -383,14 +383,14 @@ export default function RegistoPage() {
                       onChange={handleChange}
                       required
                       placeholder="email@exemplo.com"
-                      className="w-full mt-1.5 px-4 py-3 bg-white/[0.04] border border-white/[0.06] rounded-xl text-sm text-[#fafafa] placeholder-[#52525b] outline-none focus:border-[#10b981]/40 transition-colors"
+                      className="w-full mt-1.5 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-[#52525b] outline-none focus:border-[#10b981]/40 transition-colors"
                     />
                   </div>
                 )}
 
                 {regMethod === "phone" && (
                   <div>
-                    <label className="text-[11px] font-medium text-[#71717a] uppercase tracking-wider">
+                    <label className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">
                       Telemovel
                     </label>
                     <input
@@ -400,13 +400,13 @@ export default function RegistoPage() {
                       onChange={handleChange}
                       required
                       placeholder="9XX XXX XXX"
-                      className="w-full mt-1.5 px-4 py-3 bg-white/[0.04] border border-white/[0.06] rounded-xl text-sm text-[#fafafa] placeholder-[#52525b] outline-none focus:border-[#10b981]/40 transition-colors"
+                      className="w-full mt-1.5 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-[#52525b] outline-none focus:border-[#10b981]/40 transition-colors"
                     />
                   </div>
                 )}
 
                 <div>
-                  <label className="text-[11px] font-medium text-[#71717a] uppercase tracking-wider">
+                  <label className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">
                     BI / Passaporte
                   </label>
                   <input
@@ -417,12 +417,12 @@ export default function RegistoPage() {
                     required
                     placeholder="Minimo 9 caracteres"
                     minLength={9}
-                    className="w-full mt-1.5 px-4 py-3 bg-white/[0.04] border border-white/[0.06] rounded-xl text-sm text-[#fafafa] placeholder-[#52525b] outline-none focus:border-[#10b981]/40 transition-colors"
+                    className="w-full mt-1.5 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-[#52525b] outline-none focus:border-[#10b981]/40 transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="text-[11px] font-medium text-[#71717a] uppercase tracking-wider">
+                  <label className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">
                     Password
                   </label>
                   <div className="relative">
@@ -434,12 +434,12 @@ export default function RegistoPage() {
                       required
                       minLength={8}
                       placeholder="Minimo 8 caracteres"
-                      className="w-full mt-1.5 px-4 py-3 pr-12 bg-white/[0.04] border border-white/[0.06] rounded-xl text-sm text-[#fafafa] placeholder-[#52525b] outline-none focus:border-[#10b981]/40 transition-colors"
+                      className="w-full mt-1.5 px-4 py-3 pr-12 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-[#52525b] outline-none focus:border-[#10b981]/40 transition-colors"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 mt-0.5 text-[#52525b] hover:text-[#71717a] transition-colors"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 mt-0.5 text-slate-400 hover:text-slate-500 transition-colors"
                     >
                       {showPassword ? (
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
@@ -456,7 +456,7 @@ export default function RegistoPage() {
                 </div>
 
                 <div>
-                  <label className="text-[11px] font-medium text-[#71717a] uppercase tracking-wider">
+                  <label className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">
                     Confirmar Password
                   </label>
                   <div className="relative">
@@ -467,7 +467,7 @@ export default function RegistoPage() {
                       onChange={handleChange}
                       required
                       placeholder="Repete a password"
-                      className="w-full mt-1.5 px-4 py-3 pr-12 bg-white/[0.04] border border-white/[0.06] rounded-xl text-sm text-[#fafafa] placeholder-[#52525b] outline-none focus:border-[#10b981]/40 transition-colors"
+                      className="w-full mt-1.5 px-4 py-3 pr-12 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-[#52525b] outline-none focus:border-[#10b981]/40 transition-colors"
                     />
                   </div>
                 </div>
@@ -488,7 +488,7 @@ export default function RegistoPage() {
                 </button>
               </form>
 
-              <p className="text-center text-[13px] text-[#71717a] mt-6">
+              <p className="text-center text-[13px] text-slate-500 mt-6">
                 Ja tens conta?{" "}
                 <Link href="/login" className="text-[#10b981] font-semibold hover:underline">
                   Entrar
@@ -501,21 +501,21 @@ export default function RegistoPage() {
           {step === "verify" && (
             <div>
               <div className="text-center">
-                <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ${verified ? "bg-[#10b981]/10" : "bg-white/[0.04]"}`}>
+                <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ${verified ? "bg-[#10b981]/10" : "bg-slate-50"}`}>
                   {verified ? (
                     <svg className="w-8 h-8 text-[#10b981]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                   ) : (
-                    <svg className="w-8 h-8 text-[#71717a]" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                    <svg className="w-8 h-8 text-slate-500" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                     </svg>
                   )}
                 </div>
-                <h2 className="text-lg font-bold text-[#fafafa]">
+                <h2 className="text-lg font-bold text-slate-800">
                   {verified ? "Verificado!" : "Codigo de Verificacao"}
                 </h2>
-                <p className="text-[13px] text-[#71717a] mt-1">
+                <p className="text-[13px] text-slate-500 mt-1">
                   {verified
                     ? "Codigo confirmado com sucesso"
                     : `Enviamos um codigo de 6 digitos para ${maskValue(verifyMethod === "email" ? form.email : form.telemovel, verifyMethod)}`}
@@ -526,7 +526,7 @@ export default function RegistoPage() {
               {!verified && (
                 <div className="space-y-4 mt-6">
                   <div>
-                    <label className="text-[11px] font-medium text-[#71717a] uppercase tracking-wider">
+                    <label className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">
                       Codigo de 6 digitos
                     </label>
                     <input
@@ -535,9 +535,9 @@ export default function RegistoPage() {
                       onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
                       placeholder="000000"
                       maxLength={6}
-                      className="w-full mt-1.5 px-4 py-3 bg-white/[0.04] border border-white/[0.06] rounded-xl text-sm text-[#fafafa] text-center tracking-[0.5em] font-mono outline-none focus:border-[#10b981]/40 transition-colors"
+                      className="w-full mt-1.5 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 text-center tracking-[0.5em] font-mono outline-none focus:border-[#10b981]/40 transition-colors"
                     />
-                    <p className="text-[11px] text-[#52525b] text-center mt-2">
+                    <p className="text-[11px] text-slate-400 text-center mt-2">
                       Em modo desenvolvimento, qualquer codigo de 6 digitos e aceite.
                     </p>
                   </div>
@@ -558,7 +558,7 @@ export default function RegistoPage() {
 
                   <div className="text-center">
                     {countdown > 0 ? (
-                      <p className="text-[12px] text-[#52525b]">Reenviar em {countdown}s</p>
+                      <p className="text-[12px] text-slate-400">Reenviar em {countdown}s</p>
                     ) : (
                       <button
                         onClick={() => { setCodeSent(false); sendVerificationCode(); }}
@@ -572,7 +572,7 @@ export default function RegistoPage() {
 
                   <button
                     onClick={() => { setStep("register"); setCodeSent(false); setCode(""); }}
-                    className="w-full py-2 text-[#71717a] text-[12px] hover:text-[#fafafa] transition-colors"
+                    className="w-full py-2 text-slate-500 text-[12px] hover:text-slate-800 transition-colors"
                   >
                     Voltar
                   </button>
@@ -597,8 +597,8 @@ export default function RegistoPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h1 className="text-xl font-bold text-[#fafafa] mb-2">Conta Criada!</h1>
-              <p className="text-[13px] text-[#71717a] mb-6">
+              <h1 className="text-xl font-bold text-slate-800 mb-2">Conta Criada!</h1>
+              <p className="text-[13px] text-slate-500 mb-6">
                 A tua conta foi criada com sucesso. Podes comecar a explorar o marketplace.
               </p>
               <Link
@@ -682,8 +682,8 @@ function KycStep({ onComplete, onSkip }: { onComplete: () => void; onSkip: () =>
 
   return (
     <div>
-      <h1 className="text-xl font-bold text-[#fafafa] mb-1">Verificacao de Identidade</h1>
-      <p className="text-[13px] text-[#71717a] mb-6">Valida o teu BI e rosto para acesso completo.</p>
+      <h1 className="text-xl font-bold text-slate-800 mb-1">Verificacao de Identidade</h1>
+      <p className="text-[13px] text-slate-500 mb-6">Valida o teu BI e rosto para acesso completo.</p>
 
       {kycError && <div className="mb-4 p-3 bg-[#ef4444]/10 border border-[#ef4444]/30 rounded-xl text-[13px] text-[#ef4444]">{kycError}</div>}
 
@@ -697,17 +697,17 @@ function KycStep({ onComplete, onSkip }: { onComplete: () => void; onSkip: () =>
 
       {kycStep === "bi" && (
         <div className="space-y-4">
-          <p className="text-[12px] text-[#a1a1aa] font-medium">Passo 1: Bilhete de Identidade</p>
+          <p className="text-[12px] text-slate-500 font-medium">Passo 1: Bilhete de Identidade</p>
           {["frente", "verso"].map((side) => (
             <div key={side}>
-              <label className="text-[11px] text-[#71717a] uppercase tracking-wider">{side === "frente" ? "Frente do BI" : "Verso do BI"}</label>
+              <label className="text-[11px] text-slate-500 uppercase tracking-wider">{side === "frente" ? "Frente do BI" : "Verso do BI"}</label>
               <div className="mt-1.5">
                 <input type="file" accept="image/*" onChange={(e) => handleFile(side as "frente" | "verso", e)} className="hidden" id={`bi-${side}`} />
-                <label htmlFor={`bi-${side}`} className={`flex items-center justify-center h-32 rounded-xl border-2 border-dashed cursor-pointer transition-all ${(side === "frente" ? biFrentePreview : biVersoPreview) ? "border-[#10b981]/40 bg-[#10b981]/5" : "border-white/[0.08] bg-white/[0.02] hover:border-[#10b981]/30"}`}>
+                <label htmlFor={`bi-${side}`} className={`flex items-center justify-center h-32 rounded-xl border-2 border-dashed cursor-pointer transition-all ${(side === "frente" ? biFrentePreview : biVersoPreview) ? "border-[#10b981]/40 bg-[#10b981]/5" : "border-white/[0.08] bg-slate-50 hover:border-[#10b981]/30"}`}>
                   {(side === "frente" ? biFrentePreview : biVersoPreview) ? (
                     <div className="flex items-center gap-2 text-[#10b981]"><svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg><span className="text-[12px] font-medium">Carregado</span></div>
                   ) : (
-                    <div className="text-center"><svg className="w-8 h-8 text-[#52525b] mx-auto mb-1" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" /></svg><p className="text-[11px] text-[#71717a]">Toque para selecionar</p></div>
+                    <div className="text-center"><svg className="w-8 h-8 text-slate-400 mx-auto mb-1" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" /></svg><p className="text-[11px] text-slate-500">Toque para selecionar</p></div>
                   )}
                 </label>
               </div>
@@ -716,13 +716,13 @@ function KycStep({ onComplete, onSkip }: { onComplete: () => void; onSkip: () =>
           <button onClick={handleBi} disabled={!biFrenteFile || !biVersoFile || uploading} className="w-full py-3 bg-[#10b981] hover:bg-[#0ea573] text-[#060608] font-semibold text-sm rounded-xl disabled:opacity-30 disabled:cursor-not-allowed">
             {uploading ? "A carregar..." : "Continuar"}
           </button>
-          <button onClick={onSkip} className="w-full py-2 text-[#71717a] text-[12px] hover:text-[#fafafa]">Verificar depois</button>
+          <button onClick={onSkip} className="w-full py-2 text-slate-500 text-[12px] hover:text-slate-800">Verificar depois</button>
         </div>
       )}
 
       {kycStep === "selfie" && (
         <div className="space-y-4">
-          <p className="text-[12px] text-[#a1a1aa] font-medium">Passo 2: Reconhecimento Facial</p>
+          <p className="text-[12px] text-slate-500 font-medium">Passo 2: Reconhecimento Facial</p>
           <div className="flex flex-col items-center">
             <div className="relative w-56 h-56 rounded-full border-4 border-[#10b981]/40 bg-[#0d0d10] flex items-center justify-center overflow-hidden">
               {selfiePreview ? (<img src={selfiePreview} alt="Selfie" className="w-full h-full rounded-full object-cover" />) : (
@@ -735,15 +735,15 @@ function KycStep({ onComplete, onSkip }: { onComplete: () => void; onSkip: () =>
             {selfiePreview ? "Trocar Selfie" : "Tirar Selfie"}
           </label>
           {selfieFile && <button onClick={handleSelfieAndProcess} className="w-full py-3 bg-[#10b981] hover:bg-[#0ea573] text-[#060608] font-semibold text-sm rounded-xl">Confirmar e Verificar</button>}
-          <button onClick={onSkip} className="w-full py-2 text-[#71717a] text-[12px] hover:text-[#fafafa]">Verificar depois</button>
+          <button onClick={onSkip} className="w-full py-2 text-slate-500 text-[12px] hover:text-slate-800">Verificar depois</button>
         </div>
       )}
 
       {kycStep === "processing" && (
         <div className="flex flex-col items-center py-8">
           <div className="w-16 h-16 rounded-full border-4 border-[#10b981] border-t-transparent animate-spin mb-4" />
-          <p className="text-[14px] text-[#fafafa] font-medium">A verificar identidade...</p>
-          <p className="text-[12px] text-[#71717a] mt-1">Isto demora apenas alguns segundos</p>
+          <p className="text-[14px] text-slate-800 font-medium">A verificar identidade...</p>
+          <p className="text-[12px] text-slate-500 mt-1">Isto demora apenas alguns segundos</p>
         </div>
       )}
     </div>

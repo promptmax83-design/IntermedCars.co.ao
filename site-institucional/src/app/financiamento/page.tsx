@@ -17,53 +17,53 @@ export default function FinanciamentoPage() {
   const prestacaoBase = financiavel / prazo;
 
   return (
-    <div className="min-h-screen bg-[#060608]">
+    <div className="min-h-screen bg-[#F8F9FA]">
       <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-[#fafafa]">Financiamento</h1>
-          <p className="text-sm text-[#71717a]">
+          <h1 className="text-2xl font-bold text-slate-800">Financiamento</h1>
+          <p className="text-sm text-slate-500">
             Simule o financiamento da sua viatura.
           </p>
         </div>
 
-        <div className="bg-zinc-900/50 rounded-2xl p-6 border border-zinc-800/80 space-y-5">
+        <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200 space-y-5">
           <div>
-            <label className="text-xs font-bold text-[#71717a] uppercase tracking-wider">
+            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">
               Preço da Viatura
             </label>
             <div className="relative mt-1">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#52525b]">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
                 Kz
               </span>
               <input
                 type="number"
                 value={preco}
                 onChange={(e) => setPreco(Number(e.target.value))}
-                className="w-full pl-8 pr-4 py-3 bg-white/[0.04] border border-white/[0.06] rounded-xl text-lg font-bold text-[#fafafa] outline-none focus:ring-2 focus:ring-[#10b981] focus:border-transparent transition"
+                className="w-full pl-8 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-lg font-bold text-slate-800 outline-none focus:ring-2 focus:ring-[#10b981] focus:border-transparent transition"
               />
             </div>
           </div>
           <div>
-            <label className="text-xs font-bold text-[#71717a] uppercase tracking-wider">
+            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">
               Entrada
             </label>
             <div className="relative mt-1">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#52525b]">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
                 Kz
               </span>
               <input
                 type="number"
                 value={entrada}
                 onChange={(e) => setEntrada(Number(e.target.value))}
-                className="w-full pl-8 pr-4 py-3 bg-white/[0.04] border border-white/[0.06] rounded-xl text-lg font-bold text-[#fafafa] outline-none focus:ring-2 focus:ring-[#10b981] focus:border-transparent transition"
+                className="w-full pl-8 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-lg font-bold text-slate-800 outline-none focus:ring-2 focus:ring-[#10b981] focus:border-transparent transition"
               />
             </div>
-            <p className="text-xs text-[#71717a] mt-1">
+            <p className="text-xs text-slate-500 mt-1">
               Mínimo: 20% ({(preco * 0.2).toLocaleString()}Kz)
             </p>
           </div>
           <div>
-            <label className="text-xs font-bold text-[#71717a] uppercase tracking-wider">
+            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">
               Prazo
             </label>
             <div className="flex gap-2 mt-1">
@@ -74,7 +74,7 @@ export default function FinanciamentoPage() {
                   className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                     p === prazo
                       ? "bg-[#10b981] text-[#060608] font-semibold"
-                      : "bg-white/[0.04] text-[#71717a] hover:bg-white/[0.06]"
+                      : "bg-slate-50 text-slate-500 hover:bg-slate-100"
                   }`}
                 >
                   {p} meses
@@ -111,37 +111,37 @@ export default function FinanciamentoPage() {
         </div>
 
         <div>
-          <h2 className="font-bold text-[#fafafa] mb-3">Melhores Ofertas</h2>
+          <h2 className="font-bold text-slate-800 mb-3">Melhores Ofertas</h2>
           <div className="space-y-3">
             {bancos.map((b) => (
               <div
                 key={b.nome}
-                className="bg-zinc-900/50 rounded-2xl p-4 border border-zinc-800/80 flex items-center justify-between hover:bg-white/[0.02] transition-colors"
+                className="bg-slate-50 rounded-2xl p-4 border border-slate-200 flex items-center justify-between hover:bg-slate-50 transition-colors"
               >
                 <div>
-                  <p className="font-bold text-[#fafafa]">{b.nome}</p>
-                  <p className="text-xs text-[#71717a]">
+                  <p className="font-bold text-slate-800">{b.nome}</p>
+                  <p className="text-xs text-slate-500">
                     Taxa: {b.taxa} · {b.prazo}
                   </p>
                 </div>
                 <div className="text-right">
                   <p className="text-[#10b981] font-bold text-lg">{b.prestacao}Kz</p>
-                  <p className="text-[10px] text-[#71717a]">/mês</p>
+                  <p className="text-[10px] text-slate-500">/mês</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="bg-zinc-900/50 rounded-2xl p-5 border border-zinc-800/80">
-          <h2 className="font-bold text-[#fafafa] mb-3">Adicionar Seguro</h2>
+        <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200">
+          <h2 className="font-bold text-slate-800 mb-3">Adicionar Seguro</h2>
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-[#fafafa]">Seguro Automóvel</p>
-              <p className="text-xs text-[#71717a]">Cobertura completa · ~35Kz/mês</p>
+              <p className="text-sm font-medium text-slate-800">Seguro Automóvel</p>
+              <p className="text-xs text-slate-500">Cobertura completa · ~35Kz/mês</p>
             </div>
             <button className="w-12 h-7 bg-[#10b981] rounded-full relative">
-              <span className="absolute right-0.5 top-0.5 w-6 h-6 bg-[#060608] rounded-full shadow-sm" />
+              <span className="absolute right-0.5 top-0.5 w-6 h-6 bg-[#F8F9FA] rounded-full shadow-sm" />
             </button>
           </div>
         </div>

@@ -44,7 +44,7 @@ export default function AgentePage({ params }: { params: Promise<{ id: string }>
   if (error || !agente) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-6 text-center">
-        <p className="text-[#71717a]">{error || "Agente nao encontrado"}</p>
+        <p className="text-slate-500">{error || "Agente nao encontrado"}</p>
         <Link href="/" className="text-[#10b981] text-sm mt-2 inline-block">Voltar</Link>
       </div>
     );
@@ -65,14 +65,14 @@ export default function AgentePage({ params }: { params: Promise<{ id: string }>
         </div>
         <div className="pt-14 px-6 pb-6">
           <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold text-[#fafafa]">{agente.nome}</h1>
+            <h1 className="text-xl font-bold text-slate-800">{agente.nome}</h1>
             {agente.verified && <span className="text-[#10b981] text-sm">Verificado</span>}
           </div>
-          <p className="text-sm text-[#71717a]">Membro IntermedCars</p>
+          <p className="text-sm text-slate-500">Membro IntermedCars</p>
           {agente.rating && (
             <div className="flex items-center gap-1 mt-1">
               <span className="text-[#c9a84c]">{"★".repeat(Math.round(agente.rating))}</span>
-              <span className="text-sm text-[#71717a]">{agente.rating} ({agente.avaliacoes || 0} avaliacoes)</span>
+              <span className="text-sm text-slate-500">{agente.rating} ({agente.avaliacoes || 0} avaliacoes)</span>
             </div>
           )}
           <div className="flex gap-2 mt-3">
@@ -100,7 +100,7 @@ export default function AgentePage({ params }: { params: Promise<{ id: string }>
         ].map((s) => (
           <div key={s.label} className="glass-card rounded-xl p-4 text-center">
             <p className="text-xl font-bold text-[#10b981]">{s.valor}</p>
-            <p className="text-[10px] text-[#71717a] mt-1">{s.label}</p>
+            <p className="text-[10px] text-slate-500 mt-1">{s.label}</p>
           </div>
         ))}
       </div>
@@ -108,10 +108,10 @@ export default function AgentePage({ params }: { params: Promise<{ id: string }>
       {/* Medalhas */}
       {agente.medalhas && agente.medalhas.length > 0 && (
         <div className="glass-card rounded-xl p-5">
-          <h2 className="font-bold text-[#fafafa] mb-3">Medalhas</h2>
+          <h2 className="font-bold text-slate-800 mb-3">Medalhas</h2>
           <div className="flex gap-3 flex-wrap">
             {agente.medalhas.map((m: string) => (
-              <div key={m} className="bg-white/[0.04] rounded-lg px-3 py-2 text-xs font-medium text-[#fafafa]">
+              <div key={m} className="bg-slate-50 rounded-lg px-3 py-2 text-xs font-medium text-slate-800">
                 {m}
               </div>
             ))}

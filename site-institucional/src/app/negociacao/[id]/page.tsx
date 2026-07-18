@@ -153,15 +153,15 @@ export default function NegociacaoDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#060608] flex items-center justify-center">
-        <div className="text-zinc-400">A carregar...</div>
+      <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center">
+        <div className="text-slate-500">A carregar...</div>
       </div>
     );
   }
 
   if (error || !negotiation) {
     return (
-      <div className="min-h-screen bg-[#060608] flex items-center justify-center">
+      <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center">
         <div className="text-center">
           <p className="text-red-400 mb-3">{error || "Negociacao nao encontrada"}</p>
           <Link
@@ -179,15 +179,15 @@ export default function NegociacaoDetailPage() {
   const currentStep = getTimelineIndex(negotiation.status);
 
   return (
-    <div className="min-h-screen bg-[#060608] text-white">
+    <div className="min-h-screen bg-[#F8F9FA] text-slate-800">
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
         <div className="flex items-center gap-3">
           <Link
             href="/negociacoes"
-            className="p-2 rounded-lg hover:bg-white/5 transition-colors"
+            className="p-2 rounded-lg hover:bg-slate-100 transition-colors"
           >
             <svg
-              className="w-5 h-5 text-zinc-400"
+              className="w-5 h-5 text-slate-500"
               fill="none"
               stroke="currentColor"
               strokeWidth={1.5}
@@ -201,24 +201,24 @@ export default function NegociacaoDetailPage() {
             </svg>
           </Link>
           <div>
-            <h1 className="text-xl font-bold text-white">
+            <h1 className="text-xl font-bold text-slate-800">
               {negotiation.veiculo_marca} {negotiation.veiculo_modelo}
             </h1>
-            <p className="text-sm text-zinc-400">
+            <p className="text-sm text-slate-500">
               Negociacao #{negotiation.id} &middot; {negotiation.veiculo_ano}
             </p>
           </div>
           <span
             className={`ml-auto px-3 py-1.5 rounded-lg text-xs font-medium ${
-              statusColors[negotiation.status] || "bg-zinc-800 text-zinc-400"
+              statusColors[negotiation.status] || "bg-zinc-800 text-slate-500"
             }`}
           >
             {statusLabels[negotiation.status] || negotiation.status}
           </span>
         </div>
 
-        <div className="bg-[#0d0d0d] rounded-xl border border-white/5 p-5">
-          <h2 className="font-semibold text-white mb-4">Estado da Negociacao</h2>
+        <div className="bg-white rounded-xl border border-slate-200/60 p-5">
+          <h2 className="font-semibold text-slate-800 mb-4">Estado da Negociacao</h2>
           <div className="flex items-center justify-between">
             {timelineSteps.map((step, i) => (
               <div key={step.key} className="flex items-center flex-1 last:flex-none">
@@ -227,7 +227,7 @@ export default function NegociacaoDetailPage() {
                     className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
                       i <= currentStep
                         ? "bg-[#10b981]/20 text-[#10b981]"
-                        : "bg-white/5 text-zinc-600"
+                        : "bg-slate-100 text-zinc-600"
                     }`}
                   >
                     <svg
@@ -255,7 +255,7 @@ export default function NegociacaoDetailPage() {
                 {i < timelineSteps.length - 1 && (
                   <div
                     className={`flex-1 h-0.5 mx-2 mb-5 ${
-                      i < currentStep ? "bg-[#10b981]" : "bg-white/5"
+                      i < currentStep ? "bg-[#10b981]" : "bg-slate-100"
                     }`}
                   />
                 )}
@@ -265,21 +265,21 @@ export default function NegociacaoDetailPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-[#0d0d0d] rounded-xl border border-white/5 p-5">
-            <h2 className="font-semibold text-white mb-3">Veiculo</h2>
+          <div className="bg-white rounded-xl border border-slate-200/60 p-5">
+            <h2 className="font-semibold text-slate-800 mb-3">Veiculo</h2>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-zinc-400">Marca/Modelo</span>
-                <span className="text-white font-medium">
+                <span className="text-slate-500">Marca/Modelo</span>
+                <span className="text-slate-800 font-medium">
                   {negotiation.veiculo_marca} {negotiation.veiculo_modelo}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-zinc-400">Ano</span>
-                <span className="text-white">{negotiation.veiculo_ano}</span>
+                <span className="text-slate-500">Ano</span>
+                <span className="text-slate-800">{negotiation.veiculo_ano}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-zinc-400">Preco</span>
+                <span className="text-slate-500">Preco</span>
                 <span className="text-[#10b981] font-bold">
                   Kz{negotiation.preco.toLocaleString("pt-AO")}
                 </span>
@@ -287,49 +287,49 @@ export default function NegociacaoDetailPage() {
             </div>
           </div>
 
-          <div className="bg-[#0d0d0d] rounded-xl border border-white/5 p-5">
-            <h2 className="font-semibold text-white mb-3">Partes Envolvidas</h2>
+          <div className="bg-white rounded-xl border border-slate-200/60 p-5">
+            <h2 className="font-semibold text-slate-800 mb-3">Partes Envolvidas</h2>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-zinc-400">Vendedor</span>
-                <span className="text-white">{negotiation.vendedor_nome || "N/D"}</span>
+                <span className="text-slate-500">Vendedor</span>
+                <span className="text-slate-800">{negotiation.vendedor_nome || "N/D"}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-zinc-400">Comprador</span>
-                <span className="text-white">{negotiation.comprador_nome || "N/D"}</span>
+                <span className="text-slate-500">Comprador</span>
+                <span className="text-slate-800">{negotiation.comprador_nome || "N/D"}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-zinc-400">Consultor</span>
-                <span className="text-white">{negotiation.consultor_nome || "N/D"}</span>
+                <span className="text-slate-500">Consultor</span>
+                <span className="text-slate-800">{negotiation.consultor_nome || "N/D"}</span>
               </div>
             </div>
           </div>
         </div>
 
         {financial && (
-          <div className="bg-[#0d0d0d] rounded-xl border border-white/5 p-5">
-            <h2 className="font-semibold text-white mb-3">Resumo Financeiro</h2>
+          <div className="bg-white rounded-xl border border-slate-200/60 p-5">
+            <h2 className="font-semibold text-slate-800 mb-3">Resumo Financeiro</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div>
-                <p className="text-xs text-zinc-400">Preco Final</p>
-                <p className="text-lg font-bold text-white">
+                <p className="text-xs text-slate-500">Preco Final</p>
+                <p className="text-lg font-bold text-slate-800">
                   Kz{(financial.preco_final || negotiation.preco).toLocaleString("pt-AO")}
                 </p>
               </div>
               <div>
-                <p className="text-xs text-zinc-400">Comissao Vendedor</p>
+                <p className="text-xs text-slate-500">Comissao Vendedor</p>
                 <p className="text-lg font-bold text-[#f59e0b]">
                   Kz{(financial.comissao_vendedor || 0).toLocaleString("pt-AO")}
                 </p>
               </div>
               <div>
-                <p className="text-xs text-zinc-400">Comissao Comprador</p>
+                <p className="text-xs text-slate-500">Comissao Comprador</p>
                 <p className="text-lg font-bold text-blue-400">
                   Kz{(financial.comissao_comprador || 0).toLocaleString("pt-AO")}
                 </p>
               </div>
               <div>
-                <p className="text-xs text-zinc-400">Total Taxas</p>
+                <p className="text-xs text-slate-500">Total Taxas</p>
                 <p className="text-lg font-bold text-[#10b981]">
                   Kz{(financial.total_taxas || 0).toLocaleString("pt-AO")}
                 </p>
@@ -338,8 +338,8 @@ export default function NegociacaoDetailPage() {
           </div>
         )}
 
-        <div className="bg-[#0d0d0d] rounded-xl border border-white/5 p-5">
-          <h2 className="font-semibold text-white mb-4">Accoes</h2>
+        <div className="bg-white rounded-xl border border-slate-200/60 p-5">
+          <h2 className="font-semibold text-slate-800 mb-4">Accoes</h2>
           <div className="flex flex-wrap gap-3">
             {role === "consultor" && (
               <>
@@ -403,7 +403,7 @@ export default function NegociacaoDetailPage() {
 
             <Link
               href={`/chat?negotiation=${negotiation.id}`}
-              className="px-4 py-2.5 bg-white/5 text-zinc-300 border border-white/5 text-sm font-medium rounded-lg hover:bg-white/10 transition-colors inline-flex items-center gap-2"
+              className="px-4 py-2.5 bg-slate-100 text-slate-600 border border-slate-200/60 text-sm font-medium rounded-lg hover:bg-slate-100 transition-colors inline-flex items-center gap-2"
             >
               <svg
                 className="w-4 h-4"

@@ -142,11 +142,11 @@ export default function DashboardFinanceiroPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#060608]">
+    <div className="min-h-screen bg-[#F8F9FA]">
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-[#fafafa]">Dashboard Financeiro</h1>
-          <p className="text-sm text-[#71717a]">Visao geral das suas financas.</p>
+          <h1 className="text-2xl font-bold text-slate-800">Dashboard Financeiro</h1>
+          <p className="text-sm text-slate-500">Visao geral das suas financas.</p>
         </div>
 
         <div className="flex gap-2">
@@ -157,7 +157,7 @@ export default function DashboardFinanceiroPage() {
               className={`px-4 py-2 rounded-full text-xs font-medium transition-colors ${
                 p === periodo
                   ? "bg-[#10b981] text-[#060608] font-semibold"
-                  : "bg-white/[0.04] text-[#71717a] border border-white/[0.06] hover:bg-white/[0.06]"
+                  : "bg-slate-50 text-slate-500 border border-slate-200 hover:bg-slate-100"
               }`}
             >
               {p}
@@ -166,14 +166,14 @@ export default function DashboardFinanceiroPage() {
         </div>
 
         {loading && (
-          <div className="bg-zinc-900/50 rounded-2xl p-12 text-center border border-zinc-800/80">
+          <div className="bg-slate-50 rounded-2xl p-12 text-center border border-slate-200">
             <div className="w-8 h-8 border-2 border-[#10b981] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-            <p className="text-[#71717a] text-sm">A carregar dados financeiros...</p>
+            <p className="text-slate-500 text-sm">A carregar dados financeiros...</p>
           </div>
         )}
 
         {error && !loading && (
-          <div className="bg-zinc-900/50 rounded-2xl p-12 text-center border border-zinc-800/80">
+          <div className="bg-slate-50 rounded-2xl p-12 text-center border border-slate-200">
             <p className="text-[#ef4444] text-sm">{error}</p>
           </div>
         )}
@@ -184,16 +184,16 @@ export default function DashboardFinanceiroPage() {
               {summaryCards.map((r) => (
                 <div
                   key={r.label}
-                  className="bg-zinc-900/50 rounded-2xl p-4 border border-zinc-800/80"
+                  className="bg-slate-50 rounded-2xl p-4 border border-slate-200"
                 >
                   <p className={`text-2xl font-bold ${r.cor}`}>{r.valor}</p>
-                  <p className="text-xs text-[#71717a] mt-1">{r.label}</p>
+                  <p className="text-xs text-slate-500 mt-1">{r.label}</p>
                 </div>
               ))}
             </div>
 
-            <div className="bg-zinc-900/50 rounded-2xl p-5 border border-zinc-800/80">
-              <h2 className="font-bold text-[#fafafa] mb-4">Grafico de Receitas</h2>
+            <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200">
+              <h2 className="font-bold text-slate-800 mb-4">Grafico de Receitas</h2>
               <div className="flex items-end gap-2 h-40">
                 {chartMonths.map((m, i) => {
                   const heightPercent = m.value > 0 ? (m.value / maxChartValue) * 100 : 0;
@@ -208,21 +208,21 @@ export default function DashboardFinanceiroPage() {
                           style={{ height: "100%" }}
                         />
                       </div>
-                      <span className="text-[10px] text-[#71717a]">{m.label}</span>
+                      <span className="text-[10px] text-slate-500">{m.label}</span>
                     </div>
                   );
                 })}
               </div>
             </div>
 
-            <div className="bg-zinc-900/50 rounded-2xl border border-zinc-800/80 overflow-hidden">
-              <div className="p-4 border-b border-zinc-800/80">
-                <h2 className="font-bold text-[#fafafa]">Transacoes Recentes</h2>
+            <div className="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden">
+              <div className="p-4 border-b border-slate-200">
+                <h2 className="font-bold text-slate-800">Transacoes Recentes</h2>
               </div>
               <div className="divide-y divide-zinc-800/80">
                 {recentTransactions.length === 0 ? (
                   <div className="px-4 py-8 text-center">
-                    <p className="text-[#71717a] text-sm">Sem transacoes.</p>
+                    <p className="text-slate-500 text-sm">Sem transacoes.</p>
                   </div>
                 ) : (
                   recentTransactions.map((t) => {
@@ -230,13 +230,13 @@ export default function DashboardFinanceiroPage() {
                     return (
                       <div
                         key={t.id}
-                        className="flex items-center justify-between px-4 py-3 hover:bg-white/[0.02] transition-colors"
+                        className="flex items-center justify-between px-4 py-3 hover:bg-slate-50 transition-colors"
                       >
                         <div>
-                          <p className="text-sm font-medium text-[#fafafa]">
+                          <p className="text-sm font-medium text-slate-800">
                             {t.marca} {t.modelo}
                           </p>
-                          <p className="text-xs text-[#71717a]">
+                          <p className="text-xs text-slate-500">
                             {formatTransactionDate(t.created_at)}
                           </p>
                         </div>

@@ -54,7 +54,7 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
   if (error || !viatura) {
     return (
       <div className="max-w-[1400px] mx-auto px-4 py-6 text-center">
-        <p className="text-[#71717a]">{error || "Viatura nao encontrada"}</p>
+        <p className="text-slate-500">{error || "Viatura nao encontrada"}</p>
         <Link href="/" className="text-[#10b981] text-sm mt-2 inline-block">Voltar ao Feed</Link>
       </div>
     );
@@ -74,7 +74,7 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
       <div className="flex items-center justify-between mb-6">
         <Link
           href="/"
-          className="text-sm text-[#71717a] hover:text-[#fafafa] transition-colors flex items-center gap-2"
+          className="text-sm text-slate-500 hover:text-slate-800 transition-colors flex items-center gap-2"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -88,7 +88,7 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
             className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors ${
               favoritado
                 ? "bg-[#ef4444]/10 text-[#ef4444]"
-                : "bg-white/[0.04] text-[#71717a] hover:text-[#fafafa]"
+                : "bg-slate-50 text-slate-500 hover:text-slate-800"
             }`}
           >
             {favoritado ? (
@@ -107,10 +107,10 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
       {/* Sold/Cancelled Overlay */}
       {viatura.status === "comprado" && (
         <div className="mb-6 bg-[#52525b]/10 border border-[#52525b]/20 rounded-xl p-6 text-center">
-          <span className="px-6 py-3 bg-[#52525b]/30 text-[#a1a1aa] text-lg font-bold rounded-lg uppercase tracking-wider">
+          <span className="px-6 py-3 bg-[#52525b]/30 text-slate-500 text-lg font-bold rounded-lg uppercase tracking-wider">
             Viatura Vendida
           </span>
-          <p className="text-[#52525b] text-sm mt-2">Esta viatura ja foi vendida e nao esta disponivel.</p>
+          <p className="text-slate-400 text-sm mt-2">Esta viatura ja foi vendida e nao esta disponivel.</p>
         </div>
       )}
 
@@ -119,7 +119,7 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
           <span className="px-6 py-3 bg-[#ef4444]/10 text-[#ef4444] text-lg font-bold rounded-lg uppercase tracking-wider">
             Anuncio Cancelado
           </span>
-          <p className="text-[#52525b] text-sm mt-2">Este anuncio foi cancelado pelo vendedor.</p>
+          <p className="text-slate-400 text-sm mt-2">Este anuncio foi cancelado pelo vendedor.</p>
         </div>
       )}
 
@@ -129,39 +129,39 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
         {/* COLUNA ESQUERDA — Dados Tecnicos */}
         <div className="lg:col-span-1 space-y-4 order-2 lg:order-1">
           {/* Identificacao */}
-          <div className="bg-zinc-900/50 border border-zinc-800/80 rounded-2xl p-4">
-            <p className="text-[10px] text-[#71717a] uppercase tracking-wider mb-3">Identificacao</p>
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4">
+            <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-3">Identificacao</p>
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <span className="text-[12px] text-[#71717a]">Marca</span>
+                <span className="text-[12px] text-slate-500">Marca</span>
                 <span className="text-[13px] font-semibold text-[#10b981]">{viatura.marca}</span>
               </div>
-              <div className="h-px bg-white/[0.04]" />
+              <div className="h-px bg-slate-50" />
               <div className="flex justify-between items-center">
-                <span className="text-[12px] text-[#71717a]">Modelo</span>
-                <span className="text-[13px] font-semibold text-[#fafafa]">{viatura.modelo}</span>
+                <span className="text-[12px] text-slate-500">Modelo</span>
+                <span className="text-[13px] font-semibold text-slate-800">{viatura.modelo}</span>
               </div>
-              <div className="h-px bg-white/[0.04]" />
+              <div className="h-px bg-slate-50" />
               <div className="flex justify-between items-center">
-                <span className="text-[12px] text-[#71717a]">Ano</span>
-                <span className="text-[13px] font-semibold text-[#fafafa]">{viatura.ano}</span>
+                <span className="text-[12px] text-slate-500">Ano</span>
+                <span className="text-[13px] font-semibold text-slate-800">{viatura.ano}</span>
               </div>
-              <div className="h-px bg-white/[0.04]" />
+              <div className="h-px bg-slate-50" />
               <div className="flex justify-between items-center">
-                <span className="text-[12px] text-[#71717a]">Cor</span>
-                <span className="text-[13px] font-semibold text-[#fafafa]">{viatura.cor}</span>
+                <span className="text-[12px] text-slate-500">Cor</span>
+                <span className="text-[13px] font-semibold text-slate-800">{viatura.cor}</span>
               </div>
-              <div className="h-px bg-white/[0.04]" />
+              <div className="h-px bg-slate-50" />
               <div className="flex justify-between items-center">
-                <span className="text-[12px] text-[#71717a]">Localizacao</span>
-                <span className="text-[13px] font-semibold text-[#fafafa]">{viatura.localizacao}</span>
+                <span className="text-[12px] text-slate-500">Localizacao</span>
+                <span className="text-[13px] font-semibold text-slate-800">{viatura.localizacao}</span>
               </div>
             </div>
           </div>
 
           {/* Especificacoes */}
-          <div className="bg-zinc-900/50 border border-zinc-800/80 rounded-2xl p-4">
-            <p className="text-[10px] text-[#71717a] uppercase tracking-wider mb-3">Especificacoes</p>
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4">
+            <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-3">Especificacoes</p>
             <div className="space-y-3">
               {[
                 { label: "Quilometragem", value: viatura.km.toLocaleString("pt-AO") + " km" },
@@ -173,39 +173,39 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
               ].map((item, i) => (
                 <div key={item.label}>
                   <div className="flex justify-between items-center">
-                    <span className="text-[12px] text-[#71717a]">{item.label}</span>
-                    <span className="text-[13px] font-medium text-[#fafafa]">{item.value}</span>
+                    <span className="text-[12px] text-slate-500">{item.label}</span>
+                    <span className="text-[13px] font-medium text-slate-800">{item.value}</span>
                   </div>
-                  {i < 5 && <div className="h-px bg-white/[0.04] mt-3" />}
+                  {i < 5 && <div className="h-px bg-slate-50 mt-3" />}
                 </div>
               ))}
             </div>
           </div>
 
           {/* Descricao */}
-          <div className="bg-zinc-900/50 border border-zinc-800/80 rounded-2xl p-4">
-            <p className="text-[10px] text-[#71717a] uppercase tracking-wider mb-3">Descricao</p>
-            <p className="text-[13px] text-[#a1a1aa] leading-relaxed">{viatura.descricao}</p>
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4">
+            <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-3">Descricao</p>
+            <p className="text-[13px] text-slate-500 leading-relaxed">{viatura.descricao}</p>
           </div>
 
           {/* Vistoria */}
-          <div className="bg-zinc-900/50 border border-zinc-800/80 rounded-2xl p-4">
-            <p className="text-[10px] text-[#71717a] uppercase tracking-wider mb-3">Vistoria</p>
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4">
+            <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-3">Vistoria</p>
             <div className="grid grid-cols-2 gap-2">
               {["Motor", "Travoes", "Interior", "Pintura", "Pneus", "Suspensao"].map((item) => (
-                <div key={item} className="flex items-center gap-2 text-[12px] text-[#71717a] bg-white/[0.02] rounded-lg px-3 py-2">
+                <div key={item} className="flex items-center gap-2 text-[12px] text-slate-500 bg-slate-50 rounded-lg px-3 py-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-[#52525b]" />
                   {item}
                 </div>
               ))}
             </div>
-            <p className="text-[11px] text-[#52525b] mt-3">Disponivel apos negociacao iniciar.</p>
+            <p className="text-[11px] text-slate-400 mt-3">Disponivel apos negociacao iniciar.</p>
           </div>
         </div>
 
         {/* COLUNA CENTRAL — Imagem Vertical Estendida */}
         <div className="lg:col-span-2 order-1 lg:order-2">
-          <div className="relative rounded-2xl overflow-hidden border border-white/[0.04] bg-gradient-to-br from-[#0d0d10] to-[#121215]">
+          <div className="relative rounded-2xl overflow-hidden border border-slate-200/60 bg-gradient-to-br from-slate-100 to-slate-200">
             {/* Imagem principal */}
             <div className="h-[500px] flex items-center justify-center relative">
               <span className="text-[120px] text-[#1a1a1f] font-bold select-none">
@@ -213,7 +213,7 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
               </span>
 
               {/* Contador de imagens */}
-              <span className="absolute top-4 left-4 bg-[#060608]/70 backdrop-blur-sm text-[#fafafa] text-[11px] font-medium px-3 py-1.5 rounded-full border border-white/[0.06]">
+              <span className="absolute top-4 left-4 bg-[#F8F9FA]/70 backdrop-blur-sm text-slate-800 text-[11px] font-medium px-3 py-1.5 rounded-full border border-slate-200">
                 {imagemAtual + 1} / {galeria.length}
               </span>
 
@@ -223,12 +223,12 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
               </div>
 
               {/* Overlay glassmorphism na base — nome do modelo */}
-              <div className="absolute bottom-0 left-0 right-0 bg-zinc-900/60 backdrop-blur-sm px-6 py-4 border-t border-white/[0.06]">
+              <div className="absolute bottom-0 left-0 right-0 bg-white/80 backdrop-blur-sm px-6 py-4 border-t border-slate-200">
                 <div className="flex items-end justify-between">
                   <div>
                     <p className="text-[11px] text-[#10b981] font-semibold uppercase tracking-wider">{viatura.marca}</p>
-                    <h1 className="text-2xl font-bold text-[#fafafa] mt-0.5">{viatura.modelo}</h1>
-                    <p className="text-[12px] text-[#71717a] mt-1">{viatura.localizacao} &middot; {viatura.ano}</p>
+                    <h1 className="text-2xl font-bold text-slate-800 mt-0.5">{viatura.modelo}</h1>
+                    <p className="text-[12px] text-slate-500 mt-1">{viatura.localizacao} &middot; {viatura.ano}</p>
                   </div>
                   <p className="text-2xl font-bold text-[#10b981]">
                     Kz {precoFormatado}
@@ -238,7 +238,7 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
             </div>
 
             {/* Thumbnails */}
-            <div className="flex gap-2 p-3 overflow-x-auto bg-[#0a0a0c]">
+            <div className="flex gap-2 p-3 overflow-x-auto bg-white">
               {galeria.map((_: string, i: number) => (
                 <button
                   key={i}
@@ -249,7 +249,7 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
                       : "border-transparent bg-white/[0.03] hover:bg-white/[0.05]"
                   }`}
                 >
-                  <span className="text-[#52525b] text-[11px] font-medium">{i + 1}</span>
+                  <span className="text-slate-400 text-[11px] font-medium">{i + 1}</span>
                 </button>
               ))}
             </div>
@@ -267,7 +267,7 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
                     : "border-transparent bg-white/[0.03] hover:bg-white/[0.05]"
                 }`}
               >
-                <span className="text-[#52525b] text-sm">{i + 1}</span>
+                <span className="text-slate-400 text-sm">{i + 1}</span>
               </button>
             ))}
           </div>
@@ -276,46 +276,46 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
         {/* COLUNA DIREITA — Accoes Financeiras e Vendedor */}
         <div className="lg:col-span-1 space-y-4 order-3">
           {/* Preco Principal */}
-          <div className="bg-zinc-900/50 border border-zinc-800/80 rounded-2xl p-5">
-            <p className="text-[10px] text-[#71717a] uppercase tracking-wider mb-1">Preco</p>
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5">
+            <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-1">Preco</p>
             <p className="text-3xl font-bold text-[#10b981]">Kz {precoFormatado}</p>
-            <p className="text-[11px] text-[#52525b] mt-1">IVA incluido</p>
+            <p className="text-[11px] text-slate-400 mt-1">IVA incluido</p>
 
-            <div className="h-px bg-white/[0.04] my-4" />
+            <div className="h-px bg-slate-50 my-4" />
 
             <div className="space-y-2">
               <div className="flex justify-between items-center">
-                <span className="text-[12px] text-[#71717a]">Taxa Fixa (Vendedor)</span>
+                <span className="text-[12px] text-slate-500">Taxa Fixa (Vendedor)</span>
                 <span className="text-[13px] font-semibold text-[#c9a84c]">Kz {comissao}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-[12px] text-[#71717a]">Tu pagas (1%)</span>
-                <span className="text-[13px] font-medium text-[#fafafa]">Kz {comissao}</span>
+                <span className="text-[12px] text-slate-500">Tu pagas (1%)</span>
+                <span className="text-[13px] font-medium text-slate-800">Kz {comissao}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-[12px] text-[#71717a]">Vendedor paga (1%)</span>
-                <span className="text-[13px] font-medium text-[#fafafa]">Kz {comissao}</span>
+                <span className="text-[12px] text-slate-500">Vendedor paga (1%)</span>
+                <span className="text-[13px] font-medium text-slate-800">Kz {comissao}</span>
               </div>
             </div>
           </div>
 
           {/* Vendedor */}
-          <div className="bg-zinc-900/50 border border-zinc-800/80 rounded-2xl p-4">
-            <p className="text-[10px] text-[#71717a] uppercase tracking-wider mb-3">Vendedor</p>
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4">
+            <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-3">Vendedor</p>
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#c9a84c] to-[#b8933d] flex items-center justify-center text-[#060608] font-bold text-sm shrink-0">
                 {vendedor.nome.split(" ").map((n: string) => n[0]).join("")}
               </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <p className="text-[13px] font-bold text-[#fafafa] truncate">{vendedor.nome}</p>
+                  <p className="text-[13px] font-bold text-slate-800 truncate">{vendedor.nome}</p>
                   {vendedor.verified && (
                     <svg className="w-3.5 h-3.5 text-[#10b981] shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                   )}
                 </div>
-                <p className="text-[11px] text-[#71717a]">{vendedor.vendas} vendas realizadas</p>
+                <p className="text-[11px] text-slate-500">{vendedor.vendas} vendas realizadas</p>
               </div>
             </div>
             <Link
@@ -328,8 +328,8 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
 
           {/* Accoes */}
           {(isAvailable || isNegotiating) && (
-            <div className="bg-zinc-900/50 border border-zinc-800/80 rounded-2xl p-4 space-y-3">
-              <p className="text-[10px] text-[#71717a] uppercase tracking-wider">Accoes</p>
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
+              <p className="text-[10px] text-slate-500 uppercase tracking-wider">Accoes</p>
 
               <Link
                 href="/chat"
@@ -344,7 +344,7 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
 
               <Link
                 href="/financiamento"
-                className="block w-full text-center py-3.5 rounded-xl font-medium text-sm text-[#fafafa] bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.06] transition-colors"
+                className="block w-full text-center py-3.5 rounded-xl font-medium text-sm text-slate-800 bg-slate-50 border border-slate-200 hover:bg-slate-100 transition-colors"
               >
                 Financiar
               </Link>
@@ -359,8 +359,8 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
           )}
 
           {/* Seguranca */}
-          <div className="bg-zinc-900/50 border border-zinc-800/80 rounded-2xl p-4">
-            <p className="text-[10px] text-[#71717a] uppercase tracking-wider mb-3">Garantia IntermedCars</p>
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4">
+            <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-3">Garantia IntermedCars</p>
             <div className="space-y-2.5">
               {[
                 "Pagamento seguro no cofre",
@@ -372,7 +372,7 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
                   <svg className="w-3.5 h-3.5 text-[#10b981] mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-[12px] text-[#a1a1aa]">{item}</span>
+                  <span className="text-[12px] text-slate-500">{item}</span>
                 </div>
               ))}
             </div>

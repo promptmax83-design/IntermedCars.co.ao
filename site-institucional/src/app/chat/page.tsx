@@ -218,7 +218,7 @@ export default function ChatPage() {
   if (currentUserId === null) {
     return (
       <div className="flex h-[calc(100vh-80px)] items-center justify-center">
-        <p className="text-zinc-500 text-sm">A carregar...</p>
+        <p className="text-slate-500 text-sm">A carregar...</p>
       </div>
     );
   }
@@ -226,10 +226,10 @@ export default function ChatPage() {
   return (
     <div className="flex h-[calc(100vh-80px)] max-w-6xl mx-auto">
       {/* Conversations Sidebar */}
-      <div className="w-80 border-r border-white/[0.06] flex flex-col">
-        <div className="p-4 border-b border-white/[0.06]">
-          <h1 className="text-lg font-bold text-white">Mensagens</h1>
-          <p className="text-xs text-zinc-500">
+      <div className="w-80 border-r border-slate-200 flex flex-col">
+        <div className="p-4 border-b border-slate-200">
+          <h1 className="text-lg font-bold text-slate-800">Mensagens</h1>
+          <p className="text-xs text-slate-500">
             Chat livre — partilhe contactos diretamente
           </p>
         </div>
@@ -247,7 +247,7 @@ export default function ChatPage() {
                 className={`w-full p-4 flex items-center gap-3 transition-colors ${
                   activeChat === conv.other_user_id
                     ? "bg-[#10b981]/10 border-r-2 border-[#10b981]"
-                    : "hover:bg-white/[0.02]"
+                    : "hover:bg-slate-50"
                 }`}
               >
                 <div className="w-10 h-10 rounded-full bg-[#10b981]/20 flex items-center justify-center text-[#10b981] font-bold text-sm shrink-0">
@@ -255,30 +255,30 @@ export default function ChatPage() {
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium text-white truncate">
+                    <span className="text-sm font-medium text-slate-800 truncate">
                       {conv.other_user_name}
                     </span>
                     <span className="text-[10px] text-zinc-600">
                       {formatLastMessage(conv.last_message_at)}
                     </span>
                   </div>
-                  <p className="text-xs text-zinc-500 truncate mt-0.5">
+                  <p className="text-xs text-slate-500 truncate mt-0.5">
                     {conv.last_message || "Iniciar conversa..."}
                   </p>
                   {conv.negotiation_id && (
                     <div className="flex items-center gap-1.5 mt-1">
-                      <span className="text-[9px] text-zinc-500 bg-white/5 px-1.5 py-0.5 rounded">
+                      <span className="text-[9px] text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">
                         #{conv.negotiation_id}
                       </span>
                       {conv.negotiation_vehicle && (
-                        <span className="text-[9px] text-zinc-500 truncate">
+                        <span className="text-[9px] text-slate-500 truncate">
                           {conv.negotiation_vehicle}
                         </span>
                       )}
                       {conv.negotiation_status && (
                         <span
                           className={`text-[9px] px-1 py-0.5 rounded ${
-                            negStatusColors[conv.negotiation_status] || "bg-zinc-800 text-zinc-500"
+                            negStatusColors[conv.negotiation_status] || "bg-zinc-800 text-slate-500"
                           }`}
                         >
                           {conv.negotiation_status}
@@ -319,22 +319,22 @@ export default function ChatPage() {
                     />
                   </svg>
                 </div>
-                <div className="bg-[#0d0d0d] rounded-xl border border-white/5 p-4 mb-4">
-                  <p className="text-[10px] text-zinc-500 uppercase tracking-wider mb-1">
+                <div className="bg-white rounded-xl border border-slate-200/60 p-4 mb-4">
+                  <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-1">
                     Negociacao
                   </p>
-                  <p className="text-sm font-semibold text-white">
+                  <p className="text-sm font-semibold text-slate-800">
                     {negotiationContext.vehicle}
                   </p>
                   <span
                     className={`inline-block mt-1 text-[10px] px-2 py-0.5 rounded ${
-                      negStatusColors[negotiationContext.status] || "bg-zinc-800 text-zinc-400"
+                      negStatusColors[negotiationContext.status] || "bg-zinc-800 text-slate-500"
                     }`}
                   >
                     {negotiationContext.status}
                   </span>
                 </div>
-                <p className="text-sm text-zinc-400">
+                <p className="text-sm text-slate-500">
                   Selecione o utilizador para iniciar a conversa sobre esta negociacao.
                 </p>
               </div>
@@ -355,8 +355,8 @@ export default function ChatPage() {
                     />
                   </svg>
                 </div>
-                <h2 className="text-white font-bold mb-1">IntermedCars Chat</h2>
-                <p className="text-sm text-zinc-500 max-w-xs">
+                <h2 className="text-slate-800 font-bold mb-1">IntermedCars Chat</h2>
+                <p className="text-sm text-slate-500 max-w-xs">
                   Selecione uma conversa para comecar. Partilhe contactos, WhatsApp ou qualquer forma diretamente.
                 </p>
               </>
@@ -366,12 +366,12 @@ export default function ChatPage() {
       ) : (
         <div className="flex-1 flex flex-col">
           {/* Chat Header */}
-          <div className="p-4 border-b border-white/[0.06] flex items-center gap-3">
+          <div className="p-4 border-b border-slate-200 flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-[#10b981]/20 flex items-center justify-center text-[#10b981] font-bold text-xs shrink-0">
               {conversations.find((c) => c.other_user_id === activeChat)?.other_user_name[0] || "?"}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-white">
+              <p className="text-sm font-medium text-slate-800">
                 {conversations.find((c) => c.other_user_id === activeChat)?.other_user_name || "Utilizador"}
               </p>
               <p className="text-[10px] text-[#10b981]">Online</p>
@@ -379,7 +379,7 @@ export default function ChatPage() {
             {negotiationContext && (
               <a
                 href={`/negociacao/${negotiationContext.id}`}
-                className="flex items-center gap-1.5 px-2.5 py-1 bg-white/5 rounded-lg text-[10px] text-zinc-400 hover:bg-white/10 transition-colors shrink-0"
+                className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 rounded-lg text-[10px] text-slate-500 hover:bg-slate-100 transition-colors shrink-0"
               >
                 <svg
                   className="w-3 h-3"
@@ -417,7 +417,7 @@ export default function ChatPage() {
                       className={`max-w-[70%] rounded-2xl px-4 py-2.5 ${
                         isMine
                           ? "bg-[#10b981] text-[#060608]"
-                          : "bg-white/[0.04] text-white border border-white/[0.06]"
+                          : "bg-slate-50 text-slate-800 border border-slate-200"
                       }`}
                     >
                       <p className="text-sm">{msg.content}</p>
@@ -437,7 +437,7 @@ export default function ChatPage() {
           </div>
 
           {/* Input */}
-          <div className="p-4 border-t border-white/[0.06]">
+          <div className="p-4 border-t border-slate-200">
             <div className="flex items-center gap-2">
               <input
                 type="text"
@@ -445,7 +445,7 @@ export default function ChatPage() {
                 onChange={(e) => setNewMessage(e.target.value)}
                 onKeyDown={handleKeyPress}
                 placeholder="Escreva uma mensagem..."
-                className="flex-1 px-4 py-3 bg-white/[0.04] border border-white/[0.06] rounded-xl text-sm text-white placeholder-zinc-600 outline-none focus:border-[#10b981]/30"
+                className="flex-1 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-zinc-600 outline-none focus:border-[#10b981]/30"
               />
               <button
                 onClick={sendMessage}

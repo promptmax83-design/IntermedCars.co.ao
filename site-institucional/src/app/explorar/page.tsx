@@ -212,7 +212,7 @@ export default function ExplorarPage() {
 
                   {car.status === "comprado" && (
                     <div className="absolute inset-0 bg-white/60 flex items-center justify-center">
-                      <span className="px-4 py-2 bg-slate-500/80 text-white text-sm font-bold rounded-lg uppercase tracking-wider">
+                      <span className="px-4 py-2 bg-slate-500/80 text-slate-800 text-sm font-bold rounded-lg uppercase tracking-wider">
                         Vendido
                       </span>
                     </div>

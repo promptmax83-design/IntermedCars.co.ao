@@ -153,7 +153,7 @@ export default function CofrePage() {
   if (loading) {
     return (
       <div className="max-w-5xl mx-auto px-4 py-6 text-center">
-        <p className="text-[#52525b] text-sm">A carregar transacoes...</p>
+        <p className="text-slate-400 text-sm">A carregar transacoes...</p>
       </div>
     );
   }
@@ -161,8 +161,8 @@ export default function CofrePage() {
   return (
     <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-[#fafafa]">Cofre Fiduciario</h1>
-        <p className="text-sm text-[#71717a]">
+        <h1 className="text-2xl font-bold text-slate-800">Cofre Fiduciario</h1>
+        <p className="text-sm text-slate-500">
           Custodia segura de fundos. Pagamento de taxa fixa com comprovativo verificado por IA.
         </p>
       </div>
@@ -174,8 +174,8 @@ export default function CofrePage() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
             </svg>
           </div>
-          <h2 className="text-lg font-bold text-[#fafafa] mb-2">Nenhuma transacao ativa</h2>
-          <p className="text-sm text-[#71717a]">As tuas transacoes aparecerao aqui quando iniciares negociacoes.</p>
+          <h2 className="text-lg font-bold text-slate-800 mb-2">Nenhuma transacao ativa</h2>
+          <p className="text-sm text-slate-500">As tuas transacoes aparecerao aqui quando iniciares negociacoes.</p>
         </div>
       ) : (
         <>
@@ -192,7 +192,7 @@ export default function CofrePage() {
                 className={`shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                   i === negociacaoAtiva
                     ? "bg-[#10b981] text-[#060608]"
-                    : "bg-white/[0.04] text-[#71717a] border border-white/[0.06] hover:bg-white/[0.06]"
+                    : "bg-slate-50 text-slate-500 border border-slate-200 hover:bg-slate-100"
                 }`}
               >
                 {t.marca} {t.modelo}
@@ -204,41 +204,41 @@ export default function CofrePage() {
           {tx && (
             <div className="glass-card rounded-2xl overflow-hidden">
               {/* Header */}
-              <div className="bg-gradient-to-r from-[#10b981]/10 to-[#c9a84c]/5 p-6 border-b border-white/[0.06]">
+              <div className="bg-gradient-to-r from-[#10b981]/10 to-[#c9a84c]/5 p-6 border-b border-slate-200">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div>
-                    <p className="text-[10px] font-bold text-[#71717a] uppercase tracking-wider">Veiculo</p>
-                    <p className="font-bold text-sm text-[#fafafa] mt-1">{tx.marca} {tx.modelo}</p>
+                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Veiculo</p>
+                    <p className="font-bold text-sm text-slate-800 mt-1">{tx.marca} {tx.modelo}</p>
                   </div>
                   <div>
-                    <p className="text-[10px] font-bold text-[#71717a] uppercase tracking-wider">Valor</p>
+                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Valor</p>
                     <p className="font-bold text-[#10b981] text-lg mt-1">{formatKz(tx.proposed_price)}</p>
                   </div>
                   <div>
-                    <p className="text-[10px] font-bold text-[#71717a] uppercase tracking-wider">Estado</p>
+                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Estado</p>
                     <p className="font-bold text-sm text-[#f59e0b] mt-1">{statusFlow[tx.status]?.label || tx.status}</p>
                   </div>
                   <div>
-                    <p className="text-[10px] font-bold text-[#71717a] uppercase tracking-wider">Taxa Fixa (Vendedor)</p>
+                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Taxa Fixa (Vendedor)</p>
                     <p className="font-bold text-sm text-[#c9a84c] mt-1">{formatKz(100000)}</p>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 mt-4 pt-4 border-t border-white/[0.06]">
+                <div className="grid grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-200">
                   <div>
-                    <p className="text-[10px] font-bold text-[#71717a] uppercase tracking-wider">Comprador</p>
-                    <p className="text-sm text-[#fafafa] mt-1">{tx.buyer_name}</p>
+                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Comprador</p>
+                    <p className="text-sm text-slate-800 mt-1">{tx.buyer_name}</p>
                   </div>
                   <div>
-                    <p className="text-[10px] font-bold text-[#71717a] uppercase tracking-wider">Vendedor</p>
-                    <p className="text-sm text-[#fafafa] mt-1">{tx.seller_name}</p>
+                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Vendedor</p>
+                    <p className="text-sm text-slate-800 mt-1">{tx.seller_name}</p>
                   </div>
                 </div>
               </div>
 
               {/* Progress */}
               <div className="p-6">
-                <h3 className="font-bold text-[#fafafa] mb-6">Progresso do Cofre</h3>
+                <h3 className="font-bold text-slate-800 mb-6">Progresso do Cofre</h3>
                 <div className="space-y-0">
                   {etapas.map((etapa, i) => {
                     const stepStatus = getStepStatus(i, tx.status);
@@ -251,7 +251,7 @@ export default function CofrePage() {
                                 ? "bg-[#10b981] text-[#060608]"
                                 : stepStatus === "ativo"
                                   ? "bg-[#f59e0b]/20 text-[#f59e0b] animate-pulse"
-                                  : "bg-white/[0.04] text-[#52525b]"
+                                  : "bg-slate-50 text-slate-400"
                             }`}
                           >
                             {stepStatus === "concluido" ? "\u2713" : i + 1}
@@ -268,7 +268,7 @@ export default function CofrePage() {
                                   ? "text-[#10b981]"
                                   : stepStatus === "ativo"
                                     ? "text-[#f59e0b] font-bold"
-                                    : "text-[#52525b]"
+                                    : "text-slate-400"
                               }`}
                             >
                               {etapa}
@@ -297,10 +297,10 @@ export default function CofrePage() {
           {showComprovativo && tx && (
             <div className="glass-card rounded-2xl p-6 space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="font-bold text-[#fafafa]">Comprovativo de Pagamento</h3>
+                <h3 className="font-bold text-slate-800">Comprovativo de Pagamento</h3>
                 <button
                   onClick={() => { setShowComprovativo(false); setUploadStatus("idle"); }}
-                  className="text-[#71717a] hover:text-[#fafafa] transition-colors"
+                  className="text-slate-500 hover:text-slate-800 transition-colors"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -309,20 +309,20 @@ export default function CofrePage() {
               </div>
 
               {/* Payment Details */}
-              <div className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-4 space-y-3">
-                <p className="text-[10px] font-bold text-[#71717a] uppercase tracking-wider">Dados para Pagamento</p>
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-3">
+                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Dados para Pagamento</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div>
-                    <p className="text-xs text-[#71717a]">IBAN Destino</p>
-                    <p className="text-sm text-[#fafafa] font-mono font-semibold">{paymentDetails.iban || "A carregar..."}</p>
+                    <p className="text-xs text-slate-500">IBAN Destino</p>
+                    <p className="text-sm text-slate-800 font-mono font-semibold">{paymentDetails.iban || "A carregar..."}</p>
                   </div>
                   <div>
-                    <p className="text-xs text-[#71717a]">Beneficiario</p>
-                    <p className="text-sm text-[#fafafa] font-semibold">{paymentDetails.beneficiary || "A carregar..."}</p>
+                    <p className="text-xs text-slate-500">Beneficiario</p>
+                    <p className="text-sm text-slate-800 font-semibold">{paymentDetails.beneficiary || "A carregar..."}</p>
                   </div>
                 </div>
-                <div className="pt-2 border-t border-white/[0.06]">
-                  <p className="text-xs text-[#71717a]">Valor a Transferir (Taxa Fixa - Vendedor)</p>
+                <div className="pt-2 border-t border-slate-200">
+                  <p className="text-xs text-slate-500">Valor a Transferir (Taxa Fixa - Vendedor)</p>
                   <p className="text-lg text-[#10b981] font-bold">{formatKz(100000)}</p>
                 </div>
               </div>
@@ -342,7 +342,7 @@ export default function CofrePage() {
                       className={`flex items-center justify-center h-32 rounded-xl border-2 border-dashed cursor-pointer transition-all ${
                         comprovativoFile
                           ? "border-[#10b981]/40 bg-[#10b981]/5"
-                          : "border-white/[0.08] bg-white/[0.02] hover:border-[#10b981]/30 hover:bg-white/[0.04]"
+                          : "border-white/[0.08] bg-slate-50 hover:border-[#10b981]/30 hover:bg-slate-50"
                       }`}
                     >
                       {comprovativoFile ? (
@@ -354,11 +354,11 @@ export default function CofrePage() {
                         </div>
                       ) : (
                         <div className="text-center">
-                          <svg className="w-8 h-8 text-[#52525b] mx-auto mb-1" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                          <svg className="w-8 h-8 text-slate-400 mx-auto mb-1" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
                           </svg>
-                          <p className="text-[11px] text-[#71717a]">Toque para selecionar talao bancario</p>
-                          <p className="text-[10px] text-[#52525b] mt-1">JPG, PNG ou PDF (max 10MB)</p>
+                          <p className="text-[11px] text-slate-500">Toque para selecionar talao bancario</p>
+                          <p className="text-[10px] text-slate-400 mt-1">JPG, PNG ou PDF (max 10MB)</p>
                         </div>
                       )}
                     </label>
@@ -377,8 +377,8 @@ export default function CofrePage() {
               {uploadStatus === "analyzing" && (
                 <div className="flex flex-col items-center py-8">
                   <div className="w-16 h-16 rounded-full border-4 border-[#10b981] border-t-transparent animate-spin mb-4" />
-                  <p className="text-[14px] text-[#fafafa] font-medium">IA a analisar comprovativo...</p>
-                  <p className="text-[12px] text-[#71717a] mt-1">Verificando valor, IBAN, data e autenticidade</p>
+                  <p className="text-[14px] text-slate-800 font-medium">IA a analisar comprovativo...</p>
+                  <p className="text-[12px] text-slate-500 mt-1">Verificando valor, IBAN, data e autenticidade</p>
                 </div>
               )}
 
@@ -393,7 +393,7 @@ export default function CofrePage() {
                     </div>
                     <div>
                       <p className="text-[#10b981] font-semibold text-sm">Comprovativo Validado pela IA</p>
-                      <p className="text-[11px] text-[#71717a]">Pagamento confirmado com sucesso</p>
+                      <p className="text-[11px] text-slate-500">Pagamento confirmado com sucesso</p>
                     </div>
                   </div>
                   <button
@@ -408,13 +408,13 @@ export default function CofrePage() {
               {uploadStatus === "rejected" && (
                 <div className="flex items-center gap-3 p-4 bg-[#ef4444]/10 border border-[#ef4444]/30 rounded-xl">
                   <div className="w-10 h-10 rounded-full bg-[#ef4444] flex items-center justify-center">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-slate-800" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </div>
                   <div>
                     <p className="text-[#ef4444] font-semibold text-sm">Comprovativo Rejeitado</p>
-                    <p className="text-[11px] text-[#71717a]">A IA detectou irregularidades. Tente novamente.</p>
+                    <p className="text-[11px] text-slate-500">A IA detectou irregularidades. Tente novamente.</p>
                   </div>
                 </div>
               )}
@@ -425,19 +425,19 @@ export default function CofrePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="glass-card rounded-xl p-5 text-center">
               <p className="text-3xl font-bold text-[#f59e0b]">{activeTransactions.length}</p>
-              <p className="text-sm text-[#71717a] mt-1">Negocios Ativos</p>
+              <p className="text-sm text-slate-500 mt-1">Negocios Ativos</p>
             </div>
             <div className="glass-card rounded-xl p-5 text-center">
               <p className="text-3xl font-bold text-[#10b981]">
                 {formatKz(activeTransactions.reduce((sum, t) => sum + t.proposed_price, 0))}
               </p>
-              <p className="text-sm text-[#71717a] mt-1">Em Cofre</p>
+              <p className="text-sm text-slate-500 mt-1">Em Cofre</p>
             </div>
             <div className="glass-card rounded-xl p-5 text-center">
               <p className="text-3xl font-bold text-[#10b981]">
                 {transactions.filter((t) => t.status === "transacao_concluida").length}
               </p>
-              <p className="text-sm text-[#71717a] mt-1">Concluidos</p>
+              <p className="text-sm text-slate-500 mt-1">Concluidos</p>
             </div>
           </div>
         </>

@@ -112,10 +112,10 @@ export default function ContratoPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#060608] flex items-center justify-center">
+      <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center">
         <div className="text-center space-y-3">
           <div className="w-8 h-8 border-2 border-[#10b981] border-t-transparent rounded-full animate-spin mx-auto" />
-          <p className="text-sm text-[#71717a]">A carregar contrato...</p>
+          <p className="text-sm text-slate-500">A carregar contrato...</p>
         </div>
       </div>
     );
@@ -123,7 +123,7 @@ export default function ContratoPage() {
 
   if (error && !negotiation && !negotiations.length) {
     return (
-      <div className="min-h-screen bg-[#060608] flex items-center justify-center">
+      <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center">
         <div className="text-center space-y-3">
           <p className="text-sm text-red-500">{error}</p>
           <button
@@ -170,11 +170,11 @@ export default function ContratoPage() {
 
   if (!negotiationId) {
     return (
-      <div className="min-h-screen bg-[#060608]">
+      <div className="min-h-screen bg-[#F8F9FA]">
         <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
           <div>
-            <h1 className="text-2xl font-bold text-[#fafafa]">Contrato</h1>
-            <p className="text-sm text-[#71717a]">
+            <h1 className="text-2xl font-bold text-slate-800">Contrato</h1>
+            <p className="text-sm text-slate-500">
               Selecione uma negociacao para gerar o contrato
             </p>
           </div>
@@ -186,8 +186,8 @@ export default function ContratoPage() {
           )}
 
           {negotiations.length === 0 ? (
-            <div className="bg-[#0d0d0d] rounded-2xl p-8 border border-zinc-800/80 text-center">
-              <p className="text-sm text-[#71717a]">
+            <div className="bg-white rounded-2xl p-8 border border-slate-200 text-center">
+              <p className="text-sm text-slate-500">
                 Nenhuma negociacao encontrada.
               </p>
             </div>
@@ -197,14 +197,14 @@ export default function ContratoPage() {
                 <Link
                   key={n.id}
                   href={`/contrato?negotiation=${n.id}`}
-                  className="block bg-[#0d0d0d] rounded-2xl border border-zinc-800/80 p-4 hover:bg-[#141418] transition-colors"
+                  className="block bg-white rounded-2xl border border-slate-200 p-4 hover:bg-slate-50 transition-colors"
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-[#fafafa]">
+                      <p className="text-sm font-medium text-slate-800">
                         Negociacao #{n.id}
                       </p>
-                      <p className="text-xs text-[#71717a]">
+                      <p className="text-xs text-slate-500">
                         Viatura ID: {n.vehicle_id}
                       </p>
                     </div>
@@ -212,7 +212,7 @@ export default function ContratoPage() {
                       <span className="text-xs font-medium text-[#c9a84c] bg-[#c9a84c]/10 px-2 py-0.5 rounded-full">
                         {n.status}
                       </span>
-                      <p className="text-xs text-[#52525b] mt-1">
+                      <p className="text-xs text-slate-400 mt-1">
                         {new Date(n.created_at).toLocaleDateString("pt-PT")}
                       </p>
                     </div>
@@ -252,26 +252,26 @@ export default function ContratoPage() {
     : "—";
 
   return (
-    <div className="min-h-screen bg-[#060608]">
+    <div className="min-h-screen bg-[#F8F9FA]">
       <div className="max-w-2xl mx-auto px-4 py-6 space-y-6 print:bg-white print:max-w-none print:px-0">
         <div className="print:hidden flex items-center gap-2">
           <Link
             href="/contrato"
-            className="text-xs text-[#71717a] hover:text-[#fafafa] transition-colors"
+            className="text-xs text-slate-500 hover:text-slate-800 transition-colors"
           >
             ← Voltar
           </Link>
         </div>
 
-        <div className="bg-[#0d0d0d] rounded-2xl border border-zinc-800/80 overflow-hidden print:bg-white print:border-gray-200">
-          <div className="bg-[#141418] p-6 text-center print:bg-white">
-            <p className="text-xs text-[#71717a] uppercase tracking-wider mb-2 print:text-gray-500">
+        <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden print:bg-white print:border-gray-200">
+          <div className="bg-slate-50 p-6 text-center print:bg-white">
+            <p className="text-xs text-slate-500 uppercase tracking-wider mb-2 print:text-gray-500">
               Contrato de Compra e Venda
             </p>
-            <p className="font-bold text-lg text-[#fafafa] print:text-gray-900">
+            <p className="font-bold text-lg text-slate-800 print:text-gray-900">
               IntermedCars
             </p>
-            <p className="text-xs text-[#52525b] mt-1 print:text-gray-400">
+            <p className="text-xs text-slate-400 mt-1 print:text-gray-400">
               Ref: IC-{now.getFullYear()}-
               {String(negotiationId).padStart(4, "0")}
             </p>
@@ -279,28 +279,28 @@ export default function ContratoPage() {
 
           <div className="p-6 space-y-5 text-sm print:text-gray-800">
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white/[0.04] rounded-xl p-3 print:bg-gray-50 print:border print:border-gray-200">
-                <p className="text-[10px] text-[#71717a] uppercase tracking-wider print:text-gray-400">
+              <div className="bg-slate-50 rounded-xl p-3 print:bg-gray-50 print:border print:border-gray-200">
+                <p className="text-[10px] text-slate-500 uppercase tracking-wider print:text-gray-400">
                   Vendedor
                 </p>
-                <p className="font-medium text-[#fafafa] mt-0.5 print:text-gray-900">
+                <p className="font-medium text-slate-800 mt-0.5 print:text-gray-900">
                   {negotiation?.seller?.name || "—"}
                 </p>
                 {negotiation?.seller?.email && (
-                  <p className="text-xs text-[#71717a] mt-0.5 print:text-gray-500">
+                  <p className="text-xs text-slate-500 mt-0.5 print:text-gray-500">
                     {negotiation.seller.email}
                   </p>
                 )}
               </div>
-              <div className="bg-white/[0.04] rounded-xl p-3 print:bg-gray-50 print:border print:border-gray-200">
-                <p className="text-[10px] text-[#71717a] uppercase tracking-wider print:text-gray-400">
+              <div className="bg-slate-50 rounded-xl p-3 print:bg-gray-50 print:border print:border-gray-200">
+                <p className="text-[10px] text-slate-500 uppercase tracking-wider print:text-gray-400">
                   Comprador
                 </p>
-                <p className="font-medium text-[#fafafa] mt-0.5 print:text-gray-900">
+                <p className="font-medium text-slate-800 mt-0.5 print:text-gray-900">
                   {negotiation?.buyer?.name || "—"}
                 </p>
                 {negotiation?.buyer?.email && (
-                  <p className="text-xs text-[#71717a] mt-0.5 print:text-gray-500">
+                  <p className="text-xs text-slate-500 mt-0.5 print:text-gray-500">
                     {negotiation.buyer.email}
                   </p>
                 )}
@@ -308,48 +308,48 @@ export default function ContratoPage() {
             </div>
 
             {vehicle && (
-              <div className="bg-white/[0.04] rounded-xl p-4 print:bg-gray-50 print:border print:border-gray-200">
-                <p className="text-[10px] text-[#71717a] uppercase tracking-wider mb-2 print:text-gray-400">
+              <div className="bg-slate-50 rounded-xl p-4 print:bg-gray-50 print:border print:border-gray-200">
+                <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-2 print:text-gray-400">
                   Dados da Viatura
                 </p>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <p className="text-xs text-[#71717a] print:text-gray-500">
+                    <p className="text-xs text-slate-500 print:text-gray-500">
                       Marca / Modelo
                     </p>
-                    <p className="font-medium text-[#fafafa] print:text-gray-900">
+                    <p className="font-medium text-slate-800 print:text-gray-900">
                       {vehicle.brand} {vehicle.model}
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs text-[#71717a] print:text-gray-500">
+                    <p className="text-xs text-slate-500 print:text-gray-500">
                       Ano
                     </p>
-                    <p className="font-medium text-[#fafafa] print:text-gray-900">
+                    <p className="font-medium text-slate-800 print:text-gray-900">
                       {vehicle.year}
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs text-[#71717a] print:text-gray-500">
+                    <p className="text-xs text-slate-500 print:text-gray-500">
                       Cor
                     </p>
-                    <p className="font-medium text-[#fafafa] print:text-gray-900">
+                    <p className="font-medium text-slate-800 print:text-gray-900">
                       {vehicle.color}
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs text-[#71717a] print:text-gray-500">
+                    <p className="text-xs text-slate-500 print:text-gray-500">
                       Matricula
                     </p>
-                    <p className="font-medium text-[#fafafa] print:text-gray-900">
+                    <p className="font-medium text-slate-800 print:text-gray-900">
                       {vehicle.plate}
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs text-[#71717a] print:text-gray-500">
+                    <p className="text-xs text-slate-500 print:text-gray-500">
                       Quilometragem
                     </p>
-                    <p className="font-medium text-[#fafafa] print:text-gray-900">
+                    <p className="font-medium text-slate-800 print:text-gray-900">
                       {vehicle.mileage.toLocaleString("pt-PT")} km
                     </p>
                   </div>
@@ -358,13 +358,13 @@ export default function ContratoPage() {
             )}
 
             {financial && (
-              <div className="bg-white/[0.04] rounded-xl p-4 print:bg-gray-50 print:border print:border-gray-200">
-                <p className="text-[10px] text-[#71717a] uppercase tracking-wider mb-3 print:text-gray-400">
+              <div className="bg-slate-50 rounded-xl p-4 print:bg-gray-50 print:border print:border-gray-200">
+                <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-3 print:text-gray-400">
                   Valor e Taxas
                 </p>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-[#a1a1aa] print:text-gray-600">
+                    <span className="text-slate-500 print:text-gray-600">
                       Preco Acordado
                     </span>
                     <span className="font-bold text-[#10b981] text-lg print:text-emerald-600">
@@ -373,19 +373,19 @@ export default function ContratoPage() {
                   </div>
                   <div className="h-px bg-white/[0.06] print:bg-gray-200" />
                   <div className="flex items-center justify-between">
-                    <span className="text-[#a1a1aa] print:text-gray-600">
+                    <span className="text-slate-500 print:text-gray-600">
                       Comissao IntermedCars (
                       {financial.commission_percentage}%)
                     </span>
-                    <span className="font-medium text-[#fafafa] print:text-gray-900">
+                    <span className="font-medium text-slate-800 print:text-gray-900">
                       {formattedCommission} Kz
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-[#a1a1aa] print:text-gray-600">
+                    <span className="text-slate-500 print:text-gray-600">
                       Taxas Adicionais (3%)
                     </span>
-                    <span className="font-medium text-[#fafafa] print:text-gray-900">
+                    <span className="font-medium text-slate-800 print:text-gray-900">
                       {financial.total_taxes.toLocaleString("pt-PT", {
                         minimumFractionDigits: 2,
                       })}{" "}
@@ -394,10 +394,10 @@ export default function ContratoPage() {
                   </div>
                   <div className="h-px bg-white/[0.06] print:bg-gray-200" />
                   <div className="flex items-center justify-between">
-                    <span className="text-[#a1a1aa] print:text-gray-600">
+                    <span className="text-slate-500 print:text-gray-600">
                       Valor Liquido ao Vendedor
                     </span>
-                    <span className="font-bold text-[#fafafa] print:text-gray-900">
+                    <span className="font-bold text-slate-800 print:text-gray-900">
                       {formattedNet} Kz
                     </span>
                   </div>
@@ -405,11 +405,11 @@ export default function ContratoPage() {
               </div>
             )}
 
-            <div className="bg-white/[0.04] rounded-xl p-4 print:bg-gray-50 print:border print:border-gray-200">
-              <p className="text-[10px] text-[#71717a] uppercase tracking-wider mb-2 print:text-gray-400">
+            <div className="bg-slate-50 rounded-xl p-4 print:bg-gray-50 print:border print:border-gray-200">
+              <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-2 print:text-gray-400">
                 Condicoes Gerais
               </p>
-              <ul className="text-[#a1a1aa] space-y-1.5 text-xs leading-relaxed print:text-gray-600">
+              <ul className="text-slate-500 space-y-1.5 text-xs leading-relaxed print:text-gray-600">
                 <li>
                   1. O pagamento sera efetuado via cofre fiduciario
                   IntermedCards ou transferencia bancaria.
@@ -434,50 +434,50 @@ export default function ContratoPage() {
             </div>
 
             {negotiation?.consultant && (
-              <div className="bg-white/[0.04] rounded-xl p-3 print:bg-gray-50 print:border print:border-gray-200">
-                <p className="text-[10px] text-[#71717a] uppercase tracking-wider print:text-gray-400">
+              <div className="bg-slate-50 rounded-xl p-3 print:bg-gray-50 print:border print:border-gray-200">
+                <p className="text-[10px] text-slate-500 uppercase tracking-wider print:text-gray-400">
                   Consultor Responsavel
                 </p>
-                <p className="font-medium text-[#fafafa] mt-0.5 print:text-gray-900">
+                <p className="font-medium text-slate-800 mt-0.5 print:text-gray-900">
                   {negotiation.consultant.name}
                 </p>
-                <p className="text-xs text-[#71717a] print:text-gray-500">
+                <p className="text-xs text-slate-500 print:text-gray-500">
                   {negotiation.consultant.email}
                 </p>
               </div>
             )}
 
-            <div className="bg-white/[0.04] rounded-xl p-3 print:bg-gray-50 print:border print:border-gray-200">
-              <p className="text-[10px] text-[#71717a] uppercase tracking-wider print:text-gray-400">
+            <div className="bg-slate-50 rounded-xl p-3 print:bg-gray-50 print:border print:border-gray-200">
+              <p className="text-[10px] text-slate-500 uppercase tracking-wider print:text-gray-400">
                 Data e Local
               </p>
-              <p className="font-medium text-[#fafafa] mt-0.5 print:text-gray-900">
+              <p className="font-medium text-slate-800 mt-0.5 print:text-gray-900">
                 Luanda, {dateStr}
               </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-[#0d0d0d] rounded-2xl p-6 border border-zinc-800/80 print:bg-white print:border-gray-200">
-          <h2 className="font-bold text-[#fafafa] mb-4 print:text-gray-900">
+        <div className="bg-white rounded-2xl p-6 border border-slate-200 print:bg-white print:border-gray-200">
+          <h2 className="font-bold text-slate-800 mb-4 print:text-gray-900">
             Assinaturas
           </h2>
           <div className="grid grid-cols-2 gap-6">
             <div className="text-center">
-              <div className="h-20 border-b border-zinc-800/80 print:border-gray-300 mb-2" />
-              <p className="text-xs font-medium text-[#fafafa] print:text-gray-900">
+              <div className="h-20 border-b border-slate-200 print:border-gray-300 mb-2" />
+              <p className="text-xs font-medium text-slate-800 print:text-gray-900">
                 {negotiation?.buyer?.name || "Comprador"}
               </p>
-              <p className="text-[10px] text-[#71717a] print:text-gray-500">
+              <p className="text-[10px] text-slate-500 print:text-gray-500">
                 Comprador
               </p>
             </div>
             <div className="text-center">
-              <div className="h-20 border-b border-zinc-800/80 print:border-gray-300 mb-2" />
-              <p className="text-xs font-medium text-[#fafafa] print:text-gray-900">
+              <div className="h-20 border-b border-slate-200 print:border-gray-300 mb-2" />
+              <p className="text-xs font-medium text-slate-800 print:text-gray-900">
                 {negotiation?.seller?.name || "Vendedor"}
               </p>
-              <p className="text-[10px] text-[#71717a] print:text-gray-500">
+              <p className="text-[10px] text-slate-500 print:text-gray-500">
                 Vendedor
               </p>
             </div>

@@ -43,7 +43,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#060608] flex">
+    <div className="min-h-screen bg-[#F8F9FA] flex">
       {/* ═══ LEFT — Visual Panel ═══ */}
       <div className="hidden lg:flex flex-1 items-center justify-center relative overflow-hidden">
         {/* Background */}
@@ -54,10 +54,10 @@ export default function LoginPage() {
           {/* Logo + Brand */}
           <div className="mb-12">
             <Logo size="lg" />
-            <h1 className="text-3xl font-bold text-[#fafafa] mt-6">
+            <h1 className="text-3xl font-bold text-slate-800 mt-6">
               Bem-vindo de volta
             </h1>
-            <p className="text-[15px] text-[#71717a] mt-3 leading-relaxed">
+            <p className="text-[15px] text-slate-500 mt-3 leading-relaxed">
               Acesse a sua conta e continue a negociar veiculos de forma segura.
             </p>
           </div>
@@ -72,8 +72,8 @@ export default function LoginPage() {
                 </svg>
               </div>
               <div>
-                <p className="text-[13px] font-semibold text-[#fafafa]">Mediação 100% Segura</p>
-                <p className="text-[12px] text-[#71717a]">Cada negociacao é acompanhada e protegida</p>
+                <p className="text-[13px] font-semibold text-slate-800">Mediação 100% Segura</p>
+                <p className="text-[12px] text-slate-500">Cada negociacao é acompanhada e protegida</p>
               </div>
             </div>
 
@@ -85,8 +85,8 @@ export default function LoginPage() {
                 </svg>
               </div>
               <div>
-                <p className="text-[13px] font-semibold text-[#fafafa]">Utilizadores Verificados</p>
-                <p className="text-[12px] text-[#71717a]">Identidade confirmada para sua seguranca</p>
+                <p className="text-[13px] font-semibold text-slate-800">Utilizadores Verificados</p>
+                <p className="text-[12px] text-slate-500">Identidade confirmada para sua seguranca</p>
               </div>
             </div>
 
@@ -98,14 +98,14 @@ export default function LoginPage() {
                 </svg>
               </div>
               <div>
-                <p className="text-[13px] font-semibold text-[#fafafa]">Processo Transparente</p>
-                <p className="text-[12px] text-[#71717a]">Acompanhe cada etapa da negociacao</p>
+                <p className="text-[13px] font-semibold text-slate-800">Processo Transparente</p>
+                <p className="text-[12px] text-slate-500">Acompanhe cada etapa da negociacao</p>
               </div>
             </div>
           </div>
 
           {/* Trust badge */}
-          <div className="mt-10 flex items-center gap-2 text-[12px] text-[#52525b]">
+          <div className="mt-10 flex items-center gap-2 text-[12px] text-slate-400">
             <svg className="w-4 h-4 text-[#10b981]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -122,8 +122,8 @@ export default function LoginPage() {
             <Logo size="md" />
           </div>
 
-          <h2 className="text-2xl font-bold text-[#fafafa] mb-1">Entrar</h2>
-          <p className="text-sm text-[#71717a] mb-8">
+          <h2 className="text-2xl font-bold text-slate-800 mb-1">Entrar</h2>
+          <p className="text-sm text-slate-500 mb-8">
             Acesse a tua conta para continuar
           </p>
 
@@ -135,7 +135,7 @@ export default function LoginPage() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="text-[11px] font-medium text-[#71717a] uppercase tracking-wider">
+              <label className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">
                 Email ou Telefone
               </label>
               <input
@@ -144,12 +144,12 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 placeholder="exemplo@email.com"
-                className="w-full mt-1.5 px-4 py-3.5 bg-white/[0.04] border border-white/[0.06] rounded-xl text-sm text-[#fafafa] placeholder-[#52525b] outline-none focus:border-[#10b981]/30 transition-colors"
+                className="w-full mt-1.5 px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-[#52525b] outline-none focus:border-[#10b981]/30 transition-colors"
               />
             </div>
 
             <div>
-              <label className="text-[11px] font-medium text-[#71717a] uppercase tracking-wider">
+              <label className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">
                 Palavra-passe
               </label>
               <input
@@ -158,14 +158,14 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 placeholder="A tua palavra-passe"
-                className="w-full mt-1.5 px-4 py-3.5 bg-white/[0.04] border border-white/[0.06] rounded-xl text-sm text-[#fafafa] placeholder-[#52525b] outline-none focus:border-[#10b981]/30 transition-colors"
+                className="w-full mt-1.5 px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-[#52525b] outline-none focus:border-[#10b981]/30 transition-colors"
               />
             </div>
 
             <div className="flex items-center justify-between">
               <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" className="w-4 h-4 rounded border-white/[0.1] bg-white/[0.04] text-[#10b981] focus:ring-[#10b981]/30" />
-                <span className="text-[12px] text-[#71717a]">Lembrar-me</span>
+                <input type="checkbox" className="w-4 h-4 rounded border-white/[0.1] bg-slate-50 text-[#10b981] focus:ring-[#10b981]/30" />
+                <span className="text-[12px] text-slate-500">Lembrar-me</span>
               </label>
               <a href="#" className="text-[12px] text-[#10b981] hover:underline">
                 Esqueceu a password?
@@ -182,7 +182,7 @@ export default function LoginPage() {
           </form>
 
           <div className="mt-8 text-center">
-            <p className="text-sm text-[#71717a]">
+            <p className="text-sm text-slate-500">
               Nao tens conta?{" "}
               <Link
                 href="/registo"

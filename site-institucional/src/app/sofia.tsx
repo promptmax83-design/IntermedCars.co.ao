@@ -47,7 +47,7 @@ export default function SofiaAI() {
     <>
       {aberto && (
         <div className="fixed bottom-20 right-4 md:bottom-6 md:right-6 w-[340px] h-[480px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col z-50 overflow-hidden">
-          <div className="bg-primary text-white p-4 flex items-center gap-3">
+          <div className="bg-primary text-slate-800 p-4 flex items-center gap-3">
             <div className="w-10 h-10 bg-accent rounded-full flex items-center justify-center text-primary font-bold text-sm">
               S
             </div>
@@ -59,7 +59,7 @@ export default function SofiaAI() {
             </div>
             <button
               onClick={() => setAberto(false)}
-              className="text-gray-400 hover:text-white text-lg"
+              className="text-gray-400 hover:text-slate-800 text-lg"
             >
               X
             </button>

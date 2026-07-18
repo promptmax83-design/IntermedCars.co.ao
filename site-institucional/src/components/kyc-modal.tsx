@@ -66,7 +66,7 @@ export default function KycModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-[#060608]/90 backdrop-blur-sm"
+        className="absolute inset-0 bg-[#F8F9FA]/90 backdrop-blur-sm"
         onClick={onClose}
       />
 
@@ -75,7 +75,7 @@ export default function KycModal({
         {/* Close */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center text-[#71717a] hover:text-[#fafafa] transition-colors"
+          className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center text-slate-500 hover:text-slate-800 transition-colors"
         >
           <svg
             className="w-4 h-4"
@@ -93,10 +93,10 @@ export default function KycModal({
         </button>
 
         {/* Header */}
-        <h2 className="text-lg font-bold text-[#fafafa] mb-1">
+        <h2 className="text-lg font-bold text-slate-800 mb-1">
           Verificacao de Identidade
         </h2>
-        <p className="text-[12px] text-[#71717a] mb-4">
+        <p className="text-[12px] text-slate-500 mb-4">
           Confirma a tua identidade para desbloquear todas as funcionalidades.
         </p>
 
@@ -111,7 +111,7 @@ export default function KycModal({
         {/* Step: BI Frente */}
         {step === "bi_frente" && (
           <div className="space-y-4">
-            <p className="text-[11px] text-[#a1a1aa] font-medium uppercase tracking-wider">
+            <p className="text-[11px] text-slate-500 font-medium uppercase tracking-wider">
               Frente do BI
             </p>
             <input
@@ -126,7 +126,7 @@ export default function KycModal({
               className={`flex flex-col items-center justify-center h-40 rounded-xl border-2 border-dashed cursor-pointer transition-all ${
                 biFrente
                   ? "border-[#10b981]/40 bg-[#10b981]/5"
-                  : "border-white/[0.08] bg-white/[0.02] hover:border-[#10b981]/30"
+                  : "border-white/[0.08] bg-slate-50 hover:border-[#10b981]/30"
               }`}
             >
               {biFrente ? (
@@ -151,7 +151,7 @@ export default function KycModal({
               ) : (
                 <>
                   <svg
-                    className="w-10 h-10 text-[#52525b] mb-2"
+                    className="w-10 h-10 text-slate-400 mb-2"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth={1.5}
@@ -163,10 +163,10 @@ export default function KycModal({
                       d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
                     />
                   </svg>
-                  <p className="text-[12px] text-[#71717a]">
+                  <p className="text-[12px] text-slate-500">
                     Toque para selecionar
                   </p>
-                  <p className="text-[10px] text-[#52525b] mt-1">
+                  <p className="text-[10px] text-slate-400 mt-1">
                     JPG, PNG ou PDF
                   </p>
                 </>
@@ -178,7 +178,7 @@ export default function KycModal({
         {/* Step: BI Verso */}
         {step === "bi_verso" && (
           <div className="space-y-4">
-            <p className="text-[11px] text-[#a1a1aa] font-medium uppercase tracking-wider">
+            <p className="text-[11px] text-slate-500 font-medium uppercase tracking-wider">
               Verso do BI
             </p>
             <input
@@ -193,7 +193,7 @@ export default function KycModal({
               className={`flex flex-col items-center justify-center h-40 rounded-xl border-2 border-dashed cursor-pointer transition-all ${
                 biVerso
                   ? "border-[#10b981]/40 bg-[#10b981]/5"
-                  : "border-white/[0.08] bg-white/[0.02] hover:border-[#10b981]/30"
+                  : "border-white/[0.08] bg-slate-50 hover:border-[#10b981]/30"
               }`}
             >
               {biVerso ? (
@@ -218,7 +218,7 @@ export default function KycModal({
               ) : (
                 <>
                   <svg
-                    className="w-10 h-10 text-[#52525b] mb-2"
+                    className="w-10 h-10 text-slate-400 mb-2"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth={1.5}
@@ -230,10 +230,10 @@ export default function KycModal({
                       d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
                     />
                   </svg>
-                  <p className="text-[12px] text-[#71717a]">
+                  <p className="text-[12px] text-slate-500">
                     Toque para selecionar
                   </p>
-                  <p className="text-[10px] text-[#52525b] mt-1">
+                  <p className="text-[10px] text-slate-400 mt-1">
                     JPG, PNG ou PDF
                   </p>
                 </>
@@ -245,7 +245,7 @@ export default function KycModal({
         {/* Step: Selfie */}
         {step === "selfie" && (
           <div className="space-y-4">
-            <p className="text-[11px] text-[#a1a1aa] font-medium uppercase tracking-wider">
+            <p className="text-[11px] text-slate-500 font-medium uppercase tracking-wider">
               Reconhecimento Facial
             </p>
 
@@ -272,7 +272,7 @@ export default function KycModal({
                   />
                 </svg>
               </div>
-              <p className="text-[11px] text-[#71717a] mt-3 text-center">
+              <p className="text-[11px] text-slate-500 mt-3 text-center">
                 Posiciona o rosto dentro da moldura
               </p>
             </div>
@@ -308,10 +308,10 @@ export default function KycModal({
                 </svg>
               </div>
             </div>
-            <p className="text-[14px] text-[#fafafa] font-medium">
+            <p className="text-[14px] text-slate-800 font-medium">
               A verificar identidade...
             </p>
-            <p className="text-[12px] text-[#71717a] mt-1">
+            <p className="text-[12px] text-slate-500 mt-1">
               Comparando BI com selfie
             </p>
           </div>
@@ -335,10 +335,10 @@ export default function KycModal({
                 />
               </svg>
             </div>
-            <p className="text-[14px] text-[#fafafa] font-medium">
+            <p className="text-[14px] text-slate-800 font-medium">
               Identidade Verificada!
             </p>
-            <p className="text-[12px] text-[#71717a] mt-1">
+            <p className="text-[12px] text-slate-500 mt-1">
               Agora tens acesso completo a plataforma.
             </p>
           </div>

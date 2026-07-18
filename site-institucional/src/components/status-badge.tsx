@@ -25,7 +25,7 @@ const statusConfig: Record<
   comprado: {
     label: "Vendido",
     bg: "bg-[#52525b]/10",
-    text: "text-[#a1a1aa]",
+    text: "text-slate-500",
     dot: "bg-[#a1a1aa]",
   },
   cancelado: {

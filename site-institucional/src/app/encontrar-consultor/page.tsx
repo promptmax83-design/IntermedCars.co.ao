@@ -114,7 +114,7 @@ export default function EncontrarConsultorPage() {
             <button
               onClick={handleSearchCode}
               disabled={!searchCode.trim()}
-              className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm rounded-xl transition-all duration-200 disabled:opacity-50"
+              className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-slate-800 font-semibold text-sm rounded-xl transition-all duration-200 disabled:opacity-50"
             >
               Buscar
             </button>
@@ -150,7 +150,7 @@ export default function EncontrarConsultorPage() {
         {selected && (
           <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 space-y-4">
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center text-lg font-bold text-white">
+              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center text-lg font-bold text-slate-800">
                 {selected.fullname
                   .split(" ")
                   .map((n) => n[0])
@@ -216,7 +216,7 @@ export default function EncontrarConsultorPage() {
 
             <Link
               href={`/chat?consultant=${selected.id}`}
-              className="flex items-center justify-center gap-2 w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm rounded-xl transition-all duration-200"
+              className="flex items-center justify-center gap-2 w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-slate-800 font-semibold text-sm rounded-xl transition-all duration-200"
             >
               <svg
                 className="w-4 h-4"
@@ -267,7 +267,7 @@ export default function EncontrarConsultorPage() {
                       : "bg-white border-slate-200/60 shadow-sm hover:shadow-md"
                   }`}
                 >
-                  <div className="w-11 h-11 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-[13px] font-bold text-white">
+                  <div className="w-11 h-11 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-[13px] font-bold text-slate-800">
                     {c.fullname
                       .split(" ")
                       .map((n) => n[0])

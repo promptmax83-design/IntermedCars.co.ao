@@ -81,7 +81,7 @@ const categoriaColors: Record<string, string> = {
   Negociacoes: "bg-[#3b82f6]/10 text-[#3b82f6]",
   Pagamentos: "bg-[#10b981]/10 text-[#10b981]",
   Mensagens: "bg-[#a855f7]/10 text-[#a855f7]",
-  Sistema: "bg-[#71717a]/10 text-[#71717a]",
+  Sistema: "bg-[#71717a]/10 text-slate-500",
 };
 
 export default function NotificacoesPage() {
@@ -131,13 +131,13 @@ export default function NotificacoesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#060608]">
+    <div className="min-h-screen bg-[#F8F9FA]">
       <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-[#fafafa]">Notificacoes</h1>
-            <p className="text-[13px] text-[#71717a]">
+            <h1 className="text-2xl font-bold text-slate-800">Notificacoes</h1>
+            <p className="text-[13px] text-slate-500">
               {loading
                 ? "A carregar..."
                 : naoLidas > 0
@@ -164,7 +164,7 @@ export default function NotificacoesPage() {
               className={`px-3 py-1.5 rounded-full text-xs font-medium shrink-0 transition-colors ${
                 c === filtro
                   ? "bg-[#10b981] text-[#060608]"
-                  : "bg-white/[0.04] text-[#71717a] border border-white/[0.06] hover:bg-white/[0.06]"
+                  : "bg-slate-50 text-slate-500 border border-slate-200 hover:bg-slate-100"
               }`}
             >
               {c}
@@ -174,15 +174,15 @@ export default function NotificacoesPage() {
 
         {/* Loading State */}
         {loading && (
-          <div className="bg-zinc-900/50 border border-zinc-800/80 rounded-2xl p-8 text-center">
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-8 text-center">
             <div className="w-8 h-8 border-2 border-[#10b981] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-            <p className="text-[#71717a] text-sm">A carregar notificacoes...</p>
+            <p className="text-slate-500 text-sm">A carregar notificacoes...</p>
           </div>
         )}
 
         {/* Error State */}
         {error && !loading && (
-          <div className="bg-zinc-900/50 border border-zinc-800/80 rounded-2xl p-8 text-center">
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-8 text-center">
             <p className="text-[#ef4444] text-sm">{error}</p>
           </div>
         )}
@@ -191,23 +191,23 @@ export default function NotificacoesPage() {
         {!loading && !error && (
           <div className="space-y-2">
             {filtradas.length === 0 ? (
-              <div className="bg-zinc-900/50 border border-zinc-800/80 rounded-2xl p-8 text-center">
-                <p className="text-[#71717a] text-sm">Sem notificacoes.</p>
+              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-8 text-center">
+                <p className="text-slate-500 text-sm">Sem notificacoes.</p>
               </div>
             ) : (
               filtradas.map((n) => (
                 <div
                   key={n.id}
-                  className={`bg-zinc-900/50 border rounded-2xl p-4 transition-colors cursor-pointer hover:bg-white/[0.02] ${
+                  className={`bg-slate-50 border rounded-2xl p-4 transition-colors cursor-pointer hover:bg-slate-50 ${
                     n.lida
-                      ? "border-zinc-800/80"
+                      ? "border-slate-200"
                       : "border-[#10b981]/30 bg-[#10b981]/5"
                   }`}
                 >
                   <div className="flex items-start gap-3">
                     <div
                       className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
-                        categoriaColors[n.categoria] || "bg-[#71717a]/10 text-[#71717a]"
+                        categoriaColors[n.categoria] || "bg-[#71717a]/10 text-slate-500"
                       }`}
                     >
                       {categoriaIcons[n.categoria] || "ℹ️"}
@@ -216,7 +216,7 @@ export default function NotificacoesPage() {
                       <div className="flex items-center justify-between">
                         <p
                           className={`text-[13px] ${
-                            n.lida ? "text-[#a1a1aa]" : "font-bold text-[#fafafa]"
+                            n.lida ? "text-slate-500" : "font-bold text-slate-800"
                           }`}
                         >
                           {n.titulo}
@@ -225,8 +225,8 @@ export default function NotificacoesPage() {
                           <span className="w-2 h-2 bg-[#10b981] rounded-full shrink-0" />
                         )}
                       </div>
-                      <p className="text-[12px] text-[#71717a] mt-0.5">{n.descricao}</p>
-                      <p className="text-[10px] text-[#52525b] mt-1">{n.hora}</p>
+                      <p className="text-[12px] text-slate-500 mt-0.5">{n.descricao}</p>
+                      <p className="text-[10px] text-slate-400 mt-1">{n.hora}</p>
                     </div>
                   </div>
                 </div>

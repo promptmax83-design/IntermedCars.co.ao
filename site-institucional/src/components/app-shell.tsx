@@ -53,7 +53,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <div className="w-10 h-10 rounded-full border-2 border-[#10b981] border-t-transparent animate-spin" />
-          <p className="text-xs text-[#52525b]">A carregar...</p>
+          <p className="text-xs text-slate-400">A carregar...</p>
         </div>
       </div>
     );
@@ -86,21 +86,21 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-2">
             <Link
               href="/notificacoes"
-              className="relative p-2 rounded-xl hover:bg-white/[0.04] transition-colors"
+              className="relative p-2 rounded-xl hover:bg-slate-50 transition-colors"
             >
-              <svg className="w-5 h-5 text-[#71717a]" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
               </svg>
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#f59e0b] rounded-full" />
             </Link>
             <Link
               href="/chat"
-              className="relative p-2 rounded-xl hover:bg-white/[0.04] transition-colors"
+              className="relative p-2 rounded-xl hover:bg-slate-50 transition-colors"
             >
-              <svg className="w-5 h-5 text-[#71717a]" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
               </svg>
-              <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 bg-[#10b981] text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+              <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 bg-[#10b981] text-slate-800 text-[9px] font-bold rounded-full flex items-center justify-center">
                 3
               </span>
             </Link>
@@ -111,7 +111,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <main className="flex-1 overflow-y-auto">{children}</main>
 
         {/* Mobile Bottom Nav */}
-        <nav className="lg:hidden flex items-center justify-around bg-[#0a0a0c] border-t border-white/[0.04] shrink-0 h-16">
+        <nav className="lg:hidden flex items-center justify-around bg-white border-t border-slate-200/60 shrink-0 h-16">
           {mobileNavItems.map((item) => {
             const active = isActive(item.href);
             return (
@@ -119,7 +119,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 key={item.href}
                 href={item.href}
                 className={`flex flex-col items-center gap-1 px-3 py-2 rounded-xl relative transition-colors ${
-                  active ? "text-[#10b981]" : "text-[#52525b]"
+                  active ? "text-[#10b981]" : "text-slate-400"
                 }`}
               >
                 <div className="relative">
@@ -127,7 +127,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                     <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
                   </svg>
                   {item.badge && (
-                    <span className="absolute -top-1 -right-1.5 min-w-[14px] h-3.5 px-0.5 bg-[#10b981] text-white text-[8px] font-bold rounded-full flex items-center justify-center">
+                    <span className="absolute -top-1 -right-1.5 min-w-[14px] h-3.5 px-0.5 bg-[#10b981] text-slate-800 text-[8px] font-bold rounded-full flex items-center justify-center">
                       {item.badge}
                     </span>
                   )}

@@ -55,22 +55,22 @@ export default function GaleriaPage() {
         });
 
   return (
-    <div className="min-h-screen bg-[#060608]">
+    <div className="min-h-screen bg-[#F8F9FA]">
       {/* Header */}
-      <section className="py-16 border-b border-white/[0.04]">
+      <section className="py-16 border-b border-slate-200/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-[#c9a84c] font-semibold tracking-widest uppercase text-sm mb-2">
             As Melhores Viaturas
           </p>
-          <h1 className="text-4xl md:text-5xl font-bold text-[#fafafa]">Galeria</h1>
-          <p className="text-[#71717a] mt-2">
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-800">Galeria</h1>
+          <p className="text-slate-500 mt-2">
             {veiculos.length} veiculos disponiveis
           </p>
         </div>
       </section>
 
       {/* Filters */}
-      <section className="py-6 border-b border-white/[0.04]">
+      <section className="py-6 border-b border-slate-200/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap gap-3">
             {filtros.map((f) => (
@@ -80,7 +80,7 @@ export default function GaleriaPage() {
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                   f === filtro
                     ? "bg-[#10b981] text-[#060608]"
-                    : "bg-white/[0.04] text-[#71717a] border border-white/[0.06] hover:bg-white/[0.06]"
+                    : "bg-slate-50 text-slate-500 border border-slate-200 hover:bg-slate-100"
                 }`}
               >
                 {f}
@@ -99,7 +99,7 @@ export default function GaleriaPage() {
             </div>
           ) : filtrados.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-[#71717a]">Nenhum veiculo encontrado nesta categoria.</p>
+              <p className="text-slate-500">Nenhum veiculo encontrado nesta categoria.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -107,9 +107,9 @@ export default function GaleriaPage() {
                 <Link
                   key={v.id}
                   href={`/viatura/${v.id}`}
-                  className="bg-zinc-900/50 border border-zinc-800/80 rounded-2xl overflow-hidden hover:bg-white/[0.02] transition-all group"
+                  className="bg-slate-50 border border-slate-200 rounded-2xl overflow-hidden hover:bg-slate-50 transition-all group"
                 >
-                  <div className="h-52 bg-gradient-to-br from-[#0d0d10] to-[#121215] flex items-center justify-center relative">
+                  <div className="h-52 bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center relative">
                     <span className="text-[#1a1a1f] text-4xl font-bold group-hover:scale-110 transition-transform">
                       {v.marca}
                     </span>
@@ -121,18 +121,18 @@ export default function GaleriaPage() {
                   </div>
                   <div className="p-5">
                     <p className="text-[#10b981] text-sm font-semibold">{v.marca}</p>
-                    <h3 className="text-lg font-bold text-[#fafafa] mt-0.5">{v.modelo}</h3>
-                    <div className="grid grid-cols-2 gap-2 text-sm text-[#71717a] mt-3">
+                    <h3 className="text-lg font-bold text-slate-800 mt-0.5">{v.modelo}</h3>
+                    <div className="grid grid-cols-2 gap-2 text-sm text-slate-500 mt-3">
                       <span>{v.ano}</span>
                       <span>{v.km?.toLocaleString("pt-AO") || "—"} km</span>
                       <span>{v.caixa || "—"}</span>
                       <span>{v.cor || "—"}</span>
                     </div>
-                    <div className="flex justify-between items-center pt-4 mt-4 border-t border-white/[0.04]">
+                    <div className="flex justify-between items-center pt-4 mt-4 border-t border-slate-200/60">
                       <p className="text-[#10b981] text-xl font-bold">
                         Kz {v.preco?.toLocaleString("pt-AO") || "—"}
                       </p>
-                      <span className="text-[#71717a] text-sm group-hover:text-[#10b981] transition-colors">
+                      <span className="text-slate-500 text-sm group-hover:text-[#10b981] transition-colors">
                         Ver detalhes →
                       </span>
                     </div>

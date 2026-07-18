@@ -183,7 +183,7 @@ export default function SidebarNav() {
       <div className="p-4 border-t border-slate-100 space-y-3">
         <Link
           href="/anunciar"
-          className="flex items-center justify-center gap-2 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-[13px] py-2.5 px-4 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg"
+          className="flex items-center justify-center gap-2 w-full bg-emerald-600 hover:bg-emerald-700 text-slate-800 font-semibold text-[13px] py-2.5 px-4 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg"
         >
           <svg
             className="w-4 h-4"
@@ -204,7 +204,7 @@ export default function SidebarNav() {
           onClick={logout}
           className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer w-full text-left"
         >
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-[11px] font-bold text-white shadow-sm">
+          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-[11px] font-bold text-slate-800 shadow-sm">
             {userInitials}
           </div>
           <div className="flex-1 min-w-0">

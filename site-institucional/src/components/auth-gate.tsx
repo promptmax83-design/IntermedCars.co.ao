@@ -4,12 +4,12 @@ import Logo from "@/components/logo";
 
 export default function AuthGate() {
   return (
-    <div className="min-h-screen bg-[#060608] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center px-4">
       <div className="text-center max-w-sm">
         {/* Logo */}
         <div className="mb-8 flex flex-col items-center">
           <Logo size="lg" showText={false} />
-          <p className="text-sm text-[#71717a] mt-2">
+          <p className="text-sm text-slate-500 mt-2">
             Plataforma de mobilidade inteligente
           </p>
         </div>
@@ -24,13 +24,13 @@ export default function AuthGate() {
           </Link>
           <Link
             href="/registo"
-            className="block w-full py-3.5 bg-white/[0.04] hover:bg-white/[0.08] text-[#fafafa] font-semibold text-sm rounded-xl border border-white/[0.06] transition-all duration-200"
+            className="block w-full py-3.5 bg-slate-50 hover:bg-slate-100 text-slate-800 font-semibold text-sm rounded-xl border border-slate-200 transition-all duration-200"
           >
             Criar Conta
           </Link>
         </div>
 
-        <p className="text-[11px] text-[#52525b] mt-8">
+        <p className="text-[11px] text-slate-400 mt-8">
           Compre e venda veiculos de forma segura em Angola
         </p>
       </div>

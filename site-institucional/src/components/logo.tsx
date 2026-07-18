@@ -1,9 +1,10 @@
-interface LogoProps {
+﻿interface LogoProps {
   size?: "sm" | "md" | "lg";
   showText?: boolean;
+  theme?: "dark" | "light";
 }
 
-export default function Logo({ size = "md", showText = true }: LogoProps) {
+export default function Logo({ size = "md", showText = true, theme = "light" }: LogoProps) {
   const sizes = {
     sm: { icon: 28, text: "text-xs", gap: "gap-2" },
     md: { icon: 36, text: "text-sm", gap: "gap-2.5" },
@@ -80,7 +81,7 @@ export default function Logo({ size = "md", showText = true }: LogoProps) {
       {/* Text */}
       {showText && (
         <div className="flex items-baseline">
-          <span className={`font-bold ${s.text} text-[#fafafa] tracking-tight`}>Intermed</span>
+          <span className={`font-bold ${s.text} ${theme === "dark" ? "text-[#fafafa]" : "text-slate-800"} tracking-tight`}>Intermed</span>
           <span className={`font-bold ${s.text} text-[#c9a84c] tracking-tight`}>Cars</span>
         </div>
       )}

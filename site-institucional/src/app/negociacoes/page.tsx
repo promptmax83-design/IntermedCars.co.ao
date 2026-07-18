@@ -93,26 +93,26 @@ export default function NegociacoesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#060608] flex items-center justify-center">
-        <div className="text-zinc-400">A carregar...</div>
+      <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center">
+        <div className="text-slate-500">A carregar...</div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-[#060608] flex items-center justify-center">
+      <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center">
         <div className="text-red-400">{error}</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#060608] text-white">
+    <div className="min-h-screen bg-[#F8F9FA] text-slate-800">
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-white">As Minhas Negociacoes</h1>
-          <p className="text-sm text-zinc-400">
+          <h1 className="text-2xl font-bold text-slate-800">As Minhas Negociacoes</h1>
+          <p className="text-sm text-slate-500">
             Acompanhe todas as suas negociacoes.
           </p>
         </div>
@@ -125,7 +125,7 @@ export default function NegociacoesPage() {
               className={`px-4 py-2 rounded-lg text-xs font-medium transition-colors ${
                 f.key === filter
                   ? "bg-[#10b981] text-[#060608] font-semibold"
-                  : "bg-white/5 text-zinc-400 border border-white/5 hover:bg-white/10"
+                  : "bg-slate-100 text-slate-500 border border-slate-200/60 hover:bg-slate-100"
               }`}
             >
               {f.label}
@@ -134,10 +134,10 @@ export default function NegociacoesPage() {
         </div>
 
         {filtered.length === 0 ? (
-          <div className="bg-[#0d0d0d] rounded-xl border border-white/5 p-12 text-center">
-            <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-3">
+          <div className="bg-white rounded-xl border border-slate-200/60 p-12 text-center">
+            <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-3">
               <svg
-                className="w-6 h-6 text-zinc-500"
+                className="w-6 h-6 text-slate-500"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth={1.5}
@@ -150,7 +150,7 @@ export default function NegociacoesPage() {
                 />
               </svg>
             </div>
-            <p className="text-zinc-400 text-sm">
+            <p className="text-slate-500 text-sm">
               Nenhuma negociacao encontrada.
             </p>
           </div>
@@ -160,10 +160,10 @@ export default function NegociacoesPage() {
               <Link
                 key={neg.id}
                 href={`/negociacao/${neg.id}`}
-                className="block bg-[#0d0d0d] rounded-xl border border-white/5 p-4 hover:bg-white/[0.02] transition-colors"
+                className="block bg-white rounded-xl border border-slate-200/60 p-4 hover:bg-slate-50 transition-colors"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-lg bg-white/5 flex items-center justify-center shrink-0 overflow-hidden">
+                  <div className="w-16 h-16 rounded-lg bg-slate-100 flex items-center justify-center shrink-0 overflow-hidden">
                     {neg.veiculo_foto ? (
                       <img
                         src={neg.veiculo_foto}
@@ -189,17 +189,17 @@ export default function NegociacoesPage() {
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="font-semibold text-white truncate">
+                      <span className="font-semibold text-slate-800 truncate">
                         {neg.veiculo_marca} {neg.veiculo_modelo}
                       </span>
-                      <span className="text-xs text-zinc-500">
+                      <span className="text-xs text-slate-500">
                         {neg.veiculo_ano}
                       </span>
                     </div>
                     <p className="text-sm text-[#10b981] font-medium">
                       {formatPrice(neg.preco)}
                     </p>
-                    <div className="flex items-center gap-3 mt-1 text-xs text-zinc-500">
+                    <div className="flex items-center gap-3 mt-1 text-xs text-slate-500">
                       {neg.consultor_nome && (
                         <span>Consultor: {neg.consultor_nome}</span>
                       )}
@@ -211,14 +211,14 @@ export default function NegociacoesPage() {
 
                   <span
                     className={`px-2.5 py-1 rounded-lg text-[11px] font-medium shrink-0 ${
-                      statusColors[neg.status] || "bg-zinc-800 text-zinc-400"
+                      statusColors[neg.status] || "bg-zinc-800 text-slate-500"
                     }`}
                   >
                     {statusLabels[neg.status] || neg.status}
                   </span>
 
                   <svg
-                    className="w-4 h-4 text-zinc-500 shrink-0"
+                    className="w-4 h-4 text-slate-500 shrink-0"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth={1.5}
