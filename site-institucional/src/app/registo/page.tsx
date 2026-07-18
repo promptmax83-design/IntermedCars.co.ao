@@ -155,7 +155,7 @@ export default function RegistoPage() {
 
       const data = await res.json();
       if (!res.ok || !data.success) {
-        throw new Error(data.message || "Erro ao criar conta");
+        throw new Error(data.message || data.error || "Erro ao criar conta");
       }
 
       localStorage.setItem("token", data.token);

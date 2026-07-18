@@ -84,8 +84,8 @@ class AuthController extends BaseController
             'telemovel' => $data['telemovel'],
             'bi_passaporte' => $data['bi_passaporte'],
             'password_hash' => $passwordHash,
-            'nome_pai' => $data['nome_pai'] ?? null,
-            'nome_mae' => $data['nome_mae'] ?? null,
+            'nome_pai' => $data['nome_pai'] ?? '',
+            'nome_mae' => $data['nome_mae'] ?? '',
             'status' => 'pendente_verificacao',
         ]);
 
