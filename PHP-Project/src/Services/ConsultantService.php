@@ -26,8 +26,12 @@ class ConsultantService
             throw new \InvalidArgumentException("Campos obrigatorios: user_id, fullname, phone");
         }
 
-        $sql = 'INSERT INTO consultants (user_id, fullname, phone, zone, rank, rating, total_deals, is_active)
-                VALUES (:uid, :name, :phone, :zone, :rank, :rating, 0, 1)';
+        $maxId = $this->db->query('SELECT MAX(id) FROM consultants')->fetchColumn();
+        $nextId = ((int) ($maxId ?? 0)) + 1;
+        $codigoReferencia = 'IMC-' . str_pad((string) $nextId, 4, '0', STR_PAD_LEFT);
+
+        $sql = 'INSERT INTO consultants (user_id, fullname, phone, zone, rank, rating, total_deals, is_active, codigo_referencia)
+                VALUES (:uid, :name, :phone, :zone, :rank, :rating, 0, 1, :code)';
         $stmt = $this->db->prepare($sql);
         $stmt->execute([
             'uid' => $userId,
@@ -36,11 +40,13 @@ class ConsultantService
             'zone' => $zone,
             'rank' => 'Bronze',
             'rating' => 5.00,
+            'code' => $codigoReferencia,
         ]);
 
         return [
             'success' => true,
             'consultant_id' => (int) $this->db->lastInsertId(),
+            'codigo_referencia' => $codigoReferencia,
             'rank' => 'Bronze',
             'message' => 'Consultor registado com sucesso.',
         ];
@@ -101,6 +107,14 @@ class ConsultantService
             'consultant' => $consultant,
             'stats' => $stats,
         ];
+    }
+
+    public function getByCodigo(string $codigo): ?array
+    {
+        $stmt = $this->db->prepare('SELECT * FROM consultants WHERE codigo_referencia = :code AND is_active = 1');
+        $stmt->execute(['code' => $codigo]);
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $result ?: null;
     }
 
     private function checkRankUpgrade(int $id): void

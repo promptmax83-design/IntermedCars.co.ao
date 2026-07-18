@@ -19,6 +19,7 @@ class Migrations
         $m->ensureUserRoleColumn();
         $m->ensureNotificationLogsTable();
         $m->ensureConsultantsTable();
+        $m->ensureConsultantCodes();
         $m->ensureNegotiationsTable();
         $m->ensureFeePaymentsTable();
         $m->ensureChatChannelsTable();
@@ -56,6 +57,7 @@ class Migrations
             user_id INTEGER NOT NULL UNIQUE,
             fullname VARCHAR(255) NOT NULL,
             phone VARCHAR(50) NOT NULL UNIQUE,
+            codigo_referencia VARCHAR(20) UNIQUE NOT NULL DEFAULT '',
             rank VARCHAR(20) NOT NULL DEFAULT 'Bronze',
             rating DECIMAL(3, 2) DEFAULT 5.00,
             total_deals INTEGER DEFAULT 0,
@@ -64,6 +66,23 @@ class Migrations
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
         )");
+    }
+
+    private function ensureConsultantCodes(): void
+    {
+        try {
+            $this->db->exec("ALTER TABLE consultants ADD COLUMN codigo_referencia VARCHAR(20) UNIQUE DEFAULT ''");
+        } catch (\PDOException) {
+            // Column already exists
+        }
+
+        $stmt = $this->db->query("SELECT id, user_id FROM consultants WHERE codigo_referencia = '' OR codigo_referencia IS NULL");
+        $consultants = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        foreach ($consultants as $c) {
+            $code = 'IMC-' . str_pad((string) $c['id'], 4, '0', STR_PAD_LEFT);
+            $update = $this->db->prepare("UPDATE consultants SET codigo_referencia = :code WHERE id = :id");
+            $update->execute(['code' => $code, 'id' => $c['id']]);
+        }
     }
 
     private function ensureNegotiationsTable(): void
