@@ -41,6 +41,18 @@ class VerificationService
             throw new \InvalidArgumentException("Destino invalido");
         }
 
+        $isDev = (($_ENV['APP_ENV'] ?? 'development') === 'development');
+        if ($isDev) {
+            $code = '123456';
+            $this->storeCode($targetType, $targetValue, $code, $purpose);
+            return [
+                'success' => true,
+                'message' => "Codigo enviado para {$targetValue}",
+                'expires_in' => 600,
+                'debug_code' => $code,
+            ];
+        }
+
         $code = str_pad((string) random_int(100000, 999999), 6, '0', STR_PAD_LEFT);
         error_log("[IntermedCars] === VERIFICATION CODE: {$code} ===");
 

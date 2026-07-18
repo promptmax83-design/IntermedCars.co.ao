@@ -537,6 +537,9 @@ export default function RegistoPage() {
                       maxLength={6}
                       className="w-full mt-1.5 px-4 py-3 bg-white/[0.04] border border-white/[0.06] rounded-xl text-sm text-[#fafafa] text-center tracking-[0.5em] font-mono outline-none focus:border-[#10b981]/40 transition-colors"
                     />
+                    <p className="text-[11px] text-[#52525b] text-center mt-2">
+                      Em modo desenvolvimento, qualquer codigo de 6 digitos e aceite.
+                    </p>
                   </div>
 
                   {codeError && (
