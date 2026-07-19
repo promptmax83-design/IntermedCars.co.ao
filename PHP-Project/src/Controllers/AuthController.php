@@ -42,7 +42,8 @@ class AuthController extends BaseController
             throw new \InvalidArgumentException("Email invalido");
         }
 
-        if (strlen($data['bi_passaporte']) < 9) {
+        // Permitir "PENDENTE" como placeholder para KYC posterior
+        if ($data['bi_passaporte'] !== 'PENDENTE' && strlen($data['bi_passaporte']) < 9) {
             throw new \InvalidArgumentException("BI/Passaporte deve ter minimo 9 caracteres");
         }
 
