@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace IntermedCars\Controllers;
 
 use IntermedCars\Database\Database;
+use IntermedCars\Http\AuthMiddleware;
 use PDO;
 
 /**
@@ -41,15 +42,21 @@ abstract class BaseController
      * Send a success response
      *
      * @param mixed $data
-     * @param string $message
+     * @param string|int $messageOrStatus
      * @return never
      */
-    protected function success(mixed $data = null, string $message = 'Success'): never
+    protected function success(mixed $data = null, string|int $messageOrStatus = 'Success'): never
     {
         $response = [
             'success' => true,
-            'message' => $message,
         ];
+
+        if (is_int($messageOrStatus)) {
+            http_response_code($messageOrStatus);
+            $response['message'] = 'Success';
+        } else {
+            $response['message'] = $messageOrStatus;
+        }
 
         if ($data !== null) {
             $response['data'] = $data;
@@ -110,5 +117,15 @@ abstract class BaseController
     protected function getQueryParam(string $key, mixed $default = null): mixed
     {
         return $_GET[$key] ?? $default;
+    }
+
+    /**
+     * Get authenticated user ID from JWT token
+     *
+     * @return int|null User ID or null if not authenticated
+     */
+    protected function getAuthUserId(): ?int
+    {
+        return AuthMiddleware::getUserId();
     }
 }

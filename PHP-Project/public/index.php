@@ -416,6 +416,49 @@ $router->post('/api/negotiations/{id}/confirm-delivery', static function (): voi
 });
 
 // ─── Consultants ──────────────────────────────────────────
+// === GEOLOCATION ===
+$router->put('/api/consultants/me/location', static function (): void {
+    $c = new \IntermedCars\Controllers\LocationController();
+    $c->updateMyLocation();
+});
+
+$router->put('/api/consultants/me/status', static function (): void {
+    $c = new \IntermedCars\Controllers\LocationController();
+    $c->updateMyStatus();
+});
+
+$router->get('/api/consultants/nearby', static function (): void {
+    $c = new \IntermedCars\Controllers\LocationController();
+    $c->findNearby();
+});
+
+$router->get('/api/consultants/nearby/vehicle/{id}', static function (int $id): void {
+    $c = new \IntermedCars\Controllers\LocationController();
+    $c->findNearbyForVehicle($id);
+});
+
+// === SOLICITACOES ===
+$router->post('/api/solicitacoes', static function (): void {
+    $c = new \IntermedCars\Controllers\SolicitacaoController();
+    $c->create();
+});
+
+$router->get('/api/solicitacoes/me', static function (): void {
+    $c = new \IntermedCars\Controllers\SolicitacaoController();
+    $c->mySolicitacoes();
+});
+
+$router->put('/api/solicitacoes/{id}/aceitar', static function (int $id): void {
+    $c = new \IntermedCars\Controllers\SolicitacaoController();
+    $c->aceitar($id);
+});
+
+$router->put('/api/solicitacoes/{id}/recusar', static function (int $id): void {
+    $c = new \IntermedCars\Controllers\SolicitacaoController();
+    $c->recusar($id);
+});
+
+// === CONSULTANT CRUD ===
 $router->post('/api/consultants', static function (): void {
     try {
         $userId = AuthMiddleware::requireAuth();

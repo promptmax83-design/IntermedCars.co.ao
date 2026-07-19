@@ -30,16 +30,16 @@ const navItems = [
     roles: ["admin", "consultor", "user"],
   },
   {
-    href: "/chat",
-    label: "Mensagens",
-    icon: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z",
-    roles: ["consultor", "user"],
+    href: "/historico",
+    label: "Historico",
+    icon: "M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z",
+    roles: ["user"],
   },
   {
-    href: "/perfil",
-    label: "Perfil",
-    icon: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z",
-    roles: ["consultor", "user"],
+    href: "/carteira",
+    label: "Carteira",
+    icon: "M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0z",
+    roles: ["user"],
   },
 ];
 
@@ -72,22 +72,18 @@ const navSecondary = [
 
 export default function SidebarNav() {
   const pathname = usePathname();
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
 
   const isActive = (href: string) => {
     if (href === "/feed") return pathname === "/feed";
     return pathname.startsWith(href);
   };
 
-  const userInitials = user?.nome
-    ? user.nome.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase()
-    : "U";
-
   return (
-    <aside className="hidden lg:flex flex-col w-[260px] bg-white/80 backdrop-blur-xl border-r border-slate-200/60 shrink-0 shadow-sm">
+    <aside className="hidden lg:flex flex-col w-[220px] bg-white/80 backdrop-blur-xl border-r border-slate-200/60 shrink-0 shadow-sm">
       {/* Logo */}
-      <div className="h-16 flex items-center px-5 border-b border-slate-100">
-        <Link href="/">
+      <div className="h-14 flex items-center px-5 border-b border-slate-100">
+        <Link href="/feed">
           <Logo size="md" />
         </Link>
       </div>
@@ -105,29 +101,19 @@ export default function SidebarNav() {
               href={item.href}
               className={`group flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200 ${
                 active
-                  ? "bg-emerald-50 text-emerald-600"
+                  ? "bg-[var(--imc-verde-claro-bg)] text-[var(--imc-verde-terra)]"
                   : "text-slate-500 hover:text-slate-700 hover:bg-slate-50"
               }`}
             >
               <div
                 className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
                   active
-                    ? "bg-emerald-100"
+                    ? "bg-[var(--imc-verde-terra)]/10"
                     : "bg-slate-100 group-hover:bg-slate-200/60"
                 }`}
               >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d={item.icon}
-                  />
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
                 </svg>
               </div>
               {item.label}
@@ -148,29 +134,19 @@ export default function SidebarNav() {
               href={item.href}
               className={`group flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200 ${
                 active
-                  ? "bg-emerald-50 text-emerald-600"
+                  ? "bg-[var(--imc-verde-claro-bg)] text-[var(--imc-verde-terra)]"
                   : "text-slate-500 hover:text-slate-700 hover:bg-slate-50"
               }`}
             >
               <div
                 className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
                   active
-                    ? "bg-emerald-100"
+                    ? "bg-[var(--imc-verde-terra)]/10"
                     : "bg-slate-100 group-hover:bg-slate-200/60"
                 }`}
               >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d={item.icon}
-                  />
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
                 </svg>
               </div>
               {item.label}
@@ -179,46 +155,17 @@ export default function SidebarNav() {
         })}
       </nav>
 
-      {/* Bottom */}
-      <div className="p-4 border-t border-slate-100 space-y-3">
+      {/* Bottom — Anunciar */}
+      <div className="p-4 border-t border-slate-100">
         <Link
           href="/anunciar"
-          className="flex items-center justify-center gap-2 w-full bg-emerald-600 hover:bg-emerald-700 text-slate-800 font-semibold text-[13px] py-2.5 px-4 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg"
+          className="flex items-center justify-center gap-2 w-full bg-[var(--imc-verde-terra)] hover:bg-[var(--imc-verde-terra)]/90 text-white font-semibold text-[13px] py-2.5 px-4 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg"
         >
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 4v16m8-8H4"
-            />
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
           </svg>
           Anunciar Veiculo
         </Link>
-        <button
-          onClick={logout}
-          className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer w-full text-left"
-        >
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-[11px] font-bold text-slate-800 shadow-sm">
-            {userInitials}
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-[13px] font-medium truncate text-slate-800">
-              {user?.nome || "Utilizador"}
-            </p>
-            <p className="text-emerald-600 font-mono text-[11px]">
-              IMC-{user?.id?.toString().padStart(5, "0") || "00000"}
-            </p>
-            <p className="text-[11px] text-slate-400 truncate">
-              {user?.verificado ? "Agente Certificado" : "Conta Ativa"}
-            </p>
-          </div>
-        </button>
       </div>
     </aside>
   );

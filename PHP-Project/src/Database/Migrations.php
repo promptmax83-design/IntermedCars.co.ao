@@ -25,6 +25,8 @@ class Migrations
         $m->ensureChatChannelsTable();
         $m->ensureChannelMessagesTable();
         $m->ensureRankingHistoryTable();
+        $m->ensureGeolocationColumns();
+        $m->ensureSolicitacoesTable();
     }
 
     private function ensureUserRoleColumn(): void
@@ -184,5 +186,80 @@ class Migrations
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (consultant_id) REFERENCES consultants(id)
         )");
+    }
+
+    private function ensureGeolocationColumns(): void
+    {
+        $columns = [
+            "ALTER TABLE consultants ADD COLUMN latitude DECIMAL(10, 8) DEFAULT NULL",
+            "ALTER TABLE consultants ADD COLUMN longitude DECIMAL(11, 8) DEFAULT NULL",
+            "ALTER TABLE consultants ADD COLUMN provincia VARCHAR(50) DEFAULT NULL",
+            "ALTER TABLE consultants ADD COLUMN municipio VARCHAR(50) DEFAULT NULL",
+            "ALTER TABLE consultants ADD COLUMN bairro VARCHAR(50) DEFAULT NULL",
+            "ALTER TABLE consultants ADD COLUMN estado VARCHAR(20) NOT NULL DEFAULT 'offline'",
+            "ALTER TABLE consultants ADD COLUMN ultima_atividade DATETIME DEFAULT NULL",
+            "ALTER TABLE consultants ADD COLUMN disponivel INTEGER NOT NULL DEFAULT 1",
+            "ALTER TABLE vehicles ADD COLUMN latitude DECIMAL(10, 8) DEFAULT NULL",
+            "ALTER TABLE vehicles ADD COLUMN longitude DECIMAL(11, 8) DEFAULT NULL",
+        ];
+
+        foreach ($columns as $sql) {
+            try {
+                $this->db->exec($sql);
+            } catch (\PDOException $e) {
+                if (!str_contains($e->getMessage(), 'duplicate column')) {
+                    error_log("[Migration] Geolocation: {$e->getMessage()}");
+                }
+            }
+        }
+
+        // Seed test data
+        try {
+            $this->db->exec("UPDATE consultants SET 
+                latitude = -8.8399, longitude = 13.2894, 
+                estado = 'online', disponivel = 1,
+                provincia = 'Luanda', municipio = 'Luanda', bairro = 'Centro',
+                ultima_atividade = datetime('now','localtime')
+                WHERE id = 1");
+            $this->db->exec("UPDATE vehicles SET 
+                latitude = -8.9098, longitude = 13.3428
+                WHERE id = 1");
+        } catch (\PDOException $e) {
+            error_log("[Migration] Seed data: {$e->getMessage()}");
+        }
+    }
+
+    private function ensureSolicitacoesTable(): void
+    {
+        $this->db->exec("CREATE TABLE IF NOT EXISTS solicitacoes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            veiculo_id INTEGER NOT NULL,
+            utilizador_id INTEGER NOT NULL,
+            consultor_id INTEGER NOT NULL,
+            latitude_veiculo DECIMAL(10, 8),
+            longitude_veiculo DECIMAL(11, 8),
+            latitude_cliente DECIMAL(10, 8),
+            longitude_cliente DECIMAL(11, 8),
+            distancia_km DECIMAL(6, 2),
+            mensagem TEXT,
+            estado VARCHAR(20) NOT NULL DEFAULT 'pendente',
+            notificado_via VARCHAR(20) DEFAULT 'nenhum',
+            notificado_em DATETIME,
+            lida INTEGER DEFAULT 0,
+            respondido_em DATETIME,
+            criado_em DATETIME DEFAULT CURRENT_TIMESTAMP,
+            atualizado_em DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (veiculo_id) REFERENCES vehicles(id),
+            FOREIGN KEY (utilizador_id) REFERENCES users(id),
+            FOREIGN KEY (consultor_id) REFERENCES consultants(id)
+        )");
+
+        try {
+            $this->db->exec("CREATE INDEX IF NOT EXISTS idx_solicitacoes_consultor_estado ON solicitacoes(consultor_id, estado)");
+            $this->db->exec("CREATE INDEX IF NOT EXISTS idx_solicitacoes_utilizador ON solicitacoes(utilizador_id)");
+            $this->db->exec("CREATE INDEX IF NOT EXISTS idx_consultants_location ON consultants(estado, disponivel, latitude, longitude)");
+        } catch (\PDOException $e) {
+            // Already exist
+        }
     }
 }

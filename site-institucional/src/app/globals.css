@@ -1,4 +1,12 @@
 :root {
+  /* ═══ IntermedCars — Paleta Oficial ═══ */
+  --imc-verde-terra: #2F6B3A;
+  --imc-ouro: #C99B3E;
+  --imc-fundo-escuro: #16181A;
+  --imc-verde-claro-bg: #EAF3DE;
+  --imc-verde-online: #639922;
+  --imc-warning: #C99B3E;
+
   /* Fundo Principal — branco suave */
   --bg-primary: #F8F9FA;
   --bg-secondary: #FFFFFF;
