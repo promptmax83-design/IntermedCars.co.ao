@@ -82,4 +82,55 @@ class ConsultantController extends BaseController
             $this->error('Erro ao avaliar consultor', 500);
         }
     }
+
+    public function metrics(int $id): void
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT id FROM consultants WHERE id = ?");
+            $stmt->execute([$id]);
+            if (!$stmt->fetch()) {
+                $this->error('Consultor nao encontrado', 404);
+            }
+
+            $pedidosHoje = 0;
+            try {
+                $stmt = $this->db->prepare("SELECT COUNT(*) as total FROM solicitacoes WHERE consultor_id = ? AND date(criado_em) = date('now','localtime')");
+                $stmt->execute([$id]);
+                $pedidosHoje = (int) $stmt->fetchColumn();
+            } catch (\PDOException $e) {
+                error_log("[ConsultantController] metrics solicitacoes error: " . $e->getMessage());
+            }
+
+            $tempoMedio = 0.0;
+            try {
+                $stmt = $this->db->prepare("SELECT AVG((julianday(atualizado_em) - julianday(criado_em)) * 24 * 60) as media_minutos FROM solicitacoes WHERE consultor_id = ? AND estado = 'aceite' AND atualizado_em IS NOT NULL");
+                $stmt->execute([$id]);
+                $tempoMedio = round((float) ($stmt->fetchColumn() ?: 0), 1);
+            } catch (\PDOException $e) {
+                error_log("[ConsultantController] metrics tempo medio error: " . $e->getMessage());
+            }
+
+            $avaliacaoMedia = 0.0;
+            $totalAvaliacoes = 0;
+            try {
+                $stmt = $this->db->prepare("SELECT AVG(nota) as media, COUNT(*) as total FROM avaliacoes WHERE consultor_id = ?");
+                $stmt->execute([$id]);
+                $avaliacao = $stmt->fetch(\PDO::FETCH_ASSOC);
+                $avaliacaoMedia = round((float) ($avaliacao['media'] ?? 0), 1);
+                $totalAvaliacoes = (int) ($avaliacao['total'] ?? 0);
+            } catch (\PDOException $e) {
+                error_log("[ConsultantController] metrics avaliacoes error: " . $e->getMessage());
+            }
+
+            $this->success([
+                'pedidos_hoje' => $pedidosHoje,
+                'tempo_medio_resposta_min' => $tempoMedio,
+                'avaliacao_media' => $avaliacaoMedia,
+                'total_avaliacoes' => $totalAvaliacoes,
+            ]);
+        } catch (\Throwable $e) {
+            error_log("[ConsultantController] metrics error: " . $e->getMessage());
+            $this->error('Erro ao buscar metricas', 500);
+        }
+    }
 }

@@ -27,6 +27,7 @@ class Migrations
         $m->ensureRankingHistoryTable();
         $m->ensureGeolocationColumns();
         $m->ensureSolicitacoesTable();
+        $m->ensureAvaliacoesTable();
     }
 
     private function ensureUserRoleColumn(): void
@@ -260,6 +261,26 @@ class Migrations
             $this->db->exec("CREATE INDEX IF NOT EXISTS idx_consultants_location ON consultants(estado, disponivel, latitude, longitude)");
         } catch (\PDOException $e) {
             // Already exist
+        }
+    }
+
+    private function ensureAvaliacoesTable(): void
+    {
+        $this->db->exec("CREATE TABLE IF NOT EXISTS avaliacoes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            consultor_id INTEGER NOT NULL,
+            utilizador_id INTEGER NOT NULL,
+            nota DECIMAL(2, 1) NOT NULL,
+            comentario TEXT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (consultor_id) REFERENCES consultants(id),
+            FOREIGN KEY (utilizador_id) REFERENCES users(id)
+        )");
+
+        try {
+            $this->db->exec("CREATE INDEX IF NOT EXISTS idx_avaliacoes_consultor ON avaliacoes(consultor_id)");
+        } catch (\PDOException $e) {
+            // Already exists
         }
     }
 }

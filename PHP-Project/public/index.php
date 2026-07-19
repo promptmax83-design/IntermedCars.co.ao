@@ -485,6 +485,12 @@ $router->get('/api/consultants/{id}', static function (): void {
     echo json_encode($result, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
 });
 
+$router->get('/api/consultants/{id}/metrics', static function (): void {
+    $id = (int) ($_SERVER['ROUTE_PARAMS']['id'] ?? 0);
+    $controller = new ConsultantController();
+    $controller->metrics($id);
+});
+
 $router->get('/api/consultants/{id}/stats', static function (): void {
     $id = (int) ($_SERVER['ROUTE_PARAMS']['id'] ?? 0);
     $controller = new ConsultantController();
