@@ -93,12 +93,17 @@ export default function ConsultantRegisterForm({ onBack, onSuccess }: Props) {
     setCode("");
     const value = verifyMethod === "email" ? form.email : form.telemovel;
 
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
+
     try {
       const res = await fetch(`${API_BASE}/api/auth/send-code`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ type: verifyMethod, value, purpose: "registration" }),
+        signal: controller.signal,
       });
+      clearTimeout(timeout);
       const text = await res.text();
       let data;
       try { data = JSON.parse(text); } catch { data = { message: text }; }
@@ -110,7 +115,12 @@ export default function ConsultantRegisterForm({ onBack, onSuccess }: Props) {
       setCodeSent(true);
       setCountdown(60);
     } catch (err) {
-      setCodeError(err instanceof Error ? err.message : "Erro ao enviar codigo");
+      clearTimeout(timeout);
+      if (err instanceof DOMException && err.name === "AbortError") {
+        setCodeError("Servidor indisponivel. Verifica se o backend esta a correr em localhost:8080 e tenta novamente.");
+      } else {
+        setCodeError(err instanceof Error ? err.message : "Erro ao enviar codigo. Verifica se o backend esta a correr.");
+      }
     } finally {
       setSendingCode(false);
     }
@@ -120,7 +130,8 @@ export default function ConsultantRegisterForm({ onBack, onSuccess }: Props) {
     if (step === "verify" && !codeSent) {
       sendVerificationCode();
     }
-  }, [step, codeSent]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step, codeSent, verifyMethod, form.email, form.telemovel]);
 
   const handleVerifyCode = async () => {
     setVerifyingCode(true);
