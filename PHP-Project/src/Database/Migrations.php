@@ -74,18 +74,28 @@ class Migrations
 
     private function ensureConsultantCodes(): void
     {
+        // SQLite não suporta UNIQUE em ALTER TABLE ADD COLUMN
+        // Verificar se a coluna existe antes de criar
         try {
-            $this->db->exec("ALTER TABLE consultants ADD COLUMN codigo_referencia VARCHAR(20) UNIQUE DEFAULT ''");
-        } catch (\PDOException) {
-            // Column already exists
+            $this->db->exec("ALTER TABLE consultants ADD COLUMN codigo_referencia VARCHAR(20) DEFAULT ''");
+        } catch (\PDOException $e) {
+            // Coluna já existe — ignorar
+            if (!str_contains($e->getMessage(), 'duplicate column')) {
+                error_log("[Migration] ensureConsultantCodes ALTER: " . $e->getMessage());
+            }
         }
 
-        $stmt = $this->db->query("SELECT id, user_id FROM consultants WHERE codigo_referencia = '' OR codigo_referencia IS NULL");
-        $consultants = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        foreach ($consultants as $c) {
-            $code = 'IMC-' . str_pad((string) $c['id'], 4, '0', STR_PAD_LEFT);
-            $update = $this->db->prepare("UPDATE consultants SET codigo_referencia = :code WHERE id = :id");
-            $update->execute(['code' => $code, 'id' => $c['id']]);
+        // Gerar códigos IMC-XXXX para consultores sem código
+        try {
+            $stmt = $this->db->query("SELECT id, user_id FROM consultants WHERE codigo_referencia = '' OR codigo_referencia IS NULL");
+            $consultants = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            foreach ($consultants as $c) {
+                $code = 'IMC-' . str_pad((string) $c['id'], 4, '0', STR_PAD_LEFT);
+                $update = $this->db->prepare("UPDATE consultants SET codigo_referencia = :code WHERE id = :id");
+                $update->execute(['code' => $code, 'id' => $c['id']]);
+            }
+        } catch (\PDOException $e) {
+            error_log("[Migration] ensureConsultantCodes SELECT: " . $e->getMessage());
         }
     }
 
