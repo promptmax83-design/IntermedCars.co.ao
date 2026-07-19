@@ -29,6 +29,10 @@ class Migrations
         $m->ensureSolicitacoesTable();
         $m->ensureAvaliacoesTable();
         $m->ensureAuditoriaRegistoTable();
+        $m->ensureSessoesConsultoriaTable();
+        $m->ensureMensagensTable();
+        $m->ensureRevisoesNegociacaoTable();
+        $m->ensureSessaoAtividadesTable();
     }
 
     private function ensureUserRoleColumn(): void
@@ -305,6 +309,121 @@ class Migrations
             $this->db->exec("CREATE INDEX IF NOT EXISTS idx_avaliacoes_consultor ON avaliacoes(consultor_id)");
         } catch (\PDOException $e) {
             // Already exists
+        }
+    }
+
+    private function ensureSessoesConsultoriaTable(): void
+    {
+        $this->db->exec("CREATE TABLE IF NOT EXISTS sessoes_consultoria (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            carro_id INTEGER NOT NULL,
+            comprador_id INTEGER NOT NULL,
+            vendedor_id INTEGER NOT NULL,
+            consultor_id INTEGER,
+            originador_id INTEGER NOT NULL,
+            canal VARCHAR(10) NOT NULL DEFAULT 'chat',
+            status VARCHAR(20) NOT NULL DEFAULT 'pendente',
+            iniciada_em DATETIME,
+            encerrada_em DATETIME,
+            motivo_encerramento TEXT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (carro_id) REFERENCES vehicles(id),
+            FOREIGN KEY (comprador_id) REFERENCES users(id),
+            FOREIGN KEY (vendedor_id) REFERENCES users(id),
+            FOREIGN KEY (consultor_id) REFERENCES users(id),
+            FOREIGN KEY (originador_id) REFERENCES users(id)
+        )");
+
+        try {
+            $this->db->exec("CREATE INDEX IF NOT EXISTS idx_sessoes_carro ON sessoes_consultoria(carro_id)");
+            $this->db->exec("CREATE INDEX IF NOT EXISTS idx_sessoes_consultor ON sessoes_consultoria(consultor_id, status)");
+            $this->db->exec("CREATE INDEX IF NOT EXISTS idx_sessoes_comprador ON sessoes_consultoria(comprador_id)");
+            $this->db->exec("CREATE INDEX IF NOT EXISTS idx_sessoes_vendedor ON sessoes_consultoria(vendedor_id)");
+            $this->db->exec("CREATE INDEX IF NOT EXISTS idx_sessoes_status ON sessoes_consultoria(status)");
+        } catch (\PDOException $e) {
+            // Indexes already exist
+        }
+    }
+
+    private function ensureMensagensTable(): void
+    {
+        $this->db->exec("CREATE TABLE IF NOT EXISTS mensagens (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            carro_id INTEGER NOT NULL,
+            sessao_id INTEGER,
+            remetente_id INTEGER NOT NULL,
+            tipo VARCHAR(20) NOT NULL DEFAULT 'texto',
+            conteudo TEXT,
+            audio_path VARCHAR(255),
+            audio_duracao_segundos INTEGER,
+            is_flagged INTEGER DEFAULT 0,
+            flag_reason TEXT,
+            flag_by INTEGER,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (carro_id) REFERENCES vehicles(id),
+            FOREIGN KEY (sessao_id) REFERENCES sessoes_consultoria(id),
+            FOREIGN KEY (remetente_id) REFERENCES users(id),
+            FOREIGN KEY (flag_by) REFERENCES users(id)
+        )");
+
+        try {
+            $this->db->exec("CREATE INDEX IF NOT EXISTS idx_mensagens_carro ON mensagens(carro_id, created_at)");
+            $this->db->exec("CREATE INDEX IF NOT EXISTS idx_mensagens_sessao ON mensagens(sessao_id)");
+            $this->db->exec("CREATE INDEX IF NOT EXISTS idx_mensagens_remetente ON mensagens(remetente_id)");
+        } catch (\PDOException $e) {
+            // Indexes already exist
+        }
+    }
+
+    private function ensureRevisoesNegociacaoTable(): void
+    {
+        $this->db->exec("CREATE TABLE IF NOT EXISTS revisoes_negociacao (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            sessao_id INTEGER NOT NULL,
+            consultor_id INTEGER NOT NULL,
+            sinalizada_em DATETIME DEFAULT CURRENT_TIMESTAMP,
+            prazo_limite DATETIME NOT NULL,
+            relato_consultor TEXT,
+            relato_enviado_em DATETIME,
+            status VARCHAR(30) NOT NULL DEFAULT 'aguardando_relato',
+            motivo_decisao_admin TEXT,
+            decidido_por INTEGER,
+            exposto_publicamente INTEGER DEFAULT 0,
+            exposto_em DATETIME,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (sessao_id) REFERENCES sessoes_consultoria(id),
+            FOREIGN KEY (consultor_id) REFERENCES users(id),
+            FOREIGN KEY (decidido_por) REFERENCES users(id)
+        )");
+
+        try {
+            $this->db->exec("CREATE INDEX IF NOT EXISTS idx_revisoes_status ON revisoes_negociacao(status)");
+            $this->db->exec("CREATE INDEX IF NOT EXISTS idx_revisoes_consultor ON revisoes_negociacao(consultor_id)");
+            $this->db->exec("CREATE INDEX IF NOT EXISTS idx_revisoes_prazo ON revisoes_negociacao(prazo_limite, status)");
+        } catch (\PDOException $e) {
+            // Indexes already exist
+        }
+    }
+
+    private function ensureSessaoAtividadesTable(): void
+    {
+        $this->db->exec("CREATE TABLE IF NOT EXISTS sessao_atividades (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            sessao_id INTEGER NOT NULL,
+            user_id INTEGER NOT NULL,
+            tipo_atividade VARCHAR(30) NOT NULL,
+            metadata_json TEXT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (sessao_id) REFERENCES sessoes_consultoria(id),
+            FOREIGN KEY (user_id) REFERENCES users(id)
+        )");
+
+        try {
+            $this->db->exec("CREATE INDEX IF NOT EXISTS idx_atividades_sessao ON sessao_atividades(sessao_id, created_at)");
+        } catch (\PDOException $e) {
+            // Index already exists
         }
     }
 }

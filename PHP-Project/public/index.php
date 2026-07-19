@@ -808,6 +808,118 @@ $router->get('/api/admin/stats', static function (): void {
     }
 });
 
+// ─── Sessoes de Consultoria ────────────────────────────────
+$router->post('/api/sessoes', static function (): void {
+    try {
+        AuthMiddleware::requireAuth();
+        $controller = new \IntermedCars\Controllers\SessaoController();
+        $controller->create();
+    } catch (\Throwable $e) {
+        http_response_code(400);
+        echo json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+    }
+});
+
+$router->get('/api/sessoes', static function (): void {
+    try {
+        AuthMiddleware::requireAuth();
+        $controller = new \IntermedCars\Controllers\SessaoController();
+        $controller->list();
+    } catch (\Throwable $e) {
+        http_response_code(400);
+        echo json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+    }
+});
+
+$router->get('/api/sessoes/{id}', static function (int $id): void {
+    try {
+        AuthMiddleware::requireAuth();
+        $controller = new \IntermedCars\Controllers\SessaoController();
+        $controller->getById($id);
+    } catch (\Throwable $e) {
+        http_response_code(400);
+        echo json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+    }
+});
+
+$router->put('/api/sessoes/{id}/aceitar', static function (int $id): void {
+    try {
+        AuthMiddleware::requireAuth();
+        $controller = new \IntermedCars\Controllers\SessaoController();
+        $controller->aceitar($id);
+    } catch (\Throwable $e) {
+        http_response_code(400);
+        echo json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+    }
+});
+
+$router->put('/api/sessoes/{id}/recusar', static function (int $id): void {
+    try {
+        AuthMiddleware::requireAuth();
+        $controller = new \IntermedCars\Controllers\SessaoController();
+        $controller->recusar($id);
+    } catch (\Throwable $e) {
+        http_response_code(400);
+        echo json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+    }
+});
+
+$router->post('/api/sessoes/{id}/encerrar', static function (int $id): void {
+    try {
+        AuthMiddleware::requireAuth();
+        $controller = new \IntermedCars\Controllers\SessaoController();
+        $controller->encerrar($id);
+    } catch (\Throwable $e) {
+        http_response_code(400);
+        echo json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+    }
+});
+
+// ─── Mensagens da Sessao ──────────────────────────────────
+$router->get('/api/sessoes/{id}/mensagens', static function (int $id): void {
+    try {
+        AuthMiddleware::requireAuth();
+        $controller = new \IntermedCars\Controllers\MensagemSessaoController();
+        $controller->getMessages($id);
+    } catch (\Throwable $e) {
+        http_response_code(400);
+        echo json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+    }
+});
+
+$router->post('/api/sessoes/{id}/mensagens', static function (int $id): void {
+    try {
+        AuthMiddleware::requireAuth();
+        $controller = new \IntermedCars\Controllers\MensagemSessaoController();
+        $controller->sendText($id);
+    } catch (\Throwable $e) {
+        http_response_code(400);
+        echo json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+    }
+});
+
+$router->post('/api/sessoes/{id}/mensagens/audio', static function (int $id): void {
+    try {
+        AuthMiddleware::requireAuth();
+        $controller = new \IntermedCars\Controllers\MensagemSessaoController();
+        $controller->sendAudio($id);
+    } catch (\Throwable $e) {
+        http_response_code(400);
+        echo json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+    }
+});
+
+$router->post('/api/mensagens/{id}/flag', static function (int $id): void {
+    try {
+        AuthMiddleware::requireAuth();
+        $controller = new \IntermedCars\Controllers\MensagemSessaoController();
+        $controller->flagMessage($id);
+    } catch (\Throwable $e) {
+        http_response_code(400);
+        echo json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+    }
+});
+
 // ─── 404 ──────────────────────────────────────────────────
 $router->notFound(static function (): void {
     http_response_code(404);
