@@ -10,7 +10,7 @@ const AUTH_PAGES = ["/login", "/registo"];
 
 const mobileNavItems = [
   {
-    href: "/",
+    href: "/feed",
     label: "Feed",
     icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6",
   },
@@ -67,7 +67,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   }
 
   const isActive = (href: string) => {
-    if (href === "/") return pathname === "/";
+    if (href === "/feed") return pathname === "/feed";
     return pathname.startsWith(href);
   };
 
@@ -80,7 +80,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Mobile Header */}
         <header className="lg:hidden sticky top-0 z-20 bg-white/80 backdrop-blur-xl border-b border-slate-200/60 flex items-center justify-between px-4 h-14 shrink-0">
-          <Link href="/">
+          <Link href="/feed">
             <Logo size="sm" showText={false} />
           </Link>
           <div className="flex items-center gap-2">
