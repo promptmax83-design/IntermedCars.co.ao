@@ -62,6 +62,7 @@ export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [currentUserId, setCurrentUserId] = useState<number | null>(null);
   const [negotiationContext, setNegotiationContext] = useState<NegotiationContext>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -98,7 +99,7 @@ export default function ChatPage() {
         });
       }
     } catch {
-      // silent
+      setError("Erro ao carregar dados. Verifique a ligação.");
     }
   }, []);
 
@@ -110,6 +111,7 @@ export default function ChatPage() {
   }, [negotiationParam, fetchNegotiationContext]);
 
   const fetchConversations = useCallback(async () => {
+    setError(null);
     try {
       const token = localStorage.getItem("token");
       if (!token) return;
@@ -121,7 +123,7 @@ export default function ChatPage() {
         setConversations(data);
       }
     } catch {
-      // API not available
+      setError("Erro ao carregar dados. Verifique a ligação.");
     }
   }, []);
 
@@ -137,7 +139,7 @@ export default function ChatPage() {
         setMessages(data);
       }
     } catch {
-      // API not available
+      setError("Erro ao carregar mensagens.");
     }
   }, []);
 
@@ -163,7 +165,7 @@ export default function ChatPage() {
       setNewMessage("");
       fetchMessages(activeChat);
     } catch {
-      // Fallback
+      setError("Erro ao enviar mensagem.");
     }
     setLoading(false);
   };
@@ -217,8 +219,11 @@ export default function ChatPage() {
 
   if (currentUserId === null) {
     return (
-      <div className="flex h-[calc(100vh-80px)] items-center justify-center">
-        <p className="text-slate-500 text-sm">A carregar...</p>
+      <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+          <p className="text-sm text-slate-500">A carregar conversas...</p>
+        </div>
       </div>
     );
   }
@@ -233,6 +238,15 @@ export default function ChatPage() {
             Chat livre — partilhe contactos diretamente
           </p>
         </div>
+
+        {error && (
+          <div className="p-3 bg-red-50 border border-red-200 rounded-xl mx-3 mt-3">
+            <p className="text-xs text-red-600">{error}</p>
+            <button onClick={() => { setError(null); fetchConversations(); }} className="text-xs text-red-500 underline mt-1">
+              Tentar novamente
+            </button>
+          </div>
+        )}
 
         <div className="flex-1 overflow-y-auto">
           {conversations.length === 0 ? (

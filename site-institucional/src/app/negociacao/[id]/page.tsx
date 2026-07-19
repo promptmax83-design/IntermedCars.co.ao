@@ -133,9 +133,10 @@ export default function NegociacaoDetailPage() {
       });
       fetchNegotiation();
     } catch {
-      // silent
+      alert("Erro ao executar acao. Tente novamente.");
+    } finally {
+      setActionLoading(false);
     }
-    setActionLoading(false);
   };
 
   const getTimelineIndex = (status: string) => {
@@ -154,7 +155,10 @@ export default function NegociacaoDetailPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center">
-        <div className="text-slate-500">A carregar...</div>
+        <div className="text-center">
+          <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+          <p className="text-sm text-slate-500">A carregar negociacao...</p>
+        </div>
       </div>
     );
   }
