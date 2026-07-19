@@ -73,12 +73,17 @@ class AuthController extends BaseController
             throw new \InvalidArgumentException("BI/Passaporte ja registado");
         }
 
+        $role = $data['role'] ?? 'cliente';
+        if (!in_array($role, ['cliente', 'consultor'], true)) {
+            throw new \InvalidArgumentException("Tipo de conta invalido");
+        }
+
         $passwordHash = defined('PASSWORD_ARGON2ID')
             ? password_hash($data['password'], PASSWORD_ARGON2ID)
             : password_hash($data['password'], PASSWORD_BCRYPT);
 
-        $sql = 'INSERT INTO users (nome, email, telemovel, bi_passaporte, password_hash, nome_pai, nome_mae, status, created_at)
-                VALUES (:nome, :email, :telemovel, :bi_passaporte, :password_hash, :nome_pai, :nome_mae, :status, datetime(\'now\',\'localtime\'))';
+        $sql = 'INSERT INTO users (nome, email, telemovel, bi_passaporte, password_hash, nome_pai, nome_mae, role, status, created_at)
+                VALUES (:nome, :email, :telemovel, :bi_passaporte, :password_hash, :nome_pai, :nome_mae, :role, :status, datetime(\'now\',\'localtime\'))';
         $stmt = $this->db->prepare($sql);
         $stmt->execute([
             'nome' => $data['nome'],
@@ -88,10 +93,25 @@ class AuthController extends BaseController
             'password_hash' => $passwordHash,
             'nome_pai' => $data['nome_pai'] ?? '',
             'nome_mae' => $data['nome_mae'] ?? '',
+            'role' => $role,
             'status' => 'pendente_verificacao',
         ]);
 
         $userId = (int) $this->db->lastInsertId();
+
+        if ($role === 'consultor') {
+            $stmt = $this->db->prepare(
+                'INSERT INTO consultants (user_id, fullname, phone, zone, created_at)
+                 VALUES (:user_id, :fullname, :phone, :zone, datetime(\'now\',\'localtime\'))'
+            );
+            $stmt->execute([
+                'user_id' => $userId,
+                'fullname' => $data['nome'],
+                'phone' => $data['telemovel'],
+                'zone' => $data['zona'] ?? '',
+            ]);
+        }
+
         $token = AuthMiddleware::generateToken($userId, $data['email']);
 
         return [

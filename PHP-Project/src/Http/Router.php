@@ -58,6 +58,15 @@ class Router
     }
 
     /**
+     * Register a PATCH route.
+     */
+    public function patch(string $path, \Closure $handler): self
+    {
+        $this->routes['PATCH ' . $path] = $handler;
+        return $this;
+    }
+
+    /**
      * Set 404 handler.
      */
     public function notFound(\Closure $handler): self

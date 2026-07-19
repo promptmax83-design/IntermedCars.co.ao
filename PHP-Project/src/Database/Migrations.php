@@ -28,6 +28,7 @@ class Migrations
         $m->ensureGeolocationColumns();
         $m->ensureSolicitacoesTable();
         $m->ensureAvaliacoesTable();
+        $m->ensureAuditoriaRegistoTable();
     }
 
     private function ensureUserRoleColumn(): void
@@ -262,6 +263,19 @@ class Migrations
         } catch (\PDOException $e) {
             // Already exist
         }
+    }
+
+    private function ensureAuditoriaRegistoTable(): void
+    {
+        $this->db->exec("CREATE TABLE IF NOT EXISTS auditoria_registo (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            utilizador_id INTEGER NOT NULL,
+            role_escolhido VARCHAR(20) NOT NULL,
+            ip_address VARCHAR(45),
+            user_agent TEXT,
+            confirmado_em DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (utilizador_id) REFERENCES users(id)
+        )");
     }
 
     private function ensureAvaliacoesTable(): void

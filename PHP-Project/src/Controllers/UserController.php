@@ -8,7 +8,7 @@ class UserController extends BaseController
 {
     public function getProfile(int $userId): array
     {
-        $stmt = $this->db->prepare('SELECT id, nome, email, telemovel, bi_passaporte, status, created_at FROM users WHERE id = :id');
+        $stmt = $this->db->prepare('SELECT id, nome, email, telemovel, bi_passaporte, role, status, created_at FROM users WHERE id = :id');
         $stmt->execute(['id' => $userId]);
         $user = $stmt->fetch(\PDO::FETCH_ASSOC);
 
@@ -28,5 +28,35 @@ class UserController extends BaseController
             'vehicle_count' => (int) $vehicleCount->fetchColumn(),
             'completed_sales' => (int) $saleCount->fetchColumn(),
         ];
+    }
+
+    public function updateProfile(int $userId, array $data): array
+    {
+        if (array_key_exists('role', $data)) {
+            http_response_code(403);
+            return ['success' => false, 'error' => 'O tipo de conta nao pode ser alterado.'];
+        }
+
+        $allowed = ['nome', 'email', 'telemovel', 'bi_passaporte'];
+        $updates = [];
+        $params = ['id' => $userId];
+
+        foreach ($allowed as $field) {
+            if (array_key_exists($field, $data)) {
+                $updates[] = "{$field} = :{$field}";
+                $params[$field] = $data[$field];
+            }
+        }
+
+        if (empty($updates)) {
+            return ['success' => false, 'error' => 'Nenhum campo para atualizar.'];
+        }
+
+        $updates[] = "updated_at = datetime('now','localtime')";
+        $sql = 'UPDATE users SET ' . implode(', ', $updates) . ' WHERE id = :id';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
+
+        return ['success' => true, 'message' => 'Perfil atualizado com sucesso.'];
     }
 }

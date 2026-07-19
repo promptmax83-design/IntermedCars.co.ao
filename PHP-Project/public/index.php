@@ -50,7 +50,7 @@ use IntermedCars\Services\PaymentProofService;
 
 // CORS headers
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
 header('Content-Type: application/json; charset=utf-8');
 
@@ -711,6 +711,19 @@ $router->get('/api/notifications/logs', static function (): void {
 });
 
 // ─── Users ────────────────────────────────────────────────
+$router->patch('/api/users/profile', static function (): void {
+    try {
+        $userId = AuthMiddleware::requireAuth();
+        $data = json_decode(file_get_contents('php://input'), true) ?? [];
+        $controller = new \IntermedCars\Controllers\UserController();
+        $result = $controller->updateProfile($userId, $data);
+        echo json_encode($result, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+    } catch (\Throwable $e) {
+        http_response_code(400);
+        echo json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+    }
+});
+
 $router->get('/api/users/{id}', static function (): void {
     try {
         AuthMiddleware::requireAuth();
