@@ -93,12 +93,17 @@ export default function ClientRegisterForm({ onBack, onSuccess }: Props) {
     setCodeError(null);
     const value = verifyMethod === "email" ? form.email : form.telemovel;
 
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
+
     try {
       const res = await fetch(`${API_BASE}/api/auth/verify-code`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ type: verifyMethod, value, code, purpose: "registration" }),
+        signal: controller.signal,
       });
+      clearTimeout(timeout);
       const text = await res.text();
       let data;
       try { data = JSON.parse(text); } catch { data = { message: text }; }
@@ -110,7 +115,12 @@ export default function ClientRegisterForm({ onBack, onSuccess }: Props) {
       setVerified(true);
       setTimeout(() => registerUser(), 1000);
     } catch (err) {
-      setCodeError(err instanceof Error ? err.message : "Codigo invalido");
+      clearTimeout(timeout);
+      if (err instanceof DOMException && err.name === "AbortError") {
+        setCodeError("Servidor indisponivel. Tenta novamente.");
+      } else {
+        setCodeError(err instanceof Error ? err.message : "Codigo invalido");
+      }
     } finally {
       setVerifyingCode(false);
     }
