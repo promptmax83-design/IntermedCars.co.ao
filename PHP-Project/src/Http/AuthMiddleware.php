@@ -18,7 +18,15 @@ class AuthMiddleware
     private static function getSecretKey(): string
     {
         if (self::$secretKey === null) {
-            self::$secretKey = $_ENV['JWT_SECRET'] ?? getenv('JWT_SECRET') ?: 'intermedcars-secret-key-change-in-production';
+            $secret = $_ENV['JWT_SECRET'] ?? getenv('JWT_SECRET') ?: '';
+            if ($secret === '' || $secret === 'intermedcars-secret-key-change-in-production') {
+                error_log("[AuthMiddleware] CRITICAL: JWT_SECRET not configured or using default value");
+                http_response_code(500);
+                header('Content-Type: application/json; charset=utf-8');
+                echo json_encode(['success' => false, 'message' => 'Configuracao de seguranca incompleta'], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+                exit;
+            }
+            self::$secretKey = $secret;
         }
         return self::$secretKey;
     }
@@ -153,6 +161,30 @@ class AuthMiddleware
             echo json_encode(['error' => 'Autenticacao obrigatoria'], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
             exit;
         }
+        return $userId;
+    }
+
+    /**
+     * Require admin role - sends 403 if not admin.
+     *
+     * @return int User ID
+     */
+    public static function requireAdmin(): int
+    {
+        $userId = self::requireAuth();
+
+        $db = \IntermedCars\Database\Database::getConnection();
+        $stmt = $db->prepare('SELECT role FROM users WHERE id = :id');
+        $stmt->execute(['id' => $userId]);
+        $role = $stmt->fetchColumn();
+
+        if ($role !== 'admin') {
+            http_response_code(403);
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode(['success' => false, 'message' => 'Acesso restrito a administradores'], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+            exit;
+        }
+
         return $userId;
     }
 

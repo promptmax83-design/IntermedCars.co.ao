@@ -48,10 +48,22 @@ use IntermedCars\Services\TransactionService;
 use IntermedCars\Services\CommissionService;
 use IntermedCars\Services\PaymentProofService;
 
-// CORS headers
-header('Access-Control-Allow-Origin: *');
+// CORS headers — domínios permitidos
+$allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'http://localhost:8080',
+    'https://intermedcars.co.ao',
+    'https://www.intermedcars.co.ao',
+];
+
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+if (in_array($origin, $allowedOrigins, true)) {
+    header("Access-Control-Allow-Origin: {$origin}");
+}
 header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Access-Control-Allow-Credentials: true');
 header('Content-Type: application/json; charset=utf-8');
 
 // Handle preflight
@@ -73,6 +85,12 @@ $router->get('/api/health', static function (): void {
 
 // ─── Verification ─────────────────────────────────────────
 $router->post('/api/auth/send-code', static function (): void {
+        $ip = \IntermedCars\Http\RateLimiter::getClientIp();
+        if (!\IntermedCars\Http\RateLimiter::check($ip, 'send-code', 3, 300)) {
+            http_response_code(429);
+            echo json_encode(['success' => false, 'message' => 'Limite de codigos atingido. Aguarde 5 minutos.'], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+            return;
+        }
     try {
         $data = json_decode(file_get_contents('php://input'), true) ?: [];
         $targetType = $data['type'] ?? '';
@@ -117,6 +135,12 @@ $router->post('/api/auth/verify-code', static function (): void {
 
 // ─── Auth ─────────────────────────────────────────────────
 $router->post('/api/auth/register', static function (): void {
+        $ip = \IntermedCars\Http\RateLimiter::getClientIp();
+        if (!\IntermedCars\Http\RateLimiter::check($ip, 'register', 3, 300)) {
+            http_response_code(429);
+            echo json_encode(['success' => false, 'message' => 'Limite de registos atingido. Aguarde 5 minutos.'], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+            return;
+        }
     try {
         $controller = new AuthController();
         $data = json_decode(file_get_contents('php://input'), true) ?: [];
@@ -129,6 +153,12 @@ $router->post('/api/auth/register', static function (): void {
 });
 
 $router->post('/api/auth/login', static function (): void {
+        $ip = \IntermedCars\Http\RateLimiter::getClientIp();
+        if (!\IntermedCars\Http\RateLimiter::check($ip, 'login', 5, 60)) {
+            http_response_code(429);
+            echo json_encode(['success' => false, 'message' => 'Tentativas excessivas. Aguarde 1 minuto.'], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+            return;
+        }
     try {
         $controller = new AuthController();
         $data = json_decode(file_get_contents('php://input'), true) ?: [];
@@ -747,7 +777,7 @@ $router->get('/api/users/{id}', static function (): void {
 // ─── Admin ────────────────────────────────────────────────
 $router->get('/api/admin/users', static function (): void {
     try {
-        AuthMiddleware::requireAuth();
+        AuthMiddleware::requireAdmin();
         $sql = 'SELECT id, nome, email, telemovel, status, bi_number, created_at FROM users ORDER BY created_at DESC';
         $stmt = \IntermedCars\Database\Database::getConnection()->query($sql);
         echo json_encode($stmt->fetchAll(\PDO::FETCH_ASSOC), JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
@@ -759,7 +789,7 @@ $router->get('/api/admin/users', static function (): void {
 
 $router->get('/api/admin/vehicles', static function (): void {
     try {
-        AuthMiddleware::requireAuth();
+        AuthMiddleware::requireAdmin();
         $controller = new VehicleController();
         $result = $controller->list();
         echo json_encode($result, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
@@ -771,7 +801,7 @@ $router->get('/api/admin/vehicles', static function (): void {
 
 $router->get('/api/admin/transactions', static function (): void {
     try {
-        AuthMiddleware::requireAuth();
+        AuthMiddleware::requireAdmin();
         $sql = 'SELECT t.*, v.marca, v.modelo, buyer.nome as buyer_name, seller.nome as seller_name
                 FROM transactions t
                 JOIN vehicles v ON t.vehicle_id = v.id
@@ -788,7 +818,7 @@ $router->get('/api/admin/transactions', static function (): void {
 
 $router->get('/api/admin/stats', static function (): void {
     try {
-        AuthMiddleware::requireAuth();
+        AuthMiddleware::requireAdmin();
         $controller = new VehicleController();
         $vehicleStats = $controller->getStats();
 
@@ -810,6 +840,12 @@ $router->get('/api/admin/stats', static function (): void {
 
 // ─── Sessoes de Consultoria ────────────────────────────────
 $router->post('/api/sessoes', static function (): void {
+        $ip = \IntermedCars\Http\RateLimiter::getClientIp();
+        if (!\IntermedCars\Http\RateLimiter::check($ip, 'sessoes', 5, 60)) {
+            http_response_code(429);
+            echo json_encode(['success' => false, 'message' => 'Limite de sessoes atingido. Aguarde 1 minuto.'], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+            return;
+        }
     try {
         AuthMiddleware::requireAuth();
         $controller = new \IntermedCars\Controllers\SessaoController();
