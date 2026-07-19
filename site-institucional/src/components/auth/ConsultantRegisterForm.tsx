@@ -7,12 +7,9 @@ const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 const PROVINCIAS = [
   "Bengo", "Benguela", "Bié", "Cabinda", "Cuando-Cubango",
   "Cuanza Norte", "Cuanza Sul", "Cunene", "Huambo", "Huíla",
-  "Icolo e Bengo", "Luanda", "Lunda Norte", "Lunda Sul",
-  "Malanje", "Moxico", "Namibe", "Uíge", "Zaire"
-];
-
-const ESPECIALIDADES = [
-  "Carros", "SUVs", "Motocicletas", "Comerciais", "Eletricos"
+  "Icolo e Bengo", "Luanda", "Luanda Norte", "Luanda Sul",
+  "Lunda Norte", "Lunda Sul", "Malanje", "Moxico", "Namibe",
+  "Uíge", "Zaire"
 ];
 
 type Props = {
@@ -30,7 +27,6 @@ export default function ConsultantRegisterForm({ onBack, onSuccess }: Props) {
     email: "",
     telemovel: "",
     zona: "",
-    especialidades: [] as string[],
     password: "",
     confirmarPassword: "",
   });
@@ -56,15 +52,6 @@ export default function ConsultantRegisterForm({ onBack, onSuccess }: Props) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const toggleEspecialidade = (esp: string) => {
-    setForm((prev) => ({
-      ...prev,
-      especialidades: prev.especialidades.includes(esp)
-        ? prev.especialidades.filter((e) => e !== esp)
-        : [...prev.especialidades, esp],
-    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -178,7 +165,6 @@ export default function ConsultantRegisterForm({ onBack, onSuccess }: Props) {
           bi_passaporte: "PENDENTE",
           role: "consultor",
           zona: form.zona,
-          especialidades: form.especialidades,
         }),
       });
 
@@ -358,32 +344,6 @@ export default function ConsultantRegisterForm({ onBack, onSuccess }: Props) {
                   <option key={p} value={p}>{p}</option>
                 ))}
               </select>
-            </div>
-
-            <div>
-              <label className="text-[11px] font-medium text-slate-500 uppercase tracking-wider">
-                Especialidades
-              </label>
-              <div className="grid grid-cols-2 gap-3 mt-1.5">
-                {ESPECIALIDADES.map((esp) => (
-                  <label
-                    key={esp}
-                    className={`flex items-center gap-2 p-3 rounded-xl border cursor-pointer transition-all ${
-                      form.especialidades.includes(esp)
-                        ? "border-[#10b981]/40 bg-[#10b981]/5"
-                        : "border-slate-200 bg-slate-50 hover:border-slate-300"
-                    }`}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={form.especialidades.includes(esp)}
-                      onChange={() => toggleEspecialidade(esp)}
-                      className="w-4 h-4 rounded border-slate-300 text-[#10b981] focus:ring-[#10b981]"
-                    />
-                    <span className="text-sm text-slate-700">{esp}</span>
-                  </label>
-                ))}
-              </div>
             </div>
 
             <div>
