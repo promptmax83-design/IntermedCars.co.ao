@@ -67,11 +67,13 @@ class AuthController extends BaseController
             throw new \InvalidArgumentException("Email ja registado");
         }
 
-        // Check if BI already exists
-        $stmt = $this->db->prepare('SELECT id FROM users WHERE bi_passaporte = :bi');
-        $stmt->execute(['bi' => $data['bi_passaporte']]);
-        if ($stmt->fetch()) {
-            throw new \InvalidArgumentException("BI/Passaporte ja registado");
+        // Check if BI already exists (skip for PENDENTE placeholder)
+        if ($data['bi_passaporte'] !== 'PENDENTE') {
+            $stmt = $this->db->prepare('SELECT id FROM users WHERE bi_passaporte = :bi');
+            $stmt->execute(['bi' => $data['bi_passaporte']]);
+            if ($stmt->fetch()) {
+                throw new \InvalidArgumentException("BI/Passaporte ja registado");
+            }
         }
 
         $role = $data['role'] ?? 'cliente';

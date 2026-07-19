@@ -6,8 +6,9 @@ import AccountTypeChoice from "@/components/auth/AccountTypeChoice";
 import PermanentChoiceModal from "@/components/auth/PermanentChoiceModal";
 import ClientRegisterForm from "@/components/auth/ClientRegisterForm";
 import ConsultantRegisterForm from "@/components/auth/ConsultantRegisterForm";
+import KycRegistration from "@/components/auth/KycRegistration";
 
-type FlowStep = "choice" | "confirm" | "form" | "success";
+type FlowStep = "choice" | "confirm" | "form" | "kyc" | "success";
 
 export default function RegistoPage() {
   const [step, setStep] = useState<FlowStep>("choice");
@@ -27,6 +28,10 @@ export default function RegistoPage() {
   };
 
   const handleFormSuccess = () => {
+    setStep("kyc");
+  };
+
+  const handleKycComplete = () => {
     setStep("success");
   };
 
@@ -144,6 +149,10 @@ export default function RegistoPage() {
 
           {step === "form" && chosenType === "consultor" && (
             <ConsultantRegisterForm onBack={handleFormBack} onSuccess={handleFormSuccess} />
+          )}
+
+          {step === "kyc" && (
+            <KycRegistration onComplete={handleKycComplete} />
           )}
 
           <p className="text-center text-[13px] text-slate-500 mt-6">
