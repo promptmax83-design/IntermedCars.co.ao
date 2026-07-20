@@ -163,7 +163,7 @@ class TransactionService
             'success' => true,
             'status' => TransactionStatus::COMISSAO_PENDENTE->value,
             'commission_deadline' => $deadline,
-            'message' => 'Vistoria aprovada. Taxa fixa de 100.000 Kz pendente (apenas vendedor). Prazo: 72 horas.',
+            'message' => 'Vistoria aprovada. Taxas pendentes: 5% vendedor + 3% comprador. Prazo: 72 horas.',
         ];
     }
 
@@ -202,7 +202,7 @@ class TransactionService
                 'success' => true,
                 'both_paid' => true,
                 'status' => TransactionStatus::TRANSACAO_CONCLUIDA->value,
-                'message' => 'Taxa fixa paga pelo vendedor. Transacao concluida.',
+                'message' => 'Taxas pagas por ambas as partes. Transacao concluida.',
             ];
         }
 
@@ -210,7 +210,7 @@ class TransactionService
             'success' => true,
             'both_paid' => false,
             'status' => TransactionStatus::COMISSAO_PENDENTE->value,
-            'message' => "Taxa fixa de {$role} registada. Aguardando pagamento da taxa.",
+            'message' => "Pagamento de {$role} registado. Aguardando pagamento da outra parte.",
         ];
     }
 
@@ -280,12 +280,21 @@ class TransactionService
      */
     private function checkBothPartiesPaid(int $transactionId): bool
     {
-        $sql = "SELECT COUNT(*) as paid FROM commission_payments
-                WHERE transaction_id = :transaction_id AND role = 'seller'";
+        $sql = "SELECT role, COUNT(*) as paid FROM commission_payments
+                WHERE transaction_id = :transaction_id AND status = 'confirmado'
+                GROUP BY role";
         $stmt = Database::getConnection()->prepare($sql);
         $stmt->execute(['transaction_id' => $transactionId]);
-        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
-        return ($result['paid'] ?? 0) >= 1;
+        $payments = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        $paidRoles = [];
+        foreach ($payments as $payment) {
+            if ($payment['paid'] >= 1) {
+                $paidRoles[] = $payment['role'];
+            }
+        }
+
+        return in_array('seller', $paidRoles, true) && in_array('buyer', $paidRoles, true);
     }
 
     /**

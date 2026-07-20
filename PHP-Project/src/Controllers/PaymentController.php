@@ -54,11 +54,56 @@ class PaymentController extends BaseController
     public function getStatus(string $transactionId): void
     {
         try {
-            $this->success([
-                'transaction_id' => $transactionId,
-                'status' => 'pending',
-                'message' => 'Status do pagamento consultado.',
-            ]);
+            $db = \IntermedCars\Database\Database::getConnection();
+
+            // Check fee_payments table
+            $sql = "SELECT fp.*, n.status as negotiation_status, n.final_car_price_aoa
+                    FROM fee_payments fp
+                    LEFT JOIN negotiations n ON fp.negotiation_id = n.id
+                    WHERE fp.id = :id OR fp.payment_ref = :ref
+                    ORDER BY fp.created_at DESC LIMIT 1";
+            $stmt = $db->prepare($sql);
+            $stmt->execute(['id' => (int) $transactionId, 'ref' => $transactionId]);
+            $payment = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+            if ($payment) {
+                $this->success([
+                    'transaction_id' => $transactionId,
+                    'payment_id' => $payment['id'],
+                    'status' => $payment['status'],
+                    'amount_aoa' => $payment['amount_aoa'],
+                    'payer_role' => $payment['payer_role'],
+                    'negotiation_status' => $payment['negotiation_status'] ?? null,
+                    'confirmed_at' => $payment['confirmed_at'] ?? null,
+                    'message' => 'Status do pagamento consultado.',
+                ]);
+                return;
+            }
+
+            // Check negotiations table
+            $sql2 = "SELECT id, status, final_car_price_aoa, commission_seller_aoa, commission_buyer_aoa,
+                            has_seller_paid_fee, has_buyer_paid_fee
+                     FROM negotiations WHERE id = :id";
+            $stmt2 = $db->prepare($sql2);
+            $stmt2->execute(['id' => (int) $transactionId]);
+            $negotiation = $stmt2->fetch(\PDO::FETCH_ASSOC);
+
+            if ($negotiation) {
+                $this->success([
+                    'transaction_id' => $transactionId,
+                    'type' => 'negotiation',
+                    'status' => $negotiation['status'],
+                    'final_price_aoa' => $negotiation['final_car_price_aoa'],
+                    'seller_fee' => $negotiation['commission_seller_aoa'],
+                    'buyer_fee' => $negotiation['commission_buyer_aoa'],
+                    'seller_paid' => (bool) $negotiation['has_seller_paid_fee'],
+                    'buyer_paid' => (bool) $negotiation['has_buyer_paid_fee'],
+                    'message' => 'Status da negociacao consultado.',
+                ]);
+                return;
+            }
+
+            $this->error('Pagamento nao encontrado', 404);
         } catch (\Throwable $e) {
             error_log("[PaymentController] getStatus error: " . $e->getMessage());
             $this->error('Erro ao consultar status', 500);
