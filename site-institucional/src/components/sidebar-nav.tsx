@@ -18,6 +18,12 @@ const navItems = [
     roles: ["consultor", "user"],
   },
   {
+    href: "/reels",
+    label: "Reels",
+    icon: "M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z",
+    roles: ["consultor", "user"],
+  },
+  {
     href: "/encontrar-consultor",
     label: "Encontrar Consultor",
     icon: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z",

@@ -33,6 +33,7 @@ class Migrations
         $m->ensureMensagensTable();
         $m->ensureRevisoesNegociacaoTable();
         $m->ensureSessaoAtividadesTable();
+        $m->ensureReelsTables();
     }
 
     private function ensureUserRoleColumn(): void
@@ -425,5 +426,64 @@ class Migrations
         } catch (\PDOException $e) {
             // Index already exists
         }
+    }
+
+    private function ensureReelsTables(): void
+    {
+        $this->db->exec("CREATE TABLE IF NOT EXISTS reels (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            user_role VARCHAR(20) NOT NULL DEFAULT 'vendedor',
+            video_url VARCHAR(500) NOT NULL,
+            thumbnail_url VARCHAR(500),
+            duration_seconds INTEGER DEFAULT 30,
+            vehicle_id INTEGER,
+            marca VARCHAR(100),
+            modelo VARCHAR(100),
+            ano INTEGER,
+            preco_aoa REAL,
+            caption TEXT,
+            tags VARCHAR(500),
+            latitude REAL,
+            longitude REAL,
+            provincia VARCHAR(100),
+            views_count INTEGER DEFAULT 0,
+            likes_count INTEGER DEFAULT 0,
+            comments_count INTEGER DEFAULT 0,
+            status VARCHAR(20) DEFAULT 'ativo',
+            is_featured INTEGER DEFAULT 0,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id),
+            FOREIGN KEY (vehicle_id) REFERENCES vehicles(id)
+        )");
+
+        $this->db->exec("CREATE TABLE IF NOT EXISTS reel_views (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            reel_id INTEGER NOT NULL,
+            user_id INTEGER,
+            session_id VARCHAR(100),
+            watched_seconds INTEGER DEFAULT 0,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (reel_id) REFERENCES reels(id),
+            FOREIGN KEY (user_id) REFERENCES users(id)
+        )");
+
+        $this->db->exec("CREATE TABLE IF NOT EXISTS reel_likes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            reel_id INTEGER NOT NULL,
+            user_id INTEGER NOT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (reel_id) REFERENCES reels(id),
+            FOREIGN KEY (user_id) REFERENCES users(id),
+            UNIQUE(reel_id, user_id)
+        )");
+
+        try { $this->db->exec("CREATE INDEX idx_reels_user ON reels(user_id)"); } catch (\PDOException) {}
+        try { $this->db->exec("CREATE INDEX idx_reels_vehicle ON reels(vehicle_id)"); } catch (\PDOException) {}
+        try { $this->db->exec("CREATE INDEX idx_reels_location ON reels(provincia, created_at)"); } catch (\PDOException) {}
+        try { $this->db->exec("CREATE INDEX idx_reels_status ON reels(status, created_at)"); } catch (\PDOException) {}
+        try { $this->db->exec("CREATE INDEX idx_reel_views_reel ON reel_views(reel_id)"); } catch (\PDOException) {}
+        try { $this->db->exec("CREATE INDEX idx_reel_likes_reel ON reel_likes(reel_id)"); } catch (\PDOException) {}
     }
 }

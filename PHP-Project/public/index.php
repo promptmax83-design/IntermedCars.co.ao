@@ -44,6 +44,7 @@ use IntermedCars\Controllers\ConsultantController;
 use IntermedCars\Controllers\PaymentController;
 use IntermedCars\Controllers\NotificationController;
 use IntermedCars\Controllers\ContractController;
+use IntermedCars\Controllers\ReelController;
 use IntermedCars\Services\TransactionService;
 use IntermedCars\Services\CommissionService;
 use IntermedCars\Services\PaymentProofService;
@@ -1003,6 +1004,37 @@ $router->get('/api/consultores-banidos', static function (): void {
         http_response_code(400);
         echo json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
     }
+});
+
+// ─── Reels ────────────────────────────────────────────────
+$router->post('/api/reels', static function (): void {
+    $c = new ReelController();
+    $c->create();
+});
+
+$router->get('/api/reels', static function (): void {
+    $c = new ReelController();
+    $c->feed();
+});
+
+$router->get('/api/reels/(\d+)', static function (int $id): void {
+    $c = new ReelController();
+    $c->getById($id);
+});
+
+$router->post('/api/reels/(\d+)/like', static function (int $id): void {
+    $c = new ReelController();
+    $c->toggleLike($id);
+});
+
+$router->post('/api/reels/(\d+)/view', static function (int $id): void {
+    $c = new ReelController();
+    $c->recordView($id);
+});
+
+$router->delete('/api/reels/(\d+)', static function (int $id): void {
+    $c = new ReelController();
+    $c->delete($id);
 });
 
 // ─── 404 ──────────────────────────────────────────────────
