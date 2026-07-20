@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/auth-provider";
@@ -53,6 +53,7 @@ export default function ConsultorNegociacoesPage() {
   const [negotiations, setNegotiations] = useState<Negotiation[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState<Filter>("todas");
+  const [, startTransition] = useTransition();
 
   useEffect(() => {
     if (!authLoading && !isLoggedIn) {
@@ -82,7 +83,7 @@ export default function ConsultorNegociacoesPage() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      fetchNegotiations();
+      startTransition(() => { fetchNegotiations(); });
     }
   }, [isLoggedIn, fetchNegotiations]);
 

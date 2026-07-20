@@ -73,11 +73,20 @@ const testimonials = [
 ];
 
 const faqs = [
-  { q: "O IntermedCars cobra comissão do comprador?", a: "Não. O comprador não paga nenhuma comissão obrigatória. Pode deixar uma gratificação voluntária se desejar." },
-  { q: "Como funciona a taxa de mediação?", a: "O vendedor paga uma taxa fixa de 100.000 Kz por negócio concluído. O pagamento é feito diretamente ao IntermedCars." },
-  { q: "O pagamento do veículo é feito pela plataforma?", a: "Não. O pagamento é feito diretamente entre comprador e vendedor. O IntermedCars apenas media e acompanha o negócio." },
-  { q: "Como são verificados os utilizadores?", a: "Cada utilizador passa por verificação de identidade com BI, selfie e dados pessoais. Garantimos segurança em cada transação." },
-  { q: "O que acontece se o vendedor não pagar a taxa?", a: "Após 72 horas é enviado um aviso. Após 7 dias sem pagamento, a conta é suspensa automaticamente." },
+  { q: "O IntermedCars cobra comissão do comprador?",
+    a: "Sim. O comprador paga uma taxa de 3% sobre o valor final acordado na negociação do veículo. Essa taxa inclui o acompanhamento completo e seguro de um consultor dedicado durante o processo." },
+  { q: "Como funcionam as taxas de mediação e comissão?",
+    a: "As taxas são aplicadas apenas após a negociação ser concluída e validada pelo consultor: Comprador: 3% sobre o valor final do veículo. Vendedor: 5% sobre o valor final do veículo. Assim que o negócio é fechado no terreno, a plataforma notifica ambas as partes com as referências para pagamento das respetivas taxas." },
+  { q: "O que faz o Consultor de Mediação?",
+    a: "O consultor é o seu intermediário na negociação. Ao clicar em \"Falar com Consultor\", o nosso radar localiza consultores na sua área geográfica. Ele acompanha o contacto (por voz, vídeo ou mensagem), faz a vistoria/inspeção presencial do carro no terreno e regista todas as decisões na plataforma até o fecho do negócio." },
+  { q: "O que acontece se o consultor da minha área estiver offline?",
+    a: "Mesmo que o consultor esteja offline no sistema, o número de telefone direto é exibido na plataforma para que o comprador possa ligar imediatamente. O consultor atende a chamada e puxa o vendedor para a negociação." },
+  { q: "O pagamento do veículo é feito através da plataforma?",
+    a: "Não. O pagamento do valor do veículo é realizado diretamente entre o comprador e o vendedor. A plataforma gerencia apenas a intermediação, a verificação presencial e a emissão das referências de pagamento das taxas de serviço (3% e 5%)." },
+  { q: "Como são verificados os utilizadores e consultores?",
+    a: "Todos os utilizadores (compradores e vendedores) passam por verificação de identidade com BI/Documento e verificação de contacto. Os consultores credenciados passam por um processo rigoroso de validação para garantir segurança total no acompanhamento presencial e nas negociações." },
+  { q: "O que acontece se a taxa de mediação não for paga?",
+    a: "As referências de pagamento são geradas assim que o consultor confirma o fecho do negócio no terreno. Caso o pagamento não seja identificado em até 72 horas, são enviados alertas de cobrança. Se permanecer não pago em até 7 dias, a conta do utilizador é suspensa e novas negociações são bloqueadas." },
 ];
 
 /* ─── Component ────────────────────────────────────────── */

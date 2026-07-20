@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useParams, useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import SessionChat from "@/components/intermediation/SessionChat";
@@ -42,12 +42,13 @@ export default function SessaoPage() {
   const [userRole, setUserRole] = useState("user");
   const [showMap, setShowMap] = useState(false);
   const [consultorPos, setConsultorPos] = useState<{ lat: number; lng: number } | null>(null);
+  const [, startTransition] = useTransition();
 
   useEffect(() => {
     const id = getUserIdFromToken();
     const role = getUserRoleFromToken();
-    setUserId(id);
-    setUserRole(role);
+    startTransition(() => { setUserId(id); });
+    startTransition(() => { setUserRole(role); });
 
     if (!id) {
       router.push("/login");

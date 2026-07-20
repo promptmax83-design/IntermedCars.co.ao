@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useTransition } from "react";
 import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
 
@@ -76,6 +76,7 @@ export default function NegociacaoDetailPage() {
   const [error, setError] = useState<string | null>(null);
   const [actionLoading, setActionLoading] = useState(false);
   const [currentUserId, setCurrentUserId] = useState<number | null>(null);
+  const [, startTransition] = useTransition();
 
   const fetchNegotiation = useCallback(async () => {
     try {
@@ -116,8 +117,8 @@ export default function NegociacaoDetailPage() {
       return;
     }
     const uid = decodeUserId(token);
-    setCurrentUserId(uid);
-    fetchNegotiation();
+    startTransition(() => { setCurrentUserId(uid); });
+    startTransition(() => { fetchNegotiation(); });
   }, [router, id, fetchNegotiation]);
 
   const performAction = async (action: string) => {
@@ -321,13 +322,13 @@ export default function NegociacaoDetailPage() {
                 </p>
               </div>
               <div>
-                <p className="text-xs text-slate-500">Comissao Vendedor</p>
+                <p className="text-xs text-slate-500">Comissao Vendedor (5%)</p>
                 <p className="text-lg font-bold text-[#f59e0b]">
                   Kz{(financial.comissao_vendedor || 0).toLocaleString("pt-AO")}
                 </p>
               </div>
               <div>
-                <p className="text-xs text-slate-500">Comissao Comprador</p>
+                <p className="text-xs text-slate-500">Comissao Comprador (3%)</p>
                 <p className="text-lg font-bold text-blue-400">
                   Kz{(financial.comissao_comprador || 0).toLocaleString("pt-AO")}
                 </p>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useTransition } from "react";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 
@@ -41,7 +41,7 @@ interface Props {
   currentUserRole: string;
 }
 
-export default function SessionChat({ sessaoId, currentUserId, currentUserRole }: Props) {
+export default function SessionChat({ sessaoId, currentUserId, currentUserRole: _currentUserRole }: Props) {
   const [sessao, setSessao] = useState<Sessao | null>(null);
   const [mensagens, setMensagens] = useState<Mensagem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -50,6 +50,7 @@ export default function SessionChat({ sessaoId, currentUserId, currentUserRole }
   const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const pollRef = useRef<NodeJS.Timeout | null>(null);
+  const [, startTransition] = useTransition();
 
   const fetchSessao = async () => {
     try {
@@ -82,10 +83,10 @@ export default function SessionChat({ sessaoId, currentUserId, currentUserRole }
   };
 
   useEffect(() => {
-    fetchSessao();
-    fetchMensagens();
+    startTransition(() => { fetchSessao(); });
+    startTransition(() => { fetchMensagens(); });
 
-    pollRef.current = setInterval(fetchMensagens, 3000);
+    pollRef.current = setInterval(() => { startTransition(() => { fetchMensagens(); }); }, 3000);
 
     return () => {
       if (pollRef.current) clearInterval(pollRef.current);

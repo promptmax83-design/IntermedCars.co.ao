@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useTransition } from "react";
 
 interface GeolocationState {
   position: { lat: number; lng: number } | null;
@@ -32,6 +32,7 @@ export function useGeolocation(options: UseGeolocationOptions = {}) {
   });
 
   const watchIdRef = useRef<number | null>(null);
+  const [, startTransition] = useTransition();
 
   const handleSuccess = useCallback((pos: GeolocationPosition) => {
     setState({
@@ -100,7 +101,7 @@ export function useGeolocation(options: UseGeolocationOptions = {}) {
   }, []);
 
   useEffect(() => {
-    refresh();
+    startTransition(() => { refresh(); });
 
     return () => {
       if (watchIdRef.current !== null) {

@@ -118,7 +118,7 @@ export default function CofrePage() {
     const formData = new FormData();
     formData.append("proof", comprovativoFile);
     formData.append("transaction_id", String(tx.id));
-    formData.append("amount", "100000");
+    formData.append("amount", String(Math.round(tx.proposed_price * 0.05)));
     formData.append("role", "seller");
 
     try {
@@ -163,7 +163,7 @@ export default function CofrePage() {
       <div>
         <h1 className="text-2xl font-bold text-slate-800">Cofre Fiduciario</h1>
         <p className="text-sm text-slate-500">
-          Custodia segura de fundos. Pagamento de taxa fixa com comprovativo verificado por IA.
+          Custodia segura de fundos. Comissao percentual (5% vendedor, 3% comprador) com comprovativo verificado por IA.
         </p>
       </div>
 
@@ -219,8 +219,8 @@ export default function CofrePage() {
                     <p className="font-bold text-sm text-[#f59e0b] mt-1">{statusFlow[tx.status]?.label || tx.status}</p>
                   </div>
                   <div>
-                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Taxa Fixa (Vendedor)</p>
-                    <p className="font-bold text-sm text-[#c9a84c] mt-1">{formatKz(100000)}</p>
+                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Comissao (5% Vendedor)</p>
+                    <p className="font-bold text-sm text-[#c9a84c] mt-1">{formatKz(Math.round(tx.proposed_price * 0.05))}</p>
                   </div>
                 </div>
 
@@ -322,8 +322,8 @@ export default function CofrePage() {
                   </div>
                 </div>
                 <div className="pt-2 border-t border-slate-200">
-                  <p className="text-xs text-slate-500">Valor a Transferir (Taxa Fixa - Vendedor)</p>
-                  <p className="text-lg text-[#10b981] font-bold">{formatKz(100000)}</p>
+                  <p className="text-xs text-slate-500">Valor a Transferir (Comissao 5% - Vendedor)</p>
+                  <p className="text-lg text-[#10b981] font-bold">{formatKz(Math.round(tx.proposed_price * 0.05))}</p>
                 </div>
               </div>
 

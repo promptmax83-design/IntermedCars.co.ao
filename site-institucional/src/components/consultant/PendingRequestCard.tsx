@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useTransition } from "react";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 
@@ -25,6 +25,12 @@ export default function PendingRequestCard({
   onRejected: (id: number) => void;
 }) {
   const [loading, setLoading] = useState<"aceitar" | "recusar" | null>(null);
+  const [minutesAgo, setMinutesAgo] = useState(0);
+  const [, startTransition] = useTransition();
+
+  useEffect(() => {
+    startTransition(() => { setMinutesAgo(Math.floor((Date.now() - new Date(request.criado_em).getTime()) / 60000)); });
+  }, [request.criado_em]);
 
   const handleAceitar = async () => {
     setLoading("aceitar");
@@ -49,8 +55,6 @@ export default function PendingRequestCard({
       if (res.ok) onRejected(request.id);
     } catch { /* silent */ } finally { setLoading(null); }
   };
-
-  const minutesAgo = Math.floor((Date.now() - new Date(request.criado_em).getTime()) / 60000);
 
   return (
     <div className="bg-white rounded-2xl border border-[rgba(201,155,62,0.4)] p-5 hover:shadow-md transition-all">

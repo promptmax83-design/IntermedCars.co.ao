@@ -17,39 +17,13 @@ type Transaction = {
   created_at: string;
 };
 
-type Negotiation = {
-  id: number;
-  vehicle_id: number;
-  proposed_price: number;
-  status: string;
-  created_at: string;
-};
-
 function formatKz(value: number): string {
   return "Kz" + value.toLocaleString("pt-AO");
-}
-
-function getMonthLabel(dateStr: string): string {
-  const d = new Date(dateStr);
-  const months = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
-  return months[d.getMonth()] || "";
-}
-
-function getLast6Months(): string[] {
-  const now = new Date();
-  const months: string[] = [];
-  for (let i = 5; i >= 0; i--) {
-    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-    const months = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
-    months.push(months[d.getMonth()]);
-  }
-  return months;
 }
 
 export default function DashboardFinanceiroPage() {
   const [periodo, setPeriodo] = useState("Hoje");
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [negotiations, setNegotiations] = useState<Negotiation[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -76,7 +50,7 @@ export default function DashboardFinanceiroPage() {
         const negData = negRes.ok ? await negRes.json() : [];
 
         setTransactions(Array.isArray(txData) ? txData : []);
-        setNegotiations(Array.isArray(negData) ? negData : []);
+        void negData;
       } catch (err) {
         setError(err instanceof Error ? err.message : "Erro ao carregar dados");
       } finally {
@@ -94,7 +68,7 @@ export default function DashboardFinanceiroPage() {
 
   const totalGanho = completedTransactions.reduce((sum, t) => sum + t.proposed_price, 0);
   const totalPendente = pendingTransactions.reduce((sum, t) => sum + t.proposed_price, 0);
-  const comissaoPaga = completedTransactions.length * 100000;
+  const comissaoPaga = completedTransactions.reduce((sum, t) => sum + Math.round(t.proposed_price * 0.05), 0);
   const negociosAtivos = pendingTransactions.length;
 
   const summaryCards = [

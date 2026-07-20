@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 
@@ -42,6 +42,7 @@ export default function ConsultantRegisterForm({ onBack, onSuccess }: Props) {
   const [countdown, setCountdown] = useState(0);
   const [codeError, setCodeError] = useState<string | null>(null);
   const [codeSent, setCodeSent] = useState(false);
+  const [, startTransition] = useTransition();
 
   useEffect(() => {
     if (countdown > 0) {
@@ -128,7 +129,7 @@ export default function ConsultantRegisterForm({ onBack, onSuccess }: Props) {
 
   useEffect(() => {
     if (step === "verify" && !codeSent) {
-      sendVerificationCode();
+      startTransition(() => { sendVerificationCode(); });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step, codeSent, verifyMethod, form.email, form.telemovel]);

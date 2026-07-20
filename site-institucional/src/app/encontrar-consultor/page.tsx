@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 import Link from "next/link";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
@@ -36,10 +36,7 @@ export default function EncontrarConsultorPage() {
   const [searchZone, setSearchZone] = useState("");
   const [selected, setSelected] = useState<Consultant | null>(null);
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetchConsultants();
-  }, []);
+  const [, startTransition] = useTransition();
 
   const fetchConsultants = async () => {
     setLoading(true);
@@ -58,6 +55,10 @@ export default function EncontrarConsultorPage() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    startTransition(() => { fetchConsultants(); });
+  }, []);
 
   const handleSearchCode = async () => {
     if (!searchCode.trim()) return;

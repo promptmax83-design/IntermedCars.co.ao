@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 
@@ -22,7 +22,7 @@ export default function ClientRegisterForm({ onBack, onSuccess }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState<"form" | "verify" | "done">("form");
-  const [verifyMethod, setVerifyMethod] = useState<"email" | "phone">("email");
+  const [verifyMethod] = useState<"email" | "phone">("email");
   const [code, setCode] = useState("");
   const [verified, setVerified] = useState(false);
   const [sendingCode, setSendingCode] = useState(false);
@@ -30,6 +30,7 @@ export default function ClientRegisterForm({ onBack, onSuccess }: Props) {
   const [countdown, setCountdown] = useState(0);
   const [codeError, setCodeError] = useState<string | null>(null);
   const [codeSent, setCodeSent] = useState(false);
+  const [, startTransition] = useTransition();
 
   useEffect(() => {
     if (countdown > 0) {
@@ -83,7 +84,7 @@ export default function ClientRegisterForm({ onBack, onSuccess }: Props) {
 
   useEffect(() => {
     if (step === "verify" && !codeSent) {
-      sendVerificationCode();
+      startTransition(() => { sendVerificationCode(); });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step, codeSent, verifyMethod, form.email, form.telemovel]);

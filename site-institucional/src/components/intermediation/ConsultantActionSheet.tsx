@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 interface ConsultantActionSheetProps {
   isOpen: boolean;
   onClose: () => void;

@@ -90,7 +90,8 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
   const isNegotiating = viatura.status === "em_negociacao";
   const vendedor = viatura.seller || { id: 0, nome: "Vendedor", verified: false, vendas: 0 };
   const precoFormatado = viatura.preco.toLocaleString("pt-AO");
-  const comissao = "100.000";
+  const comissaoVendedor = viatura.preco ? (viatura.preco * 0.05).toLocaleString("pt-AO") : "0";
+  const comissaoComprador = viatura.preco ? (viatura.preco * 0.03).toLocaleString("pt-AO") : "0";
 
   return (
     <div className={`max-w-[1400px] mx-auto px-4 py-6 ${isDimmed ? "opacity-60" : ""}`}>
@@ -309,16 +310,16 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
 
             <div className="space-y-2">
               <div className="flex justify-between items-center">
-                <span className="text-[12px] text-slate-500">Taxa Fixa (Vendedor)</span>
-                <span className="text-[13px] font-semibold text-[#c9a84c]">Kz {comissao}</span>
+                <span className="text-[12px] text-slate-500">Taxa Vendedor (5%)</span>
+                <span className="text-[13px] font-semibold text-[#c9a84c]">Kz {comissaoVendedor}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-[12px] text-slate-500">Tu pagas (1%)</span>
-                <span className="text-[13px] font-medium text-slate-800">Kz {comissao}</span>
+                <span className="text-[12px] text-slate-500">Tu pagas (3%)</span>
+                <span className="text-[13px] font-medium text-slate-800">Kz {comissaoComprador}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-[12px] text-slate-500">Vendedor paga (1%)</span>
-                <span className="text-[13px] font-medium text-slate-800">Kz {comissao}</span>
+                <span className="text-[12px] text-slate-500">Total taxas plataforma</span>
+                <span className="text-[13px] font-medium text-slate-800">Kz {(viatura.preco * 0.08).toLocaleString("pt-AO")}</span>
               </div>
             </div>
           </div>
@@ -402,7 +403,7 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
               {[
                 "Pagamento seguro no cofre",
                 "Vistoria obrigatoria",
-                "Taxa fixa 100.000 Kz so apos aprovacao",
+                "Comissao 5% (vendedor) e 3% (comprador) so apos aprovacao",
                 "Suporte 24/7",
               ].map((item) => (
                 <div key={item} className="flex items-start gap-2">

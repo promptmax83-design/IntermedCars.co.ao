@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useCallback, useState, useMemo } from "react";
+import { useEffect, useCallback, useState, useMemo, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { useGeolocation } from "@/components/intermediation/useGeolocation";
@@ -32,6 +32,7 @@ export default function ConsultorMapaPage() {
   const [consultants, setConsultants] = useState<ConsultantMarker[]>([]);
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
   const [sendingLocation, setSendingLocation] = useState(false);
+  const [, startTransition] = useTransition();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -60,7 +61,7 @@ export default function ConsultorMapaPage() {
 
   useEffect(() => {
     if (geo.position) {
-      sendLocation(geo.position.lat, geo.position.lng);
+      startTransition(() => { sendLocation(geo.position!.lat, geo.position!.lng); });
     }
   }, [geo.position, sendLocation]);
 
@@ -78,8 +79,8 @@ export default function ConsultorMapaPage() {
 
   useEffect(() => {
     if (geo.position) {
-      fetchNearby();
-      const interval = setInterval(fetchNearby, 10000);
+      startTransition(() => { fetchNearby(); });
+      const interval = setInterval(() => { startTransition(() => { fetchNearby(); }); }, 10000);
       return () => clearInterval(interval);
     }
   }, [geo.position, fetchNearby]);

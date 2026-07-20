@@ -41,7 +41,7 @@ export function useSession() {
       } else {
         setError(data.message || "Erro ao buscar sessões");
       }
-    } catch (err) {
+    } catch {
       setError("Erro ao conectar com o servidor");
     } finally {
       setLoading(false);
