@@ -2,6 +2,14 @@
 import Link from "next/link";
 import { useState, useEffect, use } from "react";
 import StatusBadge, { type VehicleStatus } from "@/components/status-badge";
+import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+import { useGeolocation } from "@/components/intermediation/useGeolocation";
+
+const ConsultantRadarModal = dynamic(
+  () => import("@/components/intermediation/ConsultantRadarModal"),
+  { ssr: false }
+);
 
 type ViaturaData = {
   id: number;
@@ -29,6 +37,22 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
   const [error, setError] = useState<string | null>(null);
   const [imagemAtual, setImagemAtual] = useState(0);
   const [favoritado, setFavoritado] = useState(false);
+  const router = useRouter();
+  const [radarOpen, setRadarOpen] = useState(false);
+  useGeolocation({ enableHighAccuracy: true, watchPosition: false });
+
+  const handleRadarFound = (consultantId: number, sessionId: number) => {
+    setRadarOpen(false);
+    router.push(`/sessao/${sessionId}`);
+  };
+
+  const handleRadarNotFound = () => {
+    // Modal handles the UI, just keep it open
+  };
+
+  const handleRadarCancel = () => {
+    setRadarOpen(false);
+  };
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"}/api/vehicles/${id}`)
@@ -331,6 +355,19 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
             <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
               <p className="text-[10px] text-slate-500 uppercase tracking-wider">Accoes</p>
 
+              <button
+                onClick={() => {
+                  if (!localStorage.getItem("token")) {
+                    router.push("/login");
+                    return;
+                  }
+                  setRadarOpen(true);
+                }}
+                className="block w-full text-center py-3.5 rounded-xl font-bold text-sm bg-[#c9a84c] text-[#060608] hover:bg-[#b8983f] transition-all duration-200"
+              >
+                Encontrar Consultor
+              </button>
+
               <Link
                 href="/chat"
                 className={`block w-full text-center py-3.5 rounded-xl font-bold text-sm transition-all duration-200 ${
@@ -380,6 +417,16 @@ export default function ViaturaPage({ params }: { params: Promise<{ id: string }
         </div>
 
       </div>
+
+      {/* Radar Modal */}
+      <ConsultantRadarModal
+        isOpen={radarOpen}
+        vehicleId={Number(id)}
+        vehicleName={`${viatura.marca} ${viatura.modelo} ${viatura.ano}`}
+        onFound={handleRadarFound}
+        onNotFound={handleRadarNotFound}
+        onCancel={handleRadarCancel}
+      />
     </div>
   );
 }

@@ -467,6 +467,11 @@ $router->get('/api/consultants/nearby/vehicle/{id}', static function (int $id): 
     $c->findNearbyForVehicle($id);
 });
 
+$router->get('/api/consultants/(\d+)/location', static function (int $id): void {
+    $c = new \IntermedCars\Controllers\LocationController();
+    $c->getConsultantLocation($id);
+});
+
 // === SOLICITACOES ===
 $router->post('/api/solicitacoes', static function (): void {
     $c = new \IntermedCars\Controllers\SolicitacaoController();
@@ -950,6 +955,50 @@ $router->post('/api/mensagens/{id}/flag', static function (int $id): void {
         AuthMiddleware::requireAuth();
         $controller = new \IntermedCars\Controllers\MensagemSessaoController();
         $controller->flagMessage($id);
+    } catch (\Throwable $e) {
+        http_response_code(400);
+        echo json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+    }
+});
+
+// ─── Revisoes de Negociacao ────────────────────────────────
+$router->get('/api/revisoes', static function (): void {
+    try {
+        AuthMiddleware::requireAuth();
+        $controller = new \IntermedCars\Controllers\RevisaoNegociacaoController();
+        $controller->list();
+    } catch (\Throwable $e) {
+        http_response_code(400);
+        echo json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+    }
+});
+
+$router->post('/api/revisoes/{id}/relato', static function (int $id): void {
+    try {
+        AuthMiddleware::requireAuth();
+        $controller = new \IntermedCars\Controllers\RevisaoNegociacaoController();
+        $controller->submitRelato($id);
+    } catch (\Throwable $e) {
+        http_response_code(400);
+        echo json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+    }
+});
+
+$router->post('/api/admin/revisoes/{id}/decidir', static function (int $id): void {
+    try {
+        AuthMiddleware::requireAdmin();
+        $controller = new \IntermedCars\Controllers\RevisaoNegociacaoController();
+        $controller->decidir($id);
+    } catch (\Throwable $e) {
+        http_response_code(400);
+        echo json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+    }
+});
+
+$router->get('/api/consultores-banidos', static function (): void {
+    try {
+        $controller = new \IntermedCars\Controllers\RevisaoNegociacaoController();
+        $controller->listBanidos();
     } catch (\Throwable $e) {
         http_response_code(400);
         echo json_encode(['error' => $e->getMessage()], JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);

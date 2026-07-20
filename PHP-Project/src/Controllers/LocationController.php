@@ -176,6 +176,45 @@ class LocationController extends BaseController
         $this->success($stmt->fetchAll(\PDO::FETCH_ASSOC));
     }
 
+    public function getConsultantLocation(int $consultantId): void
+    {
+        $userId = $this->getAuthUserId();
+        if (!$userId) {
+            $this->error('Nao autenticado', 401);
+            return;
+        }
+
+        $sql = "SELECT s.id FROM sessoes_consultoria s 
+                WHERE s.consultor_id = :consultor_id 
+                AND s.status = 'ativa'
+                AND (s.comprador_id = :uid OR s.vendedor_id = :uid)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(['consultor_id' => $consultantId, 'uid' => $userId]);
+        $hasSession = $stmt->fetch();
+
+        if (!$hasSession) {
+            $this->error('Sem acesso a localizacao deste consultor', 403);
+            return;
+        }
+
+        $stmt2 = $this->db->prepare(
+            'SELECT latitude, longitude, ultima_atividade FROM consultants WHERE id = :id'
+        );
+        $stmt2->execute(['id' => $consultantId]);
+        $consultant = $stmt2->fetch(\PDO::FETCH_ASSOC);
+
+        if (!$consultant) {
+            $this->error('Consultor nao encontrado', 404);
+            return;
+        }
+
+        $this->success([
+            'latitude' => $consultant['latitude'],
+            'longitude' => $consultant['longitude'],
+            'ultima_atividade' => $consultant['ultima_atividade'],
+        ]);
+    }
+
     private function getConsultantByUserId(int $userId): ?array
     {
         $stmt = $this->db->prepare('SELECT * FROM consultants WHERE user_id = :uid');
