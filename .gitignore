@@ -1,5 +1,7 @@
 # Dependencies
 /vendor/
+/node_modules/
+/frontend/node_modules/
 
 # Environment variables
 .env
@@ -19,3 +21,7 @@ Thumbs.db
 
 # Storage (user uploads)
 /storage/
+
+# Frontend build
+/frontend/.next/
+*.log
