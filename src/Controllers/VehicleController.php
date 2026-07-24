@@ -67,8 +67,8 @@ class VehicleController extends BaseController
         $sql .= " LIMIT :limit OFFSET :offset";
 
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue('limit', $limit, \PDO::PARAM_INT);
-        $stmt->bindValue('offset', $offset, \PDO::PARAM_INT);
+        $params['limit'] = $limit;
+        $params['offset'] = $offset;
         $stmt->execute($params);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }

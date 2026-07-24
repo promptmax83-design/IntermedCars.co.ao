@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace IntermedCars\Database;
 
+use PDO;
+
 /**
  * Migrates legacy transaction records into the canonical negotiations table.
  * Runs once; uses a log table to track completion.
@@ -25,7 +27,7 @@ class TransactionMigration
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             )");
 
-            $sql = "SELECT t.id, t.vehicle_id, t.seller_id, t.buyer_id, t.price, t.status, t.created_at, t.updated_at
+            $sql = "SELECT t.id, t.vehicle_id, t.seller_id, t.buyer_id, t.proposed_price, t.status, t.created_at, t.updated_at
                     FROM transactions t
                     WHERE t.id NOT IN (
                         SELECT n.id FROM negotiations n
@@ -56,7 +58,7 @@ class TransactionMigration
                     'vehicle_id' => $row['vehicle_id'],
                     'seller_id' => $row['seller_id'],
                     'buyer_id' => $row['buyer_id'],
-                    'price' => $row['price'],
+                    'price' => $row['proposed_price'],
                     'status' => $status,
                     'closed_at' => $closedAt,
                     'completed_at' => $completedAt,
